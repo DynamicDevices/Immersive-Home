@@ -1,5 +1,13 @@
 extends Node3D
 
+# It may be handy to create a bunch of dummy devices? - PCJ
+
+@onready var grid_container = $GridContainer3D
+@onready var pagination = $Pagination3D
+@onready var search_input: Input3D = $Input
+
+# I've disabled this whole bit as part of the HA Disconnection process - PCJ
+'''
 signal on_select_device(device_id)
 
 const ButtonScene = preload ("res://content/ui/components/button/button.tscn")
@@ -55,4 +63,4 @@ func _ready():
 			)
 			grid_container.add_child(button_instance)
 
-	)
+	)'''

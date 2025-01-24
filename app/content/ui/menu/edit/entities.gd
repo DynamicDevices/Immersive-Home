@@ -5,6 +5,13 @@ signal on_back()
 
 const EntityScene = preload ("entity.tscn")
 
+# I had to strip out the devices portion of this, 
+# as it was throwing up some issues when i disconnected
+# other bits of HA. Luckily I'm pretty sure we aren't
+# connecting to outside devices anyways as part of this?
+
+# unless we are, in which case we'll have to figure a way around this. - PCJ
+
 @onready var entity_container = $FlexContainer3D
 @onready var pagination = $Pagination3D
 @onready var back_button = $Button
@@ -17,14 +24,14 @@ var search = R.state("")
 
 func _ready():
 	var entities = R.computed(func(_arg):
-		var devices=Store.devices.state.devices
+#		var devices=Store.devices.state.devices
 
 		var entities=[]
 
-		for device in devices:
-			if device["id"] == selected_device.value:
-				entities=device["entities"]
-				break
+#		for device in devices:
+#			if device["id"] == selected_device.value:
+#				entities=device["entities"]
+#				break
 
 		if search.value != "":
 			return entities.filter(func(entity):

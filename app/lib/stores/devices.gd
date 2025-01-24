@@ -1,4 +1,6 @@
-extends StoreClass
+# I've disabled this whole bit as part of the initial HA Disconnection pass - PCJ
+
+'''extends StoreClass
 const StoreClass = preload ("./store.gd")
 
 func _init():
@@ -34,3 +36,4 @@ func _init():
 
 func clear():
 	pass
+'''

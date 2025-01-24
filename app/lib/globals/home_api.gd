@@ -1,6 +1,9 @@
 extends Node
 ## Manages the connection to the home automation system and provides a unified interface to the different home automation systems.
 
+# I've disabled this whole bit as part of the initial HA Disconnection pass - PCJ
+
+'''
 const EntityGroups = preload ("res://lib/utils/entity_group.gd")
 const HassWebSocket = preload ("res://lib/home_apis/hass_ws/hass.gd")
 const VoiceAssistant = preload ("res://lib/home_apis/voice_handler.gd")
@@ -156,3 +159,4 @@ func get_history(entity_id, start, interval, end=null):
 		return null
 
 	return await api.get_history(entity_id, start, interval, end)
+'''

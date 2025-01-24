@@ -11,11 +11,16 @@ var selected_device = R.state(null)
 func _ready():
 	entities_page.selected_device = selected_device
 	remove_child(entities_page)
+	
+# I had to strip out the devices portion of this, 
+# as they're connected to the HA element, as far as i can tell.
 
-	devices_page.on_select_device.connect(func(device):
-		selected_device.value=device
-		entities_page.page.value=0
-	)
+# unless we are, in which case we'll have to figure a way around this. - PCJ
+
+#	devices_page.on_select_device.connect(func(device):
+#		selected_device.value=device
+#		entities_page.page.value=0
+#	)
 
 	entities_page.on_select_entity.connect(func(entity_name):
 		spawn_sound.play()

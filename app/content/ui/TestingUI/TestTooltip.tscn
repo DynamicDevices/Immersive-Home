@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://cts4uptxjg4m2"]
+
+[ext_resource type="Script" path="res://content/ui/TestingUI/TestTooltip.gd" id="1_h88tx"]
+[ext_resource type="Shader" path="res://content/ui/components/panel/glass.gdshader" id="2_arpjy"]
+[ext_resource type="PackedScene" uid="uid://bsjqdvkt0u87c" path="res://content/ui/components/button/button.tscn" id="3_a0065"]
+[ext_resource type="Script" path="res://content/functions/camera_follower.gd" id="4_q8j2y"]
+[ext_resource type="PackedScene" uid="uid://bef3gamrm6at2" path="res://content/ui/components/pagination/pagination.tscn" id="5_38j3m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nfwtf"]
+size = Vector3(0.5, 0.3, 0.01)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d2ck8"]
+render_priority = 10
+shader = ExtResource("2_arpjy")
+shader_parameter/color = Color(1, 1, 1, 0.3)
+shader_parameter/border_color = Color(1, 1, 1, 1)
+shader_parameter/edge_color = Color(0, 0, 0, 1)
+shader_parameter/size = Vector2(0.5, 0.3)
+shader_parameter/border_size = 0.001
+shader_parameter/border_fade_in = 0.005
+shader_parameter/border_fade_out = 0.0
+shader_parameter/corner_radius = 0.02
+shader_parameter/roughness = 0.3
+shader_parameter/grain_amount = 0.02
+
+[sub_resource type="QuadMesh" id="QuadMesh_ij2lj"]
+size = Vector2(0.5, 0.3)
+
+[node name="TestTooltip" type="StaticBody3D"]
+collision_layer = 6
+collision_mask = 0
+script = ExtResource("1_h88tx")
+tooltipText = ["If you're seeing this, you haven't edited your tooltip text!
+
+-Poppy", "and here's a second page", "a third page? how luxurious"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_nfwtf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_d2ck8")
+mesh = SubResource("QuadMesh_ij2lj")
+
+[node name="GettingStartedLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23, 0.13, 0.001)
+pixel_size = 0.001
+render_priority = 30
+outline_render_priority = 29
+text = "If you're seeing this then this tooltip isn't reading from any variable or nothin.
+
+- Poppy :D"
+font_size = 18
+outline_size = 0
+horizontal_alignment = 0
+vertical_alignment = 0
+autowrap_mode = 3
+width = 470.0
+
+[node name="CloseButton" parent="." instance=ExtResource("3_a0065")]
+transform = Transform3D(0.999996, -0.00261466, 0.000444526, 0.00261463, 0.999997, 6.2295e-05, -0.000444687, -6.11333e-05, 1, 0.279179, 0.115541, 0.001)
+label = "done"
+icon = true
+
+[node name="CameraFollower" type="Node" parent="."]
+script = ExtResource("4_q8j2y")
+enabled = null
+
+[node name="Pagination" parent="." instance=ExtResource("5_38j3m")]
+transform = Transform3D(1, -3.44033e-05, 5.85009e-06, 3.44033e-05, 1, 8.12029e-07, -5.85009e-06, -8.12029e-07, 1, -0.20453, -0.1016, 0.005)
+pages = 5
+visible_pages = 5
+
+[connection signal="on_page_changed" from="Pagination" to="." method="_on_pagination_on_page_changed"]

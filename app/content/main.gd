@@ -28,10 +28,11 @@ func _ready():
 
 	create_voice_assistant()
 
-	xr.xr_started.connect(func():
-		if HomeApi.has_connected() == false:
-			HomeApi.start()
-	)
+	# Disconnecting HomeApi from everything pass - PCJ
+	#xr.xr_started.connect(func():
+	#	if HomeApi.has_connected() == false:
+	#		HomeApi.start()
+	#)
 
 	if OS.get_model_name() == "Quest":
 		meta_scene_manager = OpenXRFbSceneManager.new()
@@ -45,9 +46,10 @@ func _ready():
 
 		xr_origin.add_child(meta_scene_manager)
 
-	HomeApi.on_connect.connect(func():
-		start_setup_flow.call_deferred()
-	)
+	# Disconnecting HomeApi from everything pass - PCJ
+	#HomeApi.on_connect.connect(func():
+	#	start_setup_flow.call_deferred()
+	#)
 
 func start_setup_flow():
 	var onboarding = OnboardingScene.instantiate()
