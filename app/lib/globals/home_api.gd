@@ -22,8 +22,9 @@ var api: Node
 var reconnect_timer := Timer.new()
 
 func _ready():
-	start()
-
+	#start() # disable startup
+	return   # disabled hass watchdog
+	
 	reconnect_timer.wait_time = 60
 	reconnect_timer.one_shot = false
 	reconnect_timer.autostart = true
@@ -89,7 +90,8 @@ func get_device(id: String):
 
 ## Returns the current state of an entity
 func get_state(entity: String):
-	assert(has_connected(), "Not connected")
+	if not has_connected():
+		return null
 
 	var group = groups.get_group(entity)
 

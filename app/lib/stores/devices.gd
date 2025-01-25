@@ -3,7 +3,7 @@ const StoreClass = preload ("./store.gd")
 
 func _init():
 	self.state = R.state({
-		"devices": []
+		"devices": [{"name":"arrow", "id":"abc", "entities":[{"name":"ent", "id":"button.three"}] }]
 	})
 
 	HomeApi.on_connect.connect(func():
@@ -29,7 +29,7 @@ func _init():
 	)
 
 	HomeApi.on_disconnect.connect(func():
-		self.state.devices=[]
+		pass # self.state.devices=[]
 	)
 
 func clear():

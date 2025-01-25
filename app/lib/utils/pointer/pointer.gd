@@ -41,21 +41,17 @@ func _handle_move():
 	if is_grabbed:
 		_emit_event("grab_move", last_collided)
 
-var lastcollidedpathname = ""
 func _handle_enter_leave():
 	var collider = ray.get_collider()
 
-	if collider == last_collided||is_grabbed||is_pressed:
+	if (collider == last_collided)||is_grabbed||is_pressed:
 		return
 
 	_emit_event("ray_enter", collider)
-	if is_instance_valid(last_collided) or last_collided == null:
-		_emit_event("ray_leave", last_collided)
-	else:
-		print("no ray_leave event for ", lastcollidedpathname)
-
+	if not is_instance_valid(last_collided):
+		last_collided = null  # Force an freed object to be actually null for otherwise the emit_event assignment failes
+	_emit_event("ray_leave", last_collided)
 	last_collided = collider
-	lastcollidedpathname = (collider.get_path() if collider else "")
 
 func pressed(type: Initiator.EventType):
 	var collider = ray.get_collider()
