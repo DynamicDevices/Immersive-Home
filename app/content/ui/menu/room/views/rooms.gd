@@ -46,7 +46,9 @@ func _ready():
 		delete_button.disabled=rooms_map.selected_room.value == null
 	)
 
-	if !Store.house.is_loaded(): await Store.house.on_loaded
+	if !Store.house.is_loaded(): 
+		print("House not loaded yet??? going into an await loop")
+		await Store.house.on_loaded
 
 	if App.main.meta_scene_manager == null:
 		remove_child(sync_room_button)

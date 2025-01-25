@@ -41,6 +41,7 @@ func _handle_move():
 	if is_grabbed:
 		_emit_event("grab_move", last_collided)
 
+var lastcollidedpathname = ""
 func _handle_enter_leave():
 	var collider = ray.get_collider()
 
@@ -48,9 +49,13 @@ func _handle_enter_leave():
 		return
 
 	_emit_event("ray_enter", collider)
-	_emit_event("ray_leave", last_collided)
+	if is_instance_valid(last_collided) or last_collided == null:
+		_emit_event("ray_leave", last_collided)
+	else:
+		print("no ray_leave event for ", lastcollidedpathname)
 
 	last_collided = collider
+	lastcollidedpathname = (collider.get_path() if collider else "")
 
 func pressed(type: Initiator.EventType):
 	var collider = ray.get_collider()

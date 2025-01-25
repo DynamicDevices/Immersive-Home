@@ -38,9 +38,10 @@ func _ready():
 ## Starts the adapter with the settings from the settings file
 func start():
 	var success = Store.settings.load_local()
-
 	if success:
 		start_adapter(Store.settings.state.type.to_lower(), Store.settings.state.url, Store.settings.state.token)
+
+	Store.house.load_local()
 
 ## Starts the adapter for the given type and url
 func start_adapter(type: String, url: String, token: String):
@@ -56,7 +57,7 @@ func start_adapter(type: String, url: String, token: String):
 	add_child(api)
 
 	api.on_connect.connect(func():
-		Store.house.load_local()
+		#Store.house.load_local()
 		on_connect.emit()
 	)
 
