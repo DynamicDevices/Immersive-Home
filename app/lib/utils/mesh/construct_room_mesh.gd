@@ -87,7 +87,7 @@ static func generate_wall_mesh_with_doors(corners, height, doors):
 			edges.append(k)
 			edges.append((k + 1) % points.size())
 
-		var cdt: ConstrainedTriangulation = ConstrainedTriangulation.new()
+		var cdt = ClassDB.instantiate("ConstrainedTriangulation")
 		cdt.init(true, true, 0.1)
 
 		cdt.insert_vertices(points)
@@ -124,7 +124,7 @@ static func generate_ceiling_mesh(corners):
 		edges.append(i)
 		edges.append((i + 1) % corners.size())
 
-	var cdt: ConstrainedTriangulation = ConstrainedTriangulation.new()
+	var cdt = ClassDB.instantiate("ConstrainedTriangulation")
 
 	cdt.init(true, true, 0.1)
 
@@ -219,7 +219,7 @@ static func generate_wall_mesh_with_doors_grid(corners, height, doors, grid:=0.2
 
 				points.append(point)
 
-		var cdt: ConstrainedTriangulation = ConstrainedTriangulation.new()
+		var cdt = ClassDB.instantiate("ConstrainedTriangulation")
 		cdt.init(true, true, 0.001)
 
 		cdt.insert_vertices(points)
@@ -362,7 +362,7 @@ static func generate_ceiling_mesh_grid(corners, grid: Vector2=Vector2(0.2, 0.2))
 				color = Color(1, 0, 1)
 				points.append(point)
 
-	var cdt: ConstrainedTriangulation = ConstrainedTriangulation.new()
+	var cdt = ClassDB.instantiate("ConstrainedTriangulation")
 
 	cdt.init(true, true, 0.1)
 

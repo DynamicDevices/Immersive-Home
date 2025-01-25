@@ -34,7 +34,7 @@ func _ready():
 	)
 
 	if OS.get_model_name() == "Quest":
-		meta_scene_manager = OpenXRFbSceneManager.new()
+		meta_scene_manager = ClassDB.instantiate("OpenXRFbSceneManager")
 		meta_scene_manager.auto_create = false
 		meta_scene_manager.visible = false
 		meta_scene_manager.default_scene = MetaSceneEntity

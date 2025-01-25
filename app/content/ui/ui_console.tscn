@@ -8,7 +8,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_mfp33"]
 size = Vector3(1, 1, 0.01)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_p0lm6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7bmtu"]
 resource_local_to_scene = true
 render_priority = 10
 shader = ExtResource("2_dbrjx")
@@ -23,7 +23,7 @@ shader_parameter/corner_radius = 0.2
 shader_parameter/roughness = 0.3
 shader_parameter/grain_amount = 0.02
 
-[sub_resource type="QuadMesh" id="QuadMesh_drxk8"]
+[sub_resource type="QuadMesh" id="QuadMesh_0tojl"]
 
 [node name="Console" type="StaticBody3D"]
 collision_layer = 2
@@ -48,6 +48,6 @@ width = 980.0
 script = ExtResource("3_2a4np")
 
 [node name="Panel" parent="." instance=ExtResource("1_3t6cp")]
-material_override = SubResource("ShaderMaterial_p0lm6")
-mesh = SubResource("QuadMesh_drxk8")
+material_override = SubResource("ShaderMaterial_7bmtu")
+mesh = SubResource("QuadMesh_0tojl")
 size = Vector2(1, 1)

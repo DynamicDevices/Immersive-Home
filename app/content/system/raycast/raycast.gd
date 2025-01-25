@@ -77,10 +77,11 @@ func _handle_grid():
 
 	grid.global_position = wall_collider.get_collision_point() + wall_collider.get_collision_normal() * 0.01
 
-	if abs(wall_collider.get_collision_normal().dot(Vector3.UP)) > 0.9:
-		grid.global_transform.basis = Basis.looking_at(wall_collider.get_collision_normal(), Vector3.FORWARD, true)
-	else:
-		grid.global_transform.basis = Basis.looking_at(wall_collider.get_collision_normal(), Vector3.UP, true)
+	var wallcollidernormal = wall_collider.get_collision_normal()
+	if abs(wallcollidernormal.dot(Vector3.UP)) > 0.9:
+		grid.global_transform.basis = Basis.looking_at(wallcollidernormal, Vector3.FORWARD, true)
+	elif wallcollidernormal != Vector3.ZERO:
+		grid.global_transform.basis = Basis.looking_at(wallcollidernormal, Vector3.UP, true)
 
 func _handle_cursor():
 	var collider = get_collider()
