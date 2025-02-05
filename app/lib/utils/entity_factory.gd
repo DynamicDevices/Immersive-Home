@@ -9,6 +9,7 @@ const MediaPlayer = preload ("res://content/entities/media_player/media_player.t
 const Camera = preload ("res://content/entities/camera/camera.tscn")
 const ButtonEntity = preload ("res://content/entities/button/button.tscn")
 const ChevronEntity = preload ("res://content/entities/chevron/chevron.tscn")
+const TooltipEntity = preload("res://content/entities/Tooltip/tooltip.tscn")
 const NumberEntity = preload ("res://content/entities/number/number.tscn")
 const LineGraphEntity = preload ("res://content/entities/line_chart/line_chart.tscn")
 const TimerEntity = preload ("res://content/entities/timer/timer.tscn")
@@ -35,6 +36,8 @@ static func create_entity(id: String, type=null):
 			entity = ButtonEntity.instantiate()
 		"chevron":
 			entity = ChevronEntity.instantiate()
+		"tooltip":
+			entity = TooltipEntity.instantiate()
 		"number":
 			entity = NumberEntity.instantiate()
 		"line_chart":
@@ -65,6 +68,8 @@ static func get_entity_icon(type: String) -> String:
 			return "radio_button_checked"
 		"chevron":
 			return "radio_button_checked"
+		"tooltip":
+			return "sliders"
 		"number":
 			return "sliders"
 		"line_chart":

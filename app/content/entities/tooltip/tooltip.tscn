@@ -1,0 +1,134 @@
+[gd_scene load_steps=13 format=3 uid="uid://cs4ytsxrm4kjw"]
+
+[ext_resource type="Script" uid="uid://ep12y2470fcm" path="res://content/entities/tooltip/tooltip.gd" id="1_liuo7"]
+[ext_resource type="Shader" uid="uid://dggseju3g4for" path="res://content/ui/components/panel/glass.gdshader" id="2_gdhnl"]
+[ext_resource type="PackedScene" uid="uid://bsjqdvkt0u87c" path="res://content/ui/components/button/button.tscn" id="3_t773n"]
+[ext_resource type="Script" uid="uid://bg6vc81m8fuka" path="res://content/functions/camera_follower.gd" id="4_crs54"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="5_1ihxl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nfwtf"]
+size = Vector3(0.5, 0.3, 0.01)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d2ck8"]
+render_priority = 10
+shader = ExtResource("2_gdhnl")
+shader_parameter/color = Color(1, 1, 1, 0.3)
+shader_parameter/border_color = Color(1, 1, 1, 1)
+shader_parameter/edge_color = Color(0, 0, 0, 1)
+shader_parameter/size = Vector2(0.5, 0.3)
+shader_parameter/border_size = 0.001
+shader_parameter/border_fade_in = 0.005
+shader_parameter/border_fade_out = 0.0
+shader_parameter/corner_radius = 0.02
+shader_parameter/roughness = 0.3
+shader_parameter/grain_amount = 0.02
+
+[sub_resource type="QuadMesh" id="QuadMesh_ij2lj"]
+size = Vector2(0.5, 0.3)
+
+[sub_resource type="QuadMesh" id="QuadMesh_5yir0"]
+resource_local_to_scene = true
+size = Vector2(0.3, 0.2)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1iwq4"]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1iwq4"]
+transparency = 1
+cull_mode = 2
+albedo_texture = SubResource("ViewportTexture_1iwq4")
+texture_filter = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y5vib"]
+resource_local_to_scene = true
+size = Vector3(0.3, 0.2, 0.02)
+
+[node name="Tooltip" type="StaticBody3D"]
+collision_layer = 6
+collision_mask = 0
+script = ExtResource("1_liuo7")
+
+[node name="Label3D2" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23, -0.11, 0.001)
+pixel_size = 0.001
+render_priority = 30
+outline_render_priority = 29
+text = "Get Roomdata"
+font_size = 18
+outline_size = 0
+horizontal_alignment = 0
+autowrap_mode = 3
+width = 470.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_nfwtf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_d2ck8")
+mesh = SubResource("QuadMesh_ij2lj")
+
+[node name="GettingStartedLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23, 0.13, 0.001)
+visible = false
+pixel_size = 0.001
+render_priority = 30
+outline_render_priority = 29
+text = "Hey!
+
+This app is still early in development and still has a lot of rough edges. Things might break or are sometimes difficult to use, this will improve the more polished the app becomes.
+
+If this is the first time you try the app, please first read through the \"Getting Started\" Guide below."
+font_size = 18
+outline_size = 0
+horizontal_alignment = 0
+vertical_alignment = 0
+autowrap_mode = 3
+width = 470.0
+
+[node name="GettingStartedButton" parent="." instance=ExtResource("3_t773n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, -0.11, 0.001)
+label = "open_in_new"
+icon = true
+
+[node name="CloseButton" parent="." instance=ExtResource("3_t773n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21, -0.11, 0.001)
+label = "done"
+icon = true
+
+[node name="CloseLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18, -0.11, 0.001)
+pixel_size = 0.001
+render_priority = 30
+outline_render_priority = 29
+text = "Understood"
+font_size = 18
+outline_size = 0
+horizontal_alignment = 2
+autowrap_mode = 3
+width = 470.0
+
+[node name="CameraFollower" type="Node" parent="."]
+script = ExtResource("4_crs54")
+enabled = null
+
+[node name="Viewport2Din3D" parent="." instance=ExtResource("5_1ihxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0118007)
+screen_size = Vector2(0.3, 0.2)
+
+[node name="ScrollingTextbox" type="RichTextLabel" parent="Viewport2Din3D/Viewport" index="0"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Screen" parent="Viewport2Din3D" index="1"]
+mesh = SubResource("QuadMesh_5yir0")
+surface_material_override/0 = SubResource("StandardMaterial3D_1iwq4")
+
+[node name="StaticBody3D" parent="Viewport2Din3D" index="2"]
+screen_size = Vector2(0.3, 0.2)
+
+[node name="CollisionShape3D" parent="Viewport2Din3D/StaticBody3D" index="0"]
+shape = SubResource("BoxShape3D_y5vib")
+
+[connection signal="on_button_down" from="GettingStartedButton" to="." method="_on_getting_started_button_on_button_down"]
+
+[editable path="Viewport2Din3D"]

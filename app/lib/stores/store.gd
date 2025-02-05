@@ -64,6 +64,7 @@ func save_local(path=_save_path):
 		return false
 
 	var json_text = JSON.stringify(data)
+	print(json_text)
 	save_file.store_line(json_text)
 
 	# var path2 = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS, false) + "/immersive-home/" + path.split("/")[- 1]
@@ -102,7 +103,7 @@ func load_local(path=_save_path):
 	print("Loading file ", path)
 	var json_text = save_file.get_as_text()
 	var save_data = VariantSerializer.parse_value(JSON.parse_string(json_text))
-
+	print(save_data)
 	if save_data == null:
 		return false
 

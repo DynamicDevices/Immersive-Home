@@ -85,7 +85,13 @@ func _input(event):
 		
 	if event is InputEventKey and Input.is_key_pressed(KEY_M):
 		menu.toggle_open()
-
+	
+	if event is InputEventKey and Input.is_key_pressed(KEY_U):
+		var content = JSON.parse_string(FileAccess.get_file_as_string(Store.house._save_path))
+		if content:
+			print (content)
+		
+	
 func _move_camera_pc(delta):
 	if OS.get_name() == "Android": return
 		
