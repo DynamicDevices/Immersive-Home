@@ -1,4 +1,6 @@
-extends Node3D
+extends Entity
+
+const Entity = preload ("../entity.gd")
 
 @onready var getting_started_button = $GettingStartedButton
 @onready var close_button = $CloseButton
