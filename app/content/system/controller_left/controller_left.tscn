@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dscp8x0ari57n" path="res://content/system/raycast/raycast.tscn" id="4_n7lao"]
 [ext_resource type="PackedScene" uid="uid://bufelcry36rw1" path="res://addons/xr-autohandtracker/auto_handtracker.tscn" id="4_oe7fv"]
 [ext_resource type="PackedScene" uid="uid://dhaqth6q5yw4n" path="res://addons/godot-xr-tools/hands/model/hand_l.gltf" id="5_w1pvs"]
-[ext_resource type="Shader" path="res://assets/materials/hands.gdshader" id="6_wk733"]
+[ext_resource type="Shader" uid="uid://siqrs0qjssav" path="res://assets/materials/hands.gdshader" id="6_wk733"]
 [ext_resource type="PackedScene" uid="uid://bsjqdvkt0u87c" path="res://content/ui/components/button/button.tscn" id="6_x5vuc"]
 [ext_resource type="PackedScene" uid="uid://cfsnkoxb7mtok" path="res://content/system/trash_bin/trash_bin.tscn" id="7_vigb6"]
 
@@ -39,10 +39,8 @@ is_right = false
 
 [node name="AutoHandtracker" parent="." instance=ExtResource("4_oe7fv")]
 visible = false
-applymiddlefingerfix = null
-applyscaling = null
-coincidewristorknuckle = null
 visiblehandtrackskeleton = false
+visiblehandtrackskeletonRaw = true
 enableautotracker = false
 
 [node name="hand_l" parent="." instance=ExtResource("5_w1pvs")]

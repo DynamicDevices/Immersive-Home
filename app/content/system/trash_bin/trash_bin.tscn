@@ -65,8 +65,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hrejr"]
 _data = {
-"RESET": SubResource("Animation_wg64y"),
-"add_trashbin": SubResource("Animation_cxelh")
+&"RESET": SubResource("Animation_wg64y"),
+&"add_trashbin": SubResource("Animation_cxelh")
 }
 
 [node name="TrashBin" type="Node3D"]
@@ -89,5 +89,5 @@ volume_db = -10.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_hrejr")
+&"": SubResource("AnimationLibrary_hrejr")
 }

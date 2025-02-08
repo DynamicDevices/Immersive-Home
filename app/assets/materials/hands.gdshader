@@ -22,4 +22,3 @@ void fragment()
 	ALPHA = albedo.w + basic_fresnel;
 	ALPHA = clamp((-vertex_pos.z - fade_offset) * fade_sharpness, 0.00, ALPHA);
 }
-
