@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://wk1pj4yst3tk"]
+[gd_scene load_steps=6 format=3 uid="uid://wk1pj4yst3tk"]
 
 [ext_resource type="Script" uid="uid://c67b4w5nhom4o" path="res://content/entities/custom_label/custom_label.gd" id="1_qddjs"]
+[ext_resource type="PackedScene" uid="uid://bsjqdvkt0u87c" path="res://content/ui/components/button/button.tscn" id="2_hbtf7"]
 [ext_resource type="Script" uid="uid://tquknum0fs5j" path="res://content/functions/movable.gd" id="3_ifrgi"]
 [ext_resource type="PackedScene" uid="uid://blkfqa3ttk0d2" path="res://content/ui/components/label_container/label_container.tscn" id="3_ve37m"]
 
@@ -20,4 +21,10 @@ shape = SubResource("BoxShape3D_um5pa")
 
 [node name="Label" parent="." instance=ExtResource("3_ve37m")]
 text = "Here's a thing!"
-size = Vector3(0.131, 0.023, 0.1)
+font_size = 24
+size = Vector3(0.175, 0.03, 0.1)
+
+[node name="Button" parent="." instance=ExtResource("2_hbtf7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0879029, 0.0348504, -4.80005)
+visible = false
+label = "Edit"
