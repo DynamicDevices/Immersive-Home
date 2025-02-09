@@ -39,7 +39,7 @@ shape = SubResource("BoxShape3D_nfwtf")
 material_override = SubResource("ShaderMaterial_d2ck8")
 mesh = SubResource("QuadMesh_ij2lj")
 
-[node name="GettingStartedLabel" type="Label3D" parent="."]
+[node name="TooltipText" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23, 0.13, 0.001)
 pixel_size = 0.001
 render_priority = 30
@@ -83,7 +83,7 @@ script = ExtResource("4_crs54")
 enabled = null
 
 [node name="Input" parent="." instance=ExtResource("5_1iwq4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.125716, 0.180782, -4.54944)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.126, 0.181, 0)
 visible = false
 
 [node name="Movable" type="Node" parent="."]
@@ -91,3 +91,4 @@ script = ExtResource("6_m3w2u")
 resizable = true
 
 [connection signal="on_toggled" from="TextEditButton" to="." method="_on_text_edit_button_on_toggled"]
+[connection signal="on_text_changed" from="Input" to="." method="_on_input_on_text_changed"]
