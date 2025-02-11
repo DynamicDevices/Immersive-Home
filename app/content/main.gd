@@ -49,6 +49,7 @@ func _ready():
 	HomeApi.on_connect.connect(func():
 		start_setup_flow.call_deferred()
 	)
+	$MQTT.connect_to_broker("mosquitto.doesliverpool.xyz")
 
 func start_setup_flow():
 	var onboarding = OnboardingScene.instantiate()
@@ -129,3 +130,17 @@ func _vector_key_mapping(key_positive_x: int, key_negative_x: int, key_positive_
 		vec = vec.normalized()
 	
 	return vec
+
+# Our MQTT debug stuff
+
+func _on_mqtt_broker_connected() -> void:
+	$MQTT.subscribe("stfc/#")
+	$MQTT.publish("stfc/status", "we are good")
+	var gg = Vector2(8,9)
+	$MQTT.publish("stfc/pos", var_to_str(gg))
+
+func _on_mqtt_received_message(topic: Variant, message: Variant) -> void:
+	prints(" got message: ", topic, message)
+
+# mosquitto_sub -h mosquitto.doesliverpool.xyz -v -t "stfc/#"
+# mosquitto_pub -h mosquitto.doesliverpool.xyz -t "stfc/alex/L" -m "is talking"
