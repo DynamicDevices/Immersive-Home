@@ -17,8 +17,10 @@ const MetaSceneEntity = preload ("res://content/system/house/meta_scene_entity/m
 
 var voice_assistant = null
 var meta_scene_manager = null
+var debug_reference_position = null # How we calculate position difference for debug
 
 func _ready():
+	debug_reference_position = %XRCamera3D.position
 	if OS.get_name() == "Android":
 		# OS.request_permissions()
 		environment.environment = environment_passthrough_material
@@ -136,11 +138,24 @@ func _vector_key_mapping(key_positive_x: int, key_negative_x: int, key_positive_
 func _on_mqtt_broker_connected() -> void:
 	$MQTT.subscribe("stfc/#")
 	$MQTT.publish("stfc/status", "we are good")
-	var gg = Vector2(8,9)
-	$MQTT.publish("stfc/pos", var_to_str(gg))
+	var content = JSON.parse_string(FileAccess.get_file_as_string(Store.house._save_path))
+	if content:
+		$MQTT.publish("stfc/room", var_to_str(content))
+	$MQTT.publish("stfc/pos", var_to_str(%XRCamera3D.position))
+	
 
 func _on_mqtt_received_message(topic: Variant, message: Variant) -> void:
 	prints(" got message: ", topic, message)
 
 # mosquitto_sub -h mosquitto.doesliverpool.xyz -v -t "stfc/#"
 # mosquitto_pub -h mosquitto.doesliverpool.xyz -t "stfc/alex/L" -m "is talking"
+
+
+func _on_xr_controller_left_button_pressed(name: String) -> void:
+	var camera_position = %XRCamera3D.position
+	var content = JSON.parse_string(FileAccess.get_file_as_string(Store.house._save_path))
+	if content:
+		$MQTT.publish("stfc/room", var_to_str(content))
+	$MQTT.publish("stfc/pos", var_to_str(camera_position))
+	$MQTT.publish("stfc/pos_dif", var_to_str(abs(camera_position-debug_reference_position)))
+	debug_reference_position = camera_position

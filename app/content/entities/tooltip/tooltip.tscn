@@ -1,47 +1,51 @@
 [gd_scene load_steps=10 format=3 uid="uid://cs4ytsxrm4kjw"]
 
-[ext_resource type="Script" uid="uid://ep12y2470fcm" path="res://content/entities/tooltip/tooltip.gd" id="1_liuo7"]
+[ext_resource type="Script" uid="uid://ep12y2470fcm" path="res://content/entities/tooltip/tooltip.gd" id="1_m3w2u"]
 [ext_resource type="Shader" uid="uid://dggseju3g4for" path="res://content/ui/components/panel/glass.gdshader" id="2_gdhnl"]
 [ext_resource type="PackedScene" uid="uid://bsjqdvkt0u87c" path="res://content/ui/components/button/button.tscn" id="3_t773n"]
 [ext_resource type="Script" uid="uid://bg6vc81m8fuka" path="res://content/functions/camera_follower.gd" id="4_crs54"]
 [ext_resource type="PackedScene" uid="uid://blrhy2uccrdn4" path="res://content/ui/components/input/input.tscn" id="5_1iwq4"]
 [ext_resource type="Script" uid="uid://tquknum0fs5j" path="res://content/functions/movable.gd" id="6_m3w2u"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_nfwtf"]
-size = Vector3(0.5, 0.3, 0.01)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d2ck8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m3w2u"]
+resource_local_to_scene = true
 render_priority = 10
 shader = ExtResource("2_gdhnl")
 shader_parameter/color = Color(1, 1, 1, 0.3)
 shader_parameter/border_color = Color(1, 1, 1, 1)
 shader_parameter/edge_color = Color(0, 0, 0, 1)
-shader_parameter/size = Vector2(0.5, 0.3)
-shader_parameter/border_size = 0.001
-shader_parameter/border_fade_in = 0.005
+shader_parameter/size = Vector2(12.5, 7.5)
+shader_parameter/border_size = 0.0333333
+shader_parameter/border_fade_in = 0.166667
 shader_parameter/border_fade_out = 0.0
-shader_parameter/corner_radius = 0.02
+shader_parameter/corner_radius = 10.0
 shader_parameter/roughness = 0.3
 shader_parameter/grain_amount = 0.02
 
-[sub_resource type="QuadMesh" id="QuadMesh_ij2lj"]
+[sub_resource type="QuadMesh" id="QuadMesh_i1guj"]
 size = Vector2(0.5, 0.3)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_nfwtf"]
+size = Vector3(0.5, 0.3, 0.01)
+
 [node name="Tooltip" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00218351, 0.000727355, -5.97239e-05)
 collision_layer = 6
 collision_mask = 0
-script = ExtResource("1_liuo7")
+script = ExtResource("1_m3w2u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000690326, 0)
+material_override = SubResource("ShaderMaterial_m3w2u")
+mesh = SubResource("QuadMesh_i1guj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_nfwtf")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_override = SubResource("ShaderMaterial_d2ck8")
-mesh = SubResource("QuadMesh_ij2lj")
-
 [node name="TooltipText" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23, 0.13, 0.001)
 pixel_size = 0.001
+double_sided = false
 render_priority = 30
 outline_render_priority = 29
 text = "Here is a blank tooltip!
