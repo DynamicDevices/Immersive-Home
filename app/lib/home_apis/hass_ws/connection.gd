@@ -55,8 +55,10 @@ func start(url: String, token: String) -> ConnectionError:
 
 	connecting = true
 
-	print("Connecting to %s" % url + "/api/websocket")
-	var error = socket.connect_to_url(url + "/api/websocket", TLSOptions.client_unsafe())
+	var wurl = url + "/api/websocket"
+	print("Connecting to %s" % wurl)
+	#var error = socket.connect_to_url(wurl, TLSOptions.client_unsafe())
+	var error = socket.connect_to_url(wurl)
 
 	if error != OK:
 		print("Error connecting to %s: %s" % [url, error])
@@ -81,10 +83,14 @@ func start(url: String, token: String) -> ConnectionError:
 	on_connect.emit()
 	return ConnectionError.OK
 
+var prevwebsocketstate = -1
 func _process(_delta):
 	socket.poll()
 	
 	var state = socket.get_ready_state()
+	if state != prevwebsocketstate:
+		print("Websocket state ", state)
+		prevwebsocketstate = state
 	if state == WebSocketPeer.STATE_OPEN:
 		if connecting:
 			connecting = false

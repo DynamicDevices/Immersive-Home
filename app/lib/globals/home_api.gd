@@ -22,8 +22,8 @@ var api: Node
 var reconnect_timer := Timer.new()
 
 func _ready():
-	#start() # disable startup
-	return   # disabled hass watchdog
+	start() # disable startup
+	#return   # disabled hass watchdog
 	
 	reconnect_timer.wait_time = 60
 	reconnect_timer.one_shot = false

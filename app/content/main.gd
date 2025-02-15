@@ -153,7 +153,8 @@ func _boundary_snapped() -> void:
 func _on_mqtt_broker_connected() -> void:
 	$MQTT.subscribe("stfc/#")
 	$MQTT.publish("stfc/status", "we are good")
-	var content = JSON.parse_string(FileAccess.get_file_as_string(Store.house._save_path))
+	var scontent = FileAccess.get_file_as_string(Store.house._save_path)
+	var content = JSON.parse_string(scontent)
 	if content:
 		$MQTT.publish("stfc/room", var_to_str(content))
 	$MQTT.publish("stfc/pos", var_to_str(%XRCamera3D.position))

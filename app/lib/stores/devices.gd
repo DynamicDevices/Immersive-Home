@@ -7,7 +7,9 @@ func _init():
 	})
 
 	HomeApi.on_connect.connect(func():
+		print("HASS Connected, getting devices")
 		var devices=await HomeApi.get_devices()
+		print("devices are: ", devices)
 
 		devices.sort_custom(func(a, b):
 			return a["name"].to_lower() < b["name"].to_lower()

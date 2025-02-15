@@ -26,6 +26,10 @@ func _init(url: String, token: String):
 		on_disconnect.emit()
 	)
 
+	print("hard coding link to wss://hass")
+	url = "wss://mr5g.dynamicdevices.co.uk"
+	token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI3ZThiOGE3M2I0Nzc0NGE4YmJmNDA1MGYxOTg5NGRkNyIsImlhdCI6MTczOTYyMDM4OCwiZXhwIjoyMDU0OTgwMzg4fQ.vzNFjWb9eIRu8-3yjyDtwWyMlYpaIXulDgvUiZOtBtM"
+
 	var error = await connection.start(url, token)
 
 	if error != Connection.ConnectionError.OK:

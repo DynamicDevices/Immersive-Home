@@ -65,6 +65,7 @@ script = ExtResource("12_e13ym")
 transform = Transform3D(0.5, 0, 0, 0, 0.237697, 0.439887, 0, -0.439887, 0.237697, -0.0241798, 0.452996, -0.531271)
 
 [node name="MQTT" parent="." instance=ExtResource("15_tu1bw")]
+verbose_level = 0
 
 [connection signal="button_pressed" from="XROrigin3D/XRControllerLeft" to="." method="_on_xr_controller_left_button_pressed"]
 [connection signal="broker_connected" from="MQTT" to="." method="_on_mqtt_broker_connected"]
