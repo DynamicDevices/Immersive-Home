@@ -7,8 +7,11 @@ const Entity = preload ("../entity.gd")
 @onready var input = $Input
 @onready var tooltip_text = $TooltipText
 
-var keyboard_input = false
-
+var tooltip_name = "Blank Tooltip"
+var next_tooltip = null
+var previous_tooltip
+var tooltip_text_R = R.state(null)
+var mqtt = null
 
 func _ready():
 	
@@ -19,22 +22,71 @@ func _ready():
 	# Our new text edit button
 	text_edit_button.on_button_down.connect(func():
 		text_edit()
-		)
+	)
 		
-# For testing without VR
-func _input(event):
-	if event is InputEventKey and Input.is_key_pressed(KEY_H):
-		text_edit()
+	if tooltip_text_R.value != null: tooltip_text.text = tooltip_text_R.value
 		
+	if var_to_str(tooltip_text.text).contains("~"):
+		tooltip_name = var_to_str(tooltip_text.text).split("~",1)[0]
+		if get_node(var_to_str(tooltip_text.text).split("~",1)[1]) != null:
+			next_tooltip = get_node(var_to_str(tooltip_text.text).split("~",1)[1])
+	else:
+		tooltip_name = var_to_str(tooltip_text.text)
+	
+	if next_tooltip != null:
+		close_button.label = "forward"
+	if previous_tooltip != null and previous_tooltip.visible:
+		self.visible = false
+	mqtt = get_node("/root/Main/MQTT")
+	
 
-# Bring up/Hide our input that we use to change the body text
+# When we bring up/hide our input that we use to change the body text
 func text_edit():
 	input.visible = !input.visible
+	
+	tooltip_text_R.value = tooltip_text.text
+	
+	# Check tooltip text for identifier
+	if tooltip_text.text.contains("~"):
+		self.name = tooltip_text.text.split("~",1)[0] # Set name to word before "~"
+		mqtt.publish("stfc/tooltip_name_~", var_to_str(self.name))
+		# If a tooltip has set their name to the word directly after "~", set state to a leading 
+		# tooltip & set next tooltip to that
+		if get_node("/root/Main/" + tooltip_text.text.split("~",1)[1]) != get_node("/root/Main/"):
+			next_tooltip = get_node("/root/Main/" + tooltip_text.text.split("~",1)[1])
+			mqtt.publish("stfc/scenetree" + var_to_str(get_node("/root/Main").get_children()))
+			mqtt.publish("stfc/next_tooltip_name", "/root/Main/" + tooltip_text.text.split("~",1)[1])
+			next_tooltip.state_update(self)
+			if close_button.label == "done": close_button.label = "forward"
+	else:
+		self.name = tooltip_text.text
+#		mqtt.publish("stfc/tooltip_name", var_to_str(self.name))
+		if close_button.label == "forward": close_button.label = "done"
 
 # It may be worth closing this 
 func close():
-	queue_free()
+	# queue_free() # Our old method of closing bits
+	visible = false
+	$CollisionShape3D.disabled = true
+	if(next_tooltip != null):
+		next_tooltip.visible = true
+
+func tooltip_state_update(prev_tooltip: Node3D) -> void:
+	previous_tooltip = prev_tooltip
+	if next_tooltip != null:
+		close_button.label = "forward"
+	if previous_tooltip != null and previous_tooltip.visible:
+		self.visible = false
 
 # Change our body text with the input element we just brought up
 func _on_input_on_text_changed(text: String) -> void:
 	tooltip_text.text = text
+	#tooltip_text_R.value = text
+	
+func get_options():
+	return {
+		"tooltip_text": tooltip_text_R.value,
+	}
+
+func set_options(options):
+	if options.has("tooltip_text"): tooltip_text_R.value = options["tooltip_text"]

@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="ImmersiveHome2"
+config/name="QuestWalk"
 run/main_scene="res://content/main.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://assets/logo.png"
@@ -60,6 +60,7 @@ import/fbx/enabled=false
 ui_focus="Makes the node foucsable"
 ui_focus_skip="Skip the focus check on this node"
 ui_focus_stop="Stops checking for focus entirely"
+DD_TutorialItems="Items used for the Dynamic Devices walk-through tutorial"
 
 [gui]
 

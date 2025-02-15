@@ -17,10 +17,9 @@ const MetaSceneEntity = preload ("res://content/system/house/meta_scene_entity/m
 
 var voice_assistant = null
 var meta_scene_manager = null
-var debug_reference_position = null # How we calculate position difference for debug
+var xr_interface : XRInterface
 
 func _ready():
-	debug_reference_position = %XRCamera3D.position
 	if OS.get_name() == "Android":
 		# OS.request_permissions()
 		environment.environment = environment_passthrough_material
@@ -41,12 +40,21 @@ func _ready():
 		meta_scene_manager.auto_create = false
 		meta_scene_manager.visible = false
 		meta_scene_manager.default_scene = MetaSceneEntity
+		
+		
 
 		meta_scene_manager.openxr_fb_scene_data_missing.connect(func():
 			meta_scene_manager.request_scene_capture()
 		)
+		xr_interface = XRServer.find_interface('OpenXR')
+		
+	if xr_interface != null:
+			# Connect to boundary update event
+		xr_interface.play_area_changed.connect(_boundary_snapped)
+			
+		
 
-		xr_origin.add_child(meta_scene_manager)
+	xr_origin.add_child(meta_scene_manager)
 
 	HomeApi.on_connect.connect(func():
 		start_setup_flow.call_deferred()
@@ -89,6 +97,9 @@ func _input(event):
 		
 	if event is InputEventKey and Input.is_key_pressed(KEY_M):
 		menu.toggle_open()
+	
+	if event is InputEventKey and Input.is_key_pressed(KEY_Y):
+		print(ProjectSettings.globalize_path(Store.house._save_path))
 	
 	if event is InputEventKey and Input.is_key_pressed(KEY_U):
 		var content = JSON.parse_string(FileAccess.get_file_as_string(Store.house._save_path))
@@ -135,6 +146,10 @@ func _vector_key_mapping(key_positive_x: int, key_negative_x: int, key_positive_
 
 # Our MQTT debug stuff
 
+func _boundary_snapped() -> void:
+	$MQTT.publish("stfc/boundary_snap", ".* BOUNDARY SNAPPED *.")
+	$MQTT.publish("stfc/boundary snap", var_to_str(xr_interface.get_play_area()))
+	
 func _on_mqtt_broker_connected() -> void:
 	$MQTT.subscribe("stfc/#")
 	$MQTT.publish("stfc/status", "we are good")
@@ -151,11 +166,8 @@ func _on_mqtt_received_message(topic: Variant, message: Variant) -> void:
 # mosquitto_pub -h mosquitto.doesliverpool.xyz -t "stfc/alex/L" -m "is talking"
 
 
-func _on_xr_controller_left_button_pressed(name: String) -> void:
-	var camera_position = %XRCamera3D.position
-	var content = JSON.parse_string(FileAccess.get_file_as_string(Store.house._save_path))
-	if content:
-		$MQTT.publish("stfc/room", var_to_str(content))
-	$MQTT.publish("stfc/pos", var_to_str(camera_position))
-	$MQTT.publish("stfc/pos_dif", var_to_str(abs(camera_position-debug_reference_position)))
-	debug_reference_position = camera_position
+#func _on_xr_controller_left_button_pressed(name: String) -> void:
+#	var camera_position = %XRCamera3D.position
+#	$MQTT.publish("stfc/pos", var_to_str(camera_position))
+#	$MQTT.publish("stfc/pos_dif", var_to_str(abs(camera_position-debug_reference_position)))
+#	debug_reference_position = camera_position
