@@ -14,7 +14,7 @@ func _init():
 	self.state = R.store({
 		## The adapter to use for connecting with a backend
 		"type": "HASS_WS",
-		"url": "wss://mr5g.dynamicdevices.co.uk:8123",
+		"url": "wss://mr5g.dynamicdevices.co.uk",
 		"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI3ZThiOGE3M2I0Nzc0NGE4YmJmNDA1MGYxOTg5NGRkNyIsImlhdCI6MTczOTYyMDM4OCwiZXhwIjoyMDU0OTgwMzg4fQ.vzNFjWb9eIRu8-3yjyDtwWyMlYpaIXulDgvUiZOtBtM",
 		## If the voice assistant should be enabled
 		"voice_assistant": false,

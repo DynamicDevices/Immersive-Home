@@ -92,7 +92,7 @@ func load_local(path=_save_path):
 		return false
 
 	var save_file = FileAccess.open(path, FileAccess.READ)
-	save_file= null
+	#save_file= null
 	
 	# In case that there is no store file yet
 	if save_file == null:

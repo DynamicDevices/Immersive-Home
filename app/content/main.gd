@@ -20,6 +20,8 @@ var meta_scene_manager = null
 var xr_interface : XRInterface
 
 func _ready():
+	print("OS.get_name() ", OS.get_name())
+	print("OS.get_model_name() ", OS.get_model_name())
 	if OS.get_name() == "Android":
 		# OS.request_permissions()
 		environment.environment = environment_passthrough_material
@@ -27,12 +29,20 @@ func _ready():
 	else:
 		RenderingServer.set_debug_generate_wireframes(true)
 
-	create_voice_assistant()
+	#create_voice_assistant()
 
-	xr.xr_started.connect(func():
+	if OS.get_name() == "Android":
+		xr.xr_started.connect(func():
+			if HomeApi.has_connected() == false:
+				HomeApi.start()
+		)
+	if OS.get_name() == "Android":
+		print("Starting up HomeAPI")
 		if HomeApi.has_connected() == false:
 			HomeApi.start()
-	)
+	else:
+		print("Skipping starting up HomeAPI")
+
 
 	if OS.get_model_name() == "Quest":
 		print("Scene manage ", ClassDB.can_instantiate("OpenXRFbSceneManager"))
@@ -41,8 +51,6 @@ func _ready():
 		meta_scene_manager.visible = false
 		meta_scene_manager.default_scene = MetaSceneEntity
 		
-		
-
 		meta_scene_manager.openxr_fb_scene_data_missing.connect(func():
 			meta_scene_manager.request_scene_capture()
 		)
@@ -52,14 +60,17 @@ func _ready():
 			# Connect to boundary update event
 		xr_interface.play_area_changed.connect(_boundary_snapped)
 			
-		
 
 	xr_origin.add_child(meta_scene_manager)
 
 	HomeApi.on_connect.connect(func():
 		start_setup_flow.call_deferred()
 	)
-	$MQTT.connect_to_broker("mosquitto.doesliverpool.xyz")
+	if OS.get_name() != "Linux":
+		$MQTT.connect_to_broker("mosquitto.doesliverpool.xyz")
+	else:
+		print("Skipping connect to debug broker")
+		
 
 func start_setup_flow():
 	var onboarding = OnboardingScene.instantiate()

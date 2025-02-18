@@ -21,27 +21,32 @@ signal on_disconnect()
 var api: Node
 var reconnect_timer := Timer.new()
 
+#var enablestarthassadapter = true
+var enablestarthassadapter = false
 func _ready():
-	start() # disable startup
+	#Dstart() 
+	var success = Store.settings.load_local()
+	if success and enablestarthassadapter:
+		start_adapter(Store.settings.state.type.to_lower(), Store.settings.state.url, Store.settings.state.token)
+	Store.house.load_local()
+
+
 	#return   # disabled hass watchdog
 	
 	reconnect_timer.wait_time = 60
 	reconnect_timer.one_shot = false
 	reconnect_timer.autostart = true
-
 	add_child(reconnect_timer)
-
 	reconnect_timer.timeout.connect(func():
-		if has_connected() == false:
-			start()
+		if has_connected() == false and enablestarthassadapter:
+			start_adapter(Store.settings.state.type.to_lower(), Store.settings.state.url, Store.settings.state.token)
 	)
 
 ## Starts the adapter with the settings from the settings file
-func start():
+func Dstart():
 	var success = Store.settings.load_local()
 	if success:
 		start_adapter(Store.settings.state.type.to_lower(), Store.settings.state.url, Store.settings.state.token)
-
 	Store.house.load_local()
 
 ## Starts the adapter for the given type and url

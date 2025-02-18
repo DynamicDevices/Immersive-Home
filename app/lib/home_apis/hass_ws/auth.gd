@@ -37,7 +37,7 @@ func authenticate(token: String=self.token) -> AuthError:
 	return AuthError.UNKNOWN
 
 func _handle_message(message):
-	print("Got messages from HASS ", message)
+	print("qqq ", message)
 	match message["type"]:
 		"auth_required":
 			print("Sending access token to HASS ", self.token)
