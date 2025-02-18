@@ -39,7 +39,7 @@ func producerMustRecompute(node: RdotNode) -> bool:
 func _init():
 	self.dirty = true
 	self.producerRecomputeValue = func(node: RdotNode):
-		print("nnnn ", node.producerNode)
+		#print("nnnn ", node.producerNode)
 		assert(node.state != State.COMPUTING, "Detected cycle in computations.")
 
 		var graph := RdotGraph.getInstance()
