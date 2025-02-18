@@ -29,6 +29,8 @@ func _init():
 			)
 
 		self.state.devices=devices
+		print("calling update_house on connect so we can make all the callables")
+		App.house.update_house()
 	)
 
 	HomeApi.on_disconnect.connect(func():

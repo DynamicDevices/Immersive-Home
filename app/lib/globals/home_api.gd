@@ -121,6 +121,7 @@ func set_state(entity: String, state: Variant, attributes: Dictionary={}):
 
 ## Watches the state and each time it changes, calls the callback with the changed state, returns a function to stop watching the state
 func watch_state(entity: String, callback: Callable):
+	# build up the callbacks even if we are not yet connected
 	assert(has_connected(), "Not connected")
 
 	var group = groups.get_group(entity)

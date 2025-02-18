@@ -11,7 +11,7 @@ signal on_packed_received(packet: Dictionary)
 
 signal _try_connect(success: bool)
 
-const LOG_MESSAGES := false
+const LOG_MESSAGES := true
 
 var socket := WebSocketPeer.new()
 var packet_callbacks := CallbackMap.new()
@@ -183,7 +183,8 @@ func send_packet(packet: Dictionary, with_id:=false):
 		packet.id = id
 		id += 1
 
-	if LOG_MESSAGES: print("Sending packet: %s" % _encode_packet(packet))
+	if LOG_MESSAGES:
+		print("Sending packet: %s" % _encode_packet(packet))
 	socket.send_text(_encode_packet(packet))
 
 func _decode_packet(packet: PackedByteArray):

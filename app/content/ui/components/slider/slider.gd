@@ -26,7 +26,8 @@ class_name Slider3D
 		if !is_inside_tree(): return
 
 		label.text = str(value) + " " + label_unit
-		if value != old_value: on_value_changed.emit(value)
+		if value != old_value:
+			on_value_changed.emit(value)
 		_update_slider()
 
 @export var step: float = 0.01
