@@ -19,6 +19,9 @@ func _ready():
 	Store.house.on_loaded.connect(func():
 		update_house()
 	)
+	if Store.house.state.rooms.size() != 0:
+		print("emitting update_house after signal connected")
+		Store.house.on_loaded.emit()
 
 func update_house():
 	loaded.value = false
