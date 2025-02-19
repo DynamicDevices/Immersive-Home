@@ -4,7 +4,7 @@ const StoreClass = preload ("./store.gd")
 func _init():
 	self.state = R.state({
 		"devices": [{"name":"arrow", "id":"abc", 
-		"entities":[{"name":"chevron", "id":"chevron.three"},{"name":"ent", "id":"button.three"},{"name":"tooltip", "id":"tooltip.three"},{"name":"custom_label", "id":"custom_label.three"}] }]
+		"entities":[{"name":"chevron", "id":"chevron.three"},{"name":"ent", "id":"button.three"},{"name":"station", "id":"station.three"},{"name":"custom_label", "id":"custom_label.three"}] }]
 	})
 
 	HomeApi.on_connect.connect(func():

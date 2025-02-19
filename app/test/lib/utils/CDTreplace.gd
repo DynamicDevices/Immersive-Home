@@ -19,7 +19,7 @@ func insert_vertices(lpoints):
 
 func insert_edges(ledges):
 	if cdt:
-		cdt.insert_vertices(ledges)
+		cdt.insert_edges(ledges)
 	else:
 		edges = ledges
 

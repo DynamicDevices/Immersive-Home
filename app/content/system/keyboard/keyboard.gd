@@ -99,7 +99,7 @@ func _connect_key_events():
 		_emit_event("key_up", KEY_INSERT)
 	)
 	
-	# Enter & Space added for tooltip editing
+	# Enter & Space added for station editing
 	
 	return_button.on_button_down.connect(func():
 		_emit_event("key_down", KEY_ENTER)
