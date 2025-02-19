@@ -26,8 +26,11 @@ class_name Slider3D
 		if !is_inside_tree(): return
 
 		label.text = str(value) + " " + label_unit
+		prints("slider setting old", old_value, "new", value)
 		if value != old_value:
 			on_value_changed.emit(value)
+		else:
+			print("slider setting same val (prob from remote set, should be suppressed)")
 		_update_slider()
 
 @export var step: float = 0.01

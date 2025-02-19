@@ -31,18 +31,6 @@ func _ready():
 
 	#create_voice_assistant()
 
-	if OS.get_name() == "Android":
-		xr.xr_started.connect(func():
-			if HomeApi.has_connected() == false:
-				HomeApi.start()
-		)
-	if OS.get_name() == "Android":
-		print("Starting up HomeAPI")
-		if HomeApi.has_connected() == false:
-			HomeApi.start()
-	else:
-		print("Skipping starting up HomeAPI")
-
 
 	if OS.get_model_name() == "Quest":
 		print("Scene manage ", ClassDB.can_instantiate("OpenXRFbSceneManager"))
