@@ -9,26 +9,41 @@ func _init():
 
 	HomeApi.on_connect.connect(func():
 		print("HASS Connected, getting devices")
-		var devices=await HomeApi.get_devices()
-		print("devices are: ", devices)
+		var devices = await HomeApi.get_devices()
 
 		devices.sort_custom(func(a, b):
 			return a["name"].to_lower() < b["name"].to_lower()
 		)
 
+		var bverbosedevicelist = true
+		if bverbosedevicelist:
+			print("\nDevices list:")
+		var knowndevices = [ ]
 		for device in devices:
+			if bverbosedevicelist:
+				prints(device["name"], device["id"])
+				await App.get_tree().create_timer(0.1).timeout
 			if device["name"] == null:
-				device["name"]=device["id"]
-
+				device["name"] = device["id"]
+				
+			var knownentities = [ ]
 			for entity in device["entities"]:
-				if entity["name"] == null:
-					entity["name"]=entity["id"]
-
-			device["entities"].sort_custom(func(a, b):
+				if EntityFactory.isknownentity(entity["id"]):
+					if entity["name"] == null:
+						entity["name"] = entity["id"]
+					if bverbosedevicelist:
+						print(" ", entity)
+					knownentities.append(entity)
+			knownentities.sort_custom(func(a, b):
 				return a["name"].to_lower() < b["name"].to_lower()
 			)
-
-		self.state.devices=devices
+			if knownentities:
+				device["entities"] = knownentities
+				knowndevices.append(device)
+				if knownentities[0]["id"].contains("nodered"):
+					device["name"] = "Node Red"
+			
+		self.state.devices = knowndevices
 		print("calling update_house on connect so we can make all the callables")
 		App.house.update_house()
 	)

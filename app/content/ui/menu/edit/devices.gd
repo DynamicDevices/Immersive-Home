@@ -46,14 +46,12 @@ func _ready():
 			child.free()
 
 		for device in visible_devices.value:
-			if "nodered" in device.entities[0].id  or device.name == "arrow":
-			
-				var button_instance=ButtonScene.instantiate()
-				button_instance.label=device["name"]
-				button_instance.font_size=8
-				button_instance.on_button_up.connect(func():
-					on_select_device.emit(device["id"])
-				)
-				grid_container.add_child(button_instance)
+			var button_instance=ButtonScene.instantiate()
+			button_instance.label=device["name"]
+			button_instance.font_size=8
+			button_instance.on_button_up.connect(func():
+				on_select_device.emit(device["id"])
+			)
+			grid_container.add_child(button_instance)
 
 	)

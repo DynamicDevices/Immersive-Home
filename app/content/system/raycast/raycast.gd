@@ -36,6 +36,8 @@ func _ready():
 
 		if _event_type_map.has(button):
 			pointer.pressed(_event_type_map[button])
+		else:
+			print("pointerbutton pressed: ", button)
 	)
 	get_parent().button_released.connect(func(button: String):
 		EventSystem.emit_action(button, false, initiator)

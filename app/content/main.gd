@@ -166,8 +166,9 @@ func _on_mqtt_received_message(topic: Variant, message: Variant) -> void:
 # mosquitto_pub -h mosquitto.doesliverpool.xyz -t "stfc/alex/L" -m "is talking"
 
 
-#func _on_xr_controller_left_button_pressed(name: String) -> void:
-#	var camera_position = %XRCamera3D.position
-#	$MQTT.publish("stfc/pos", var_to_str(camera_position))
+func _on_xr_controller_left_button_pressed(name: String) -> void:
+	print("Left button ", name)
+	var camera_position = %XRCamera3D.position
+	$MQTT.publish("stfc/pos", var_to_str(camera_position))
 #	$MQTT.publish("stfc/pos_dif", var_to_str(abs(camera_position-debug_reference_position)))
 #	debug_reference_position = camera_position

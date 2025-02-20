@@ -16,6 +16,12 @@ const LineGraphEntity = preload ("res://content/entities/line_chart/line_chart.t
 const TimerEntity = preload ("res://content/entities/timer/timer.tscn")
 const WeatherEntity = preload ("res://content/entities/weather/weather.tscn")
 
+static func isknownentity(entity_id: String):
+	var type = entity_id.split(".")[0]
+	return type in ["switch", "light", "sensor", "media_player",
+					"camera", "button", "chevron", "station", "custom_label",
+					"number", "line_chart", "timer", "weather" ]
+
 static func create_entity(id: String, type=null):
 	var entity = null
 
