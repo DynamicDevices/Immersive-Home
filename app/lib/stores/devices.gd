@@ -1,15 +1,21 @@
 extends StoreClass
 const StoreClass = preload ("./store.gd")
 
-func _init():
-	self.state = R.state({
-		"devices": [{"name":"arrow", "id":"abc", 
-		"entities":[{"name":"chevron", "id":"chevron.three"},{"name":"ent", "id":"button.three"},{"name":"station", "id":"station.three"},{"name":"custom_label", "id":"custom_label.three"}] }]
-	})
+const device1 = {"name":"Stations", "id":"abcabcabcabc", "entities":[
+			{"name":"chevron", "id":"chevron.three"},
+			{"name":"ent", "id":"button.three"},
+			{"name":"station", "id":"station.three"},
+			{"name":"custom_label", "id":"custom_label.three"}
+		] }
 
+func _init():
+	self.state = R.state({"devices":[device1.duplicate(true)]})
+	var Ddevices = self.state.devices
+	print(Ddevices)
 	HomeApi.on_connect.connect(func():
 		print("HASS Connected, getting devices")
 		var devices = await HomeApi.get_devices()
+		devices.append(device1.duplicate(true))
 
 		devices.sort_custom(func(a, b):
 			return a["name"].to_lower() < b["name"].to_lower()

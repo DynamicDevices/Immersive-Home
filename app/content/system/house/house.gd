@@ -255,7 +255,8 @@ func save_all_entities():
 				"position": entity.global_position,
 				"rotation": entity.global_rotation,
 				"scale": entity.scale.x,
-				"room": String(room.name)
+				"room": String(room.name),
+				"_node_iid":entity.get_instance_id()
 			}
 
 			if entity.has_method("get_interface"):
@@ -266,5 +267,6 @@ func save_all_entities():
 
 			Store.house.state.entities.append(entity_data)
 
+	# this is the refresh
 	Store.house.state.entities = Store.house.state.entities
 	Store.house.save_local()
