@@ -38,16 +38,16 @@ func update_house():
 			Store.house.state.rooms.remove_at(index)
 			continue
 		create_room(new_room.name)
-		for entity_index in range(Store.house.state.entities.size()):
-			var entity = Store.house.state.entities[entity_index]
-			var entity_instance = create_entity_in(entity.id, entity.room, entity.get("interface", null))
-			if entity_instance == null:
-				continue
-			entity_instance.global_position = entity.position
-			entity_instance.global_rotation = entity.rotation
-			entity_instance.scale = Vector3(entity.scale, entity.scale, entity.scale) if entity.has("scale") else Vector3(1, 1, 1)
-			if entity.has("options") and entity_instance.has_method("set_options"):
-				entity_instance.set_options(entity.options)
+	for entity_index in range(Store.house.state.entities.size()):
+		var entity = Store.house.state.entities[entity_index]
+		var entity_instance = create_entity_in(entity.id, entity.room, entity.get("interface", null))
+		if entity_instance == null:
+			continue
+		entity_instance.global_position = entity.position
+		entity_instance.global_rotation = entity.rotation
+		entity_instance.scale = Vector3(entity.scale, entity.scale, entity.scale) if entity.has("scale") else Vector3(1, 1, 1)
+		if entity.has("options") and entity_instance.has_method("set_options"):
+			entity_instance.set_options(entity.options)
 	loaded.value = true
 
 func create_room(room_name: String) -> RoomType:

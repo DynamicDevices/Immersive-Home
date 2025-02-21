@@ -96,11 +96,9 @@ func _process(delta):
 	if camera.position != camera_position:
 		camera_position = camera.position
 		camera_position *= 10 # Convert to decimeters
-		HMD_Label.text = var_to_str(round(camera_position-XR_origin_position))
+		HMD_Label.text = var_to_str(round(camera_position-XR_origin_position)).split("r3")[1]
 	
-	if XR_origin_position != XR_origin_position:
-		$MQTT.publish("stfc/xr_origin_moved", "XR ORIGIN MOVED TO " + var_to_str(XR_origin_position))
-
+		pass
 func _input(event):
 
 	# Debugging Features
