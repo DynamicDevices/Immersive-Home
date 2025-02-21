@@ -24,40 +24,30 @@ func _ready():
 		Store.house.on_loaded.emit()
 
 func update_house():
+	print("*** Creating entities from Store.house.state.rooms to $Rooms")
 	loaded.value = false
 	for old_room in get_rooms():
 		old_room.get_parent().remove_child(old_room)
 		old_room.queue_free()
 
-	align_reference.update_align_reference()
-
+	print("disabled update_align_reference")
+	# align_reference.update_align_reference()
 	for index in range(Store.house.state.rooms.size()):
 		var new_room = Store.house.state.rooms[index]
-
 		if new_room.corners.size() == 0:
 			Store.house.state.rooms.remove_at(index)
-			Store.house.save_local()
 			continue
 		create_room(new_room.name)
-
-	if HomeApi.has_connected():
 		for entity_index in range(Store.house.state.entities.size()):
 			var entity = Store.house.state.entities[entity_index]
-
 			var entity_instance = create_entity_in(entity.id, entity.room, entity.get("interface", null))
-
 			if entity_instance == null:
 				continue
-
 			entity_instance.global_position = entity.position
 			entity_instance.global_rotation = entity.rotation
 			entity_instance.scale = Vector3(entity.scale, entity.scale, entity.scale) if entity.has("scale") else Vector3(1, 1, 1)
-
-			if entity.has("options")&&entity_instance.has_method("set_options"):
+			if entity.has("options") and entity_instance.has_method("set_options"):
 				entity_instance.set_options(entity.options)
-	else:
-		print("not loading the entities as HomeApi not yet connected")
-
 	loaded.value = true
 
 func create_room(room_name: String) -> RoomType:
@@ -246,8 +236,8 @@ func save_reference():
 	RoomMaterial.set_shader_parameter("show_border", false)
 
 func save_all_entities():
+	print("*** Copying entities from $Rooms to Store.house.state")
 	Store.house.state.entities.clear()
-
 	for room in get_rooms():
 		for entity in room.get_node("Entities").get_children():
 			var entity_data = {
