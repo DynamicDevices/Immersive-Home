@@ -14,7 +14,6 @@ var previous_station = null
 var station_text_R = R.state("Blank Station")
 var mqtt = null
 
-signal station_update(origin, name_search) # How we look for our next station
 
 func _ready():
 	
@@ -51,7 +50,11 @@ func text_edit():
 	if station_text.text.contains(" "):
 		station_name = station_text.text.split(" ",1)[0] # Set name to word before " "
 		mqtt.publish("stfc/station_name_~", var_to_str(station_name))
-		station_update.emit(self, station_text.text.split(" ",1)[1])
+		for device in Store.house.state.entities:
+			if device["id"] == "station.three":
+				var device_node = instance_from_id(device["_node_iid"])
+				device_node.station_update(self, station_text.text.split(" ",1)[1])
+			
 		_state_update()
 		
 	else:
@@ -99,7 +102,10 @@ func _on_next_station_input_on_text_changed(text: String) -> void:
 		next_station._state_update(self)
 
 
-func _on_station_update(origin: Variant, name_search: Variant) -> void:
+func station_update(origin: Variant, name_search: Variant) -> void:
+	print("we got here!!!")
 	if (name_search == station_name):
+		print("next station set!")
 		origin.next_station = self
+		origin._state_update()
 		previous_station = origin

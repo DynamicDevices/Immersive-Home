@@ -14,10 +14,14 @@ const MetaSceneEntity = preload ("res://content/system/house/meta_scene_entity/m
 @onready var menu: Menu = $Menu
 @onready var xr: XRToolsStartXR = $StartXR
 @onready var xr_origin: XROrigin3D = $XROrigin3D
+@onready var HMD_Label = $XROrigin3D/XRCamera3D/HMD_Label
 
 var voice_assistant = null
 var meta_scene_manager = null
 var xr_interface : XRInterface
+
+var camera_position = null
+var XR_origin_position = null
 
 func _ready():
 	print("OS.get_name() ", OS.get_name())
@@ -59,6 +63,9 @@ func _ready():
 	else:
 		print("Skipping connect to debug broker")
 		
+	camera_position = camera.position
+	XR_origin_position = xr_origin.position
+	
 
 func start_setup_flow():
 	var onboarding = OnboardingScene.instantiate()
@@ -86,6 +93,13 @@ func create_voice_assistant():
 
 func _process(delta):
 	_move_camera_pc(delta)
+	if camera.position != camera_position:
+		camera_position = camera.position
+		camera_position *= 10 # Convert to decimeters
+		HMD_Label.text = var_to_str(round(camera_position-XR_origin_position))
+	
+	if XR_origin_position != XR_origin_position:
+		$MQTT.publish("stfc/xr_origin_moved", "XR ORIGIN MOVED TO " + var_to_str(XR_origin_position))
 
 func _input(event):
 
@@ -105,7 +119,10 @@ func _input(event):
 		if content:
 			print (content)
 		
-	
+	if event is InputEventKey and Input.is_key_pressed(KEY_O):
+		print_tree_pretty()
+		
+
 func _move_camera_pc(delta):
 	if OS.get_name() == "Android": return
 		
@@ -168,7 +185,7 @@ func _on_mqtt_received_message(topic: Variant, message: Variant) -> void:
 
 func _on_xr_controller_left_button_pressed(name: String) -> void:
 	print("Left button ", name)
-	var camera_position = %XRCamera3D.position
+	
 	$MQTT.publish("stfc/pos", var_to_str(camera_position))
-#	$MQTT.publish("stfc/pos_dif", var_to_str(abs(camera_position-debug_reference_position)))
+	$MQTT.publish("stfc/pos_dif", var_to_str(abs(camera_position.distance_to(XR_origin_position))))
 #	debug_reference_position = camera_position
