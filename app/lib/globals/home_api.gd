@@ -134,17 +134,12 @@ func watch_state(entity: String, callback: Callable):
 ## Returns true if the adapter has an integration in the home automation system
 ## allowing to send the room position of the headset.
 func has_integration() -> bool:
-	if has_connected() == false||api.has_method("has_integration") == false:
-		return false
-
-	return api.has_integration()
+	return has_connected() and api.has_method("hhas_integration") and api.hhas_integration()
 
 ## Updates the room position of the headset in the home automation system
 func update_room(room: String) -> void:
-	if has_connected() == false||api.has_method("update_room") == false:
-		return
-
-	api.update_room(room)
+	if has_connected() and api.has_method("hupdate_room"):
+		api.hupdate_room(room)
 
 ## Returns the VoiceHandler if the adapter has a voice assistant
 func get_voice_assistant() -> VoiceAssistant:
