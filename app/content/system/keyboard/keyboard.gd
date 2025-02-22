@@ -40,7 +40,11 @@ func _prepare_keyboard_spawn():
 			return
 
 		App.main.add_child(self)
-		global_transform=App.menu.get_node("AnimationContainer/KeyboardPlace").global_transform
+		var aat = event.target.find_parent("AnimationContainer")
+		var pat = aat if aat != null else event.target.get_parent()
+		var kp = pat.get_node_or_null("KeyboardPlace")
+		if kp:
+			global_transform = kp.global_transform
 	)
 
 	EventSystem.on_focus_out.connect(func(event):
