@@ -119,7 +119,7 @@ func _process(_delta):
 		on_disconnect.emit()
 
 func handle_packet(packet: Dictionary):
-	if LOG_MESSAGES: print("Received packet: %s" % str(packet).substr(0, 1000))
+	if LOG_MESSAGES: print("Received packet: %s" % str(packet).substr(0, 50))
 
 	on_packed_received.emit(packet)
 
@@ -184,7 +184,7 @@ func send_packet(packet: Dictionary, with_id:=false):
 		id += 1
 
 	if LOG_MESSAGES:
-		print("Sending packet: %s" % _encode_packet(packet))
+		print("Sending packet: %s" % _encode_packet(packet).substr(0, 30))
 	socket.send_text(_encode_packet(packet))
 
 func _decode_packet(packet: PackedByteArray):

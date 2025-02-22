@@ -102,24 +102,26 @@ func _process(delta):
 func _input(event):
 
 	# Debugging Features
-	if event is InputEventKey and Input.is_key_pressed(KEY_F10):
+	if event is InputEventKey and event.keycode == KEY_F10 and event.is_pressed():
 		var vp = get_viewport()
 		vp.debug_draw = (vp.debug_draw + 1) % 5
 		
-	if event is InputEventKey and Input.is_key_pressed(KEY_M):
+	if event is InputEventKey and event.keycode == KEY_M and event.is_pressed():
 		menu.toggle_open()
 	
-	if event is InputEventKey and Input.is_key_pressed(KEY_Y):
+	if event is InputEventKey and event.keycode == KEY_Y and event.is_pressed():
 		print(ProjectSettings.globalize_path(Store.house._save_path))
 	
-	if event is InputEventKey and Input.is_key_pressed(KEY_U):
+	if event is InputEventKey and event.keycode == KEY_U and event.is_pressed():
 		var content = JSON.parse_string(FileAccess.get_file_as_string(Store.house._save_path))
 		if content:
 			print (content)
 		
-	if event is InputEventKey and Input.is_key_pressed(KEY_O):
+	if event is InputEventKey and event.keycode == KEY_O and event.is_pressed():
 		print_tree_pretty()
-		
+
+	if event is InputEventKey and event.keycode == KEY_C and event.is_pressed():
+		HomeApi.start_adapter(Store.settings.state.type.to_lower(), Store.settings.state.url, Store.settings.state.token)
 
 func _move_camera_pc(delta):
 	if OS.get_name() == "Android": return

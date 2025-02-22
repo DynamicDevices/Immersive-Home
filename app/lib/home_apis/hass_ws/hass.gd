@@ -73,7 +73,7 @@ func start_subscriptions():
 					entitiy_callbacks.call_key(entity, [entities[entity]])
 	)
 
-func has_connected():
+func hhas_connected():
 	return connection.connected
 
 func get_devices():
@@ -94,7 +94,7 @@ func get_state(entity: String):
 		return entities[entity]
 	return null
 
-func watch_state(entity: String, callback: Callable):
+func hwatch_state(entity: String, callback: Callable):
 	entitiy_callbacks.add(entity, callback)
 
 	return func():
@@ -152,18 +152,17 @@ func set_state(entity: String, state: Variant, attributes: Dictionary={}):
 		}
 	})
 
-func has_integration():
+func hhas_integration():
 	return integration_handler.integration_exists
 
-func update_room(room: String):
+func hupdate_room(room: String):
 	var response = await connection.send_request_packet({
 		"type": "immersive_home/update",
 		"device_id": OS.get_unique_id(),
 		"room": room
 	})
-
-	if response.status == Promise.Status.RESOLVED:
-		pass
+	if response.status == Promise.Status.RESOLVED and response.payload.get("success"):
+		print("hupdate_room position:", room)
 
 func get_voice_assistant():
 	return assist_handler
