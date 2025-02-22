@@ -122,9 +122,9 @@ func set_state(entity: String, state: Variant, attributes: Dictionary={}):
 # returns a function to stop watching the state
 func watch_state(entity: String, callback: Callable):
 	# build up the callbacks even if we are not yet connected
-	#assert(has_connected(), "Not connected")
-	if api == null:
+	if not has_connected():
 		return null
+
 	var group = groups.get_group(entity)
 	if group != null:
 		api.hwatch_state(group[0], callback)
