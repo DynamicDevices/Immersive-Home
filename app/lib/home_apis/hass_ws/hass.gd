@@ -93,18 +93,13 @@ func hget_devices():
 # direct from the HASS as an input for managing images
 # https://mr5g.dynamicdevices.co.uk/media-browser/browser/app%2Cmedia-source%3A%2F%2Fimage_upload
 func get_mediabrowser():
-	var result = await connection.send_request_packet({
-		#"type": "media_source/browse_media",
-		"type": "get_panels",
-		#"media_content_id":"media-source://media_source",
-		#"media_content_id":"media-source://image_upload",
-		#"timeout": 13,
-		#"report_errors": true
-	}, true)
-	if result.status == Promise.Status.RESOLVED and result.payload.has("event"):
-		return result.payload.event.result
+	if HomeApi.has_connected():
+		var jgetpanels = { "type": "get_panels" }
+		var jmediacontent = { "type": "media_source/browse_media", "media_content_id":"media-source://media_source" }
+		var response = await HomeApi.api.connection.send_request_packet(jmediacontent)
+		print(response)
 	return [ ]
-
+	
 func get_device(id: String):
 	pass
 
