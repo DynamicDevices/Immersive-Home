@@ -79,9 +79,7 @@ func _on_disconnect():
 
 ## Returns true if the adapter is connected to the home automation system
 func has_connected():
-	if api == null:
-		return false
-	return api.has_connected()
+	return api != null and api.hhas_connected()
 
 ## Get a list of all devices
 func get_devices():
@@ -107,7 +105,8 @@ func get_state(entity: String):
 
 ## Updates the state of the entity and returns the resulting state
 func set_state(entity: String, state: Variant, attributes: Dictionary={}):
-	assert(has_connected(), "Not connected")
+	if not has_connected():
+		return null
 
 	var group = groups.get_group(entity)
 
@@ -119,17 +118,17 @@ func set_state(entity: String, state: Variant, attributes: Dictionary={}):
 
 	return await api.set_state(entity, state, attributes)
 
-## Watches the state and each time it changes, calls the callback with the changed state, returns a function to stop watching the state
+## Watches the state and each time it changes, calls the callback with the changed state, 
+# returns a function to stop watching the state
 func watch_state(entity: String, callback: Callable):
 	# build up the callbacks even if we are not yet connected
-	assert(has_connected(), "Not connected")
-
+	#assert(has_connected(), "Not connected")
+	if api == null:
+		return null
 	var group = groups.get_group(entity)
-
 	if group != null:
-		api.watch_state(group[0], callback)
-
-	return api.watch_state(entity, callback)
+		api.hwatch_state(group[0], callback)
+	return api.hwatch_state(entity, callback)
 
 ## Returns true if the adapter has an integration in the home automation system
 ## allowing to send the room position of the headset.

@@ -73,7 +73,7 @@ func start_subscriptions():
 					entitiy_callbacks.call_key(entity, [entities[entity]])
 	)
 
-func has_connected():
+func hhas_connected():
 	return connection.connected
 
 func get_devices():
@@ -94,7 +94,7 @@ func get_state(entity: String):
 		return entities[entity]
 	return null
 
-func watch_state(entity: String, callback: Callable):
+func hwatch_state(entity: String, callback: Callable):
 	entitiy_callbacks.add(entity, callback)
 
 	return func():
