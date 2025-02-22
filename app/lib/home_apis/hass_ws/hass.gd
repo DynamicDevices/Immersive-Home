@@ -96,8 +96,10 @@ func get_mediabrowser():
 	if HomeApi.has_connected():
 		var jgetpanels = { "type": "get_panels" }
 		var jmediacontent = { "type": "media_source/browse_media", "media_content_id":"media-source://media_source" }
-		var response = await HomeApi.api.connection.send_request_packet(jmediacontent)
-		print(response)
+		var jmediaupload = { "type": "media_source/browse_media", "media_content_id":"media-source://image_upload"  }
+		var response = await HomeApi.api.connection.send_request_packet(jmediaupload)
+		if response.payload.get("success"):
+			var result = response.payload.result
 	return [ ]
 	
 func get_device(id: String):
