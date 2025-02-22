@@ -123,6 +123,10 @@ func _input(event):
 	if event is InputEventKey and event.keycode == KEY_C and event.is_pressed():
 		HomeApi.start_adapter(Store.settings.state.type.to_lower(), Store.settings.state.url, Store.settings.state.token)
 
+	if event is InputEventKey and event.keycode == KEY_V and event.is_pressed():
+		var mediabrowser = await HomeApi.api.get_mediabrowser()
+		print("mediabrowser ", mediabrowser)
+
 func _move_camera_pc(delta):
 	if OS.get_name() == "Android": return
 		

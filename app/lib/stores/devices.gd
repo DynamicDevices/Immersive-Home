@@ -10,8 +10,6 @@ const device1 = {"name":"Stations", "id":"abcabcabcabc", "entities":[
 
 func _init():
 	self.state = R.state({"devices":[device1.duplicate(true)]})
-	var Ddevices = self.state.devices
-	print(Ddevices)
 	HomeApi.on_connect.connect(func():
 		print("HASS Connected, getting devices")
 		var devices = await HomeApi.get_devices()

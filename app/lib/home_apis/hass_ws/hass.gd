@@ -76,15 +76,34 @@ func start_subscriptions():
 func hhas_connected():
 	return connection.connected
 
-func get_devices():
+func hget_devices():
 	var result = await connection.send_request_packet({
 		"type": "render_template",
 		"template": devices_template,
 		"timeout": 3,
 		"report_errors": true
 	}, true)
+	if result.status == Promise.Status.RESOLVED and result.payload.has("event"):
+		return result.payload.event.result
+	print("Bad hget_devices ", result)
+	return [ ]
 
-	return result.payload.event.result
+# see https://developers.home-assistant.io/docs/api/websocket/
+# trying to get the media browser data from here, so we can download images
+# direct from the HASS as an input for managing images
+# https://mr5g.dynamicdevices.co.uk/media-browser/browser/app%2Cmedia-source%3A%2F%2Fimage_upload
+func get_mediabrowser():
+	var result = await connection.send_request_packet({
+		#"type": "media_source/browse_media",
+		"type": "get_panels",
+		#"media_content_id":"media-source://media_source",
+		#"media_content_id":"media-source://image_upload",
+		#"timeout": 13,
+		#"report_errors": true
+	}, true)
+	if result.status == Promise.Status.RESOLVED and result.payload.has("event"):
+		return result.payload.event.result
+	return [ ]
 
 func get_device(id: String):
 	pass

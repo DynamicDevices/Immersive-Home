@@ -43,12 +43,6 @@ func _ready():
 	)
 
 ## Starts the adapter with the settings from the settings file
-func Dstart():
-	var success = Store.settings.load_local()
-	if success:
-		start_adapter(Store.settings.state.type.to_lower(), Store.settings.state.url, Store.settings.state.token)
-	Store.house.load_local()
-
 ## Starts the adapter for the given type and url
 func start_adapter(type: String, url: String, token: String):
 	print("Starting adapter: %s" % type)
@@ -84,7 +78,7 @@ func has_connected():
 ## Get a list of all devices
 func get_devices():
 	assert(has_connected(), "Not connected")
-	return await api.get_devices()
+	return await api.hget_devices()
 
 ## Get a single device by id
 func get_device(id: String):
