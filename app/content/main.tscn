@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://eecv28y6jxk4"]
+[gd_scene load_steps=24 format=3 uid="uid://eecv28y6jxk4"]
 
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_i4c04"]
 [ext_resource type="Script" uid="uid://bw2xmng3ynp6g" path="res://content/main.gd" id="1_uvrd4"]
@@ -13,7 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://ds60i5n211hi3" path="res://content/system/miniature/miniature.tscn" id="12_lmxhs"]
 [ext_resource type="PackedScene" uid="uid://bhyddd1f0ry1x" path="res://content/ui/onboarding/onboarding.tscn" id="12_uq2nj"]
 [ext_resource type="PackedScene" uid="uid://lrehk38exd5n" path="res://content/system/keyboard/keyboard.tscn" id="13_kylpi"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="13_tu1bw"]
 [ext_resource type="PackedScene" uid="uid://ktm7k0co2o7l" path="res://addons/mqtt/mqtt.tscn" id="15_tu1bw"]
+[ext_resource type="PackedScene" uid="uid://ytah1xlxtsv0" path="res://assets/materials/magictinsel.tscn" id="16_lmrq8"]
+[ext_resource type="Script" uid="uid://7b8fsrj5iu51" path="res://assets/materials/magictinsel.gd" id="17_aulbh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1bwg"]
 transparency = 1
@@ -25,6 +28,23 @@ emission = Color(0.839207, 3.85046e-07, 0.417799, 1)
 [sub_resource type="PrismMesh" id="PrismMesh_tu1bw"]
 material = SubResource("StandardMaterial3D_i1bwg")
 size = Vector3(0.01, 0.01, 20)
+
+[sub_resource type="QuadMesh" id="QuadMesh_ce7ft"]
+resource_local_to_scene = true
+size = Vector2(1.5, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_531rh"]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmrq8"]
+transparency = 1
+cull_mode = 2
+albedo_texture = SubResource("ViewportTexture_531rh")
+texture_filter = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_531rh"]
+resource_local_to_scene = true
+size = Vector3(1.5, 1, 0.02)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_uvrd4")
@@ -80,12 +100,64 @@ transform = Transform3D(1, -1.39636e-11, 0, 4.42413e-11, 1, 0, 0, 0, 1, -0.57679
 [node name="Screenshot" type="Node" parent="."]
 script = ExtResource("12_e13ym")
 
+[node name="TextArea2D" parent="." instance=ExtResource("13_tu1bw")]
+transform = Transform3D(0.5, 0, 0, 0, 0.496488, 0.0591589, 0, -0.0591589, 0.496488, -0.0782674, 1.29463, -0.531271)
+visible = false
+screen_size = Vector2(1.5, 1)
+enabled = false
+collision_layer = 5242887
+
+[node name="ColorRect" type="ColorRect" parent="TextArea2D/Viewport" index="0"]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.243137, 1, 1, 1)
+
+[node name="TextEdit" type="TextEdit" parent="TextArea2D/Viewport/ColorRect"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/background_color = Color(0, 0.470588, 0, 1)
+placeholder_text = "asdasdasdasdasd
+1123123123123123123
+34234234234234234
+dfhdfhfghfghfghfghfgh
+sdfsfwefwefwefwefwef
+asdasdasdasdasda
+tytykyukyukykyukyuk
+8990890890890890890
+h;;l;l;l;l;l;l;l;l
+cvbcvbcvbcvbcvbcvb
+sdfsdfsdf
+r
+te
+rt
+ertertertertertertert"
+
+[node name="Screen" parent="TextArea2D" index="1"]
+mesh = SubResource("QuadMesh_ce7ft")
+surface_material_override/0 = SubResource("StandardMaterial3D_lmrq8")
+
+[node name="StaticBody3D" parent="TextArea2D" index="2"]
+collision_layer = 5242887
+screen_size = Vector2(1.5, 1)
+
+[node name="CollisionShape3D" parent="TextArea2D/StaticBody3D" index="0"]
+shape = SubResource("BoxShape3D_531rh")
+
 [node name="Keyboard" parent="." instance=ExtResource("13_kylpi")]
 transform = Transform3D(0.5, 0, 0, 0, 0.237697, 0.439887, 0, -0.439887, 0.237697, -0.0241798, 0.452996, -0.531271)
 
 [node name="MQTT" parent="." instance=ExtResource("15_tu1bw")]
 verbose_level = 0
 
+[node name="MagicTinsel" parent="." instance=ExtResource("16_lmrq8")]
+amount = 1000
+amount_ratio = 0.4475
+script = ExtResource("17_aulbh")
+
 [connection signal="button_pressed" from="XROrigin3D/XRControllerLeft" to="." method="_on_xr_controller_left_button_pressed"]
 [connection signal="broker_connected" from="MQTT" to="." method="_on_mqtt_broker_connected"]
 [connection signal="received_message" from="MQTT" to="." method="_on_mqtt_received_message"]
+
+[editable path="TextArea2D"]

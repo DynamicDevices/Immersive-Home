@@ -41,10 +41,12 @@ func _prepare_keyboard_spawn():
 
 		App.main.add_child(self)
 		var aat = event.target.find_parent("AnimationContainer")
-		var pat = aat if aat != null else event.target.get_parent()
+		var pat = App.menu.get_node("AnimationContainer") if aat != null else event.target.get_parent()
 		var kp = pat.get_node_or_null("KeyboardPlace")
 		if kp:
 			global_transform = kp.global_transform
+			get_node("../TextArea2D").global_transform = kp.global_transform
+			get_node("../TextArea2D").global_transform.origin.y += 0.5
 	)
 
 	EventSystem.on_focus_out.connect(func(event):
@@ -146,3 +148,6 @@ func _emit_event(type: String, key: Key):
 	event.shift_pressed = caps
 	
 	EventSystem.emit(type, event)
+
+	if key == KEY_ASCIITILDE and type == "key_down":
+		get_node("../MagicTinsel").gotinsel(global_transform)
