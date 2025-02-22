@@ -20,7 +20,9 @@ func _init():
 		"voice_assistant": false,
 		## If the onboarding process has been completed
 		"onboarding_complete": false,
-		"cursor_style": CursorStyle.DEFAULT
+		"cursor_style": CursorStyle.DEFAULT,
+		## Whether we are using developer menu or not
+		"dev_state": false
 	})
 
 func clear():

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dd71loi64gnmp"]
 
 [ext_resource type="PackedScene" uid="uid://bsjqdvkt0u87c" path="res://content/ui/components/button/button.tscn" id="1_fteh8"]
-[ext_resource type="Script" path="res://content/ui/menu/room/views/overview.gd" id="1_jesad"]
+[ext_resource type="Script" uid="uid://b0nicmus72wmj" path="res://content/ui/menu/room/views/overview.gd" id="1_jesad"]
 [ext_resource type="Shader" uid="uid://dggseju3g4for" path="res://content/ui/components/panel/glass.gdshader" id="3_2yl2s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3lbn"]
@@ -24,15 +24,11 @@ size = Vector2(0.42, 0.32)
 [node name="Overview" type="Node3D"]
 script = ExtResource("1_jesad")
 
-[node name="EditButton" parent="." instance=ExtResource("1_fteh8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, -0.12, 0)
-label = "edit"
-icon = true
-
 [node name="FixButton" parent="." instance=ExtResource("1_fteh8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.12, 0)
-label = "healing"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, -0.12, 0)
+label = "view_in_ar"
 icon = true
+toggleable = true
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02, -0.08, 0.01)

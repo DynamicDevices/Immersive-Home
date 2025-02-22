@@ -211,6 +211,13 @@ func fix_reference():
 	align_reference.visible = true
 	align_reference.update_initial_positions()
 	RoomMaterial.set_shader_parameter("show_border", true)
+	
+func disable_reference():
+	fixing_reference = false
+	align_reference.disabled = true
+	align_reference.visible = false
+	align_reference.update_initial_positions()
+	RoomMaterial.set_shader_parameter("show_border", false)
 
 func save_reference():
 	if fixing_reference:
