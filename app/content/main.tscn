@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="13_tu1bw"]
 [ext_resource type="PackedScene" uid="uid://ktm7k0co2o7l" path="res://addons/mqtt/mqtt.tscn" id="15_tu1bw"]
 [ext_resource type="PackedScene" uid="uid://ytah1xlxtsv0" path="res://assets/materials/magictinsel.tscn" id="16_lmrq8"]
-[ext_resource type="Script" uid="uid://7b8fsrj5iu51" path="res://assets/materials/magictinsel.gd" id="17_aulbh"]
+[ext_resource type="Script" path="res://assets/materials/magictinsel.gd" id="17_aulbh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1bwg"]
 transparency = 1
@@ -33,13 +33,13 @@ size = Vector3(0.01, 0.01, 20)
 resource_local_to_scene = true
 size = Vector2(1.5, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_531rh"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_lmrq8"]
 viewport_path = NodePath("Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmrq8"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aulbh"]
 transparency = 1
 cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_531rh")
+albedo_texture = SubResource("ViewportTexture_lmrq8")
 texture_filter = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_531rh"]
@@ -136,7 +136,7 @@ ertertertertertertert"
 
 [node name="Screen" parent="TextArea2D" index="1"]
 mesh = SubResource("QuadMesh_ce7ft")
-surface_material_override/0 = SubResource("StandardMaterial3D_lmrq8")
+surface_material_override/0 = SubResource("StandardMaterial3D_aulbh")
 
 [node name="StaticBody3D" parent="TextArea2D" index="2"]
 collision_layer = 5242887

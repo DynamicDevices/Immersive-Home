@@ -7,6 +7,8 @@ const Entity = preload ("../entity.gd")
 @onready var close_button = $CloseButton
 @onready var input = $Input
 @onready var station_text = $StationText
+@onready var station_icon = $StationIcon
+
 
 var station_name = "Blank Station"
 var next_station = null
@@ -17,6 +19,8 @@ var dev_state = false
 
 
 func _ready():
+	
+	station_icon.visible = false
 	
 	close_button.on_button_down.connect(func():
 		close()
@@ -39,9 +43,13 @@ func _ready():
 		station_name = var_to_str(station_text.text)
 	
 	if next_station != null:
+		station_icon.visible = true
 		close_button.label = "forward"
-	if previous_station != null and previous_station.visible:
-		self.visible = false
+	else:
+		station_icon.visible = false
+		close_button.label = "done"
+	if previous_station != null and previous_station.station_icon.visible:
+		station_icon.visible = false
 	mqtt = get_node("/root/Main/MQTT")
 	
 	text_edit_button.visible = Store.settings.state.dev_state
@@ -75,14 +83,19 @@ func close():
 	visible = false
 	$CollisionShape3D.disabled = true
 	if(next_station != null):
-		next_station.visible = true
+		next_station.station_icon.visible = true
 
 
 func _state_update() -> void:
 	if next_station != null:
+		station_icon.visible = true
 		close_button.label = "forward"
-	if previous_station != null and previous_station.visible:
-		self.visible = false
+	else:
+		station_icon.visible = false
+		close_button.label = "done"
+	if previous_station != null and previous_station.station_icon.visible:
+		station_icon.visible = false
+	
 
 
 # Change our body text with the input element we just brought up

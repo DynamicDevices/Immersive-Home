@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cs4ytsxrm4kjw"]
+[gd_scene load_steps=11 format=3 uid="uid://cs4ytsxrm4kjw"]
 
 [ext_resource type="Script" uid="uid://ep12y2470fcm" path="res://content/entities/station/station.gd" id="1_ohljc"]
 [ext_resource type="Shader" uid="uid://dggseju3g4for" path="res://content/ui/components/panel/glass.gdshader" id="2_vbvi2"]
 [ext_resource type="PackedScene" uid="uid://bsjqdvkt0u87c" path="res://content/ui/components/button/button.tscn" id="3_qj8vf"]
+[ext_resource type="FontVariation" uid="uid://sshfnckriqxn" path="res://assets/icons/icons.tres" id="3_vbvi2"]
 [ext_resource type="PackedScene" uid="uid://blrhy2uccrdn4" path="res://content/ui/components/input/input.tscn" id="4_7n2ns"]
 [ext_resource type="Script" uid="uid://bg6vc81m8fuka" path="res://content/functions/camera_follower.gd" id="5_u4dbc"]
 [ext_resource type="Script" uid="uid://tquknum0fs5j" path="res://content/functions/movable.gd" id="6_vtooc"]
@@ -41,6 +42,20 @@ mesh = SubResource("QuadMesh_i1guj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_nfwtf")
+
+[node name="StationIcon" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.161207, 0.002)
+pixel_size = 0.001
+double_sided = false
+render_priority = 30
+outline_render_priority = 29
+text = "tooltip"
+font = ExtResource("3_vbvi2")
+font_size = 200
+outline_size = 0
+vertical_alignment = 2
+autowrap_mode = 3
+width = 470.0
 
 [node name="StationText" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23, 0.13, 0.001)
