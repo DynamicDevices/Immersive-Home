@@ -92,11 +92,10 @@ func hget_devices():
 # trying to get the media browser data from here, so we can download images
 # direct from the HASS as an input for managing images
 # https://mr5g.dynamicdevices.co.uk/media-browser/browser/app%2Cmedia-source%3A%2F%2Fimage_upload
-func get_mediabrowser():
+func get_getpanelsfromhass():
 	if HomeApi.has_connected():
 		var jgetpanels = { "type": "get_panels" }
-		var jmediacontent = { "type": "media_source/browse_media", "media_content_id":"media-source://media_source" }
-		var response = await HomeApi.api.connection.send_request_packet(jmediacontent)
+		var response = await HomeApi.api.connection.send_request_packet(jgetpanels)
 		print(response)
 	return [ ]
 	

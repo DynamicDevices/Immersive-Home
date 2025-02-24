@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://eecv28y6jxk4"]
+[gd_scene load_steps=26 format=3 uid="uid://eecv28y6jxk4"]
 
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_i4c04"]
 [ext_resource type="Script" uid="uid://bw2xmng3ynp6g" path="res://content/main.gd" id="1_uvrd4"]
@@ -16,7 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="13_tu1bw"]
 [ext_resource type="PackedScene" uid="uid://ktm7k0co2o7l" path="res://addons/mqtt/mqtt.tscn" id="15_tu1bw"]
 [ext_resource type="PackedScene" uid="uid://ytah1xlxtsv0" path="res://assets/materials/magictinsel.tscn" id="16_lmrq8"]
-[ext_resource type="Script" path="res://assets/materials/magictinsel.gd" id="17_aulbh"]
+[ext_resource type="Script" uid="uid://7b8fsrj5iu51" path="res://assets/materials/magictinsel.gd" id="17_aulbh"]
+[ext_resource type="Script" path="res://content/mediabrowserobjects.gd" id="18_531rh"]
+[ext_resource type="PackedScene" path="res://content/mediabrowserbox.tscn" id="19_50h8v"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1bwg"]
 transparency = 1
@@ -33,13 +35,13 @@ size = Vector3(0.01, 0.01, 20)
 resource_local_to_scene = true
 size = Vector2(1.5, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_lmrq8"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_6f830"]
 viewport_path = NodePath("Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aulbh"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_531rh"]
 transparency = 1
 cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_lmrq8")
+albedo_texture = SubResource("ViewportTexture_6f830")
 texture_filter = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_531rh"]
@@ -136,7 +138,7 @@ ertertertertertertert"
 
 [node name="Screen" parent="TextArea2D" index="1"]
 mesh = SubResource("QuadMesh_ce7ft")
-surface_material_override/0 = SubResource("StandardMaterial3D_aulbh")
+surface_material_override/0 = SubResource("StandardMaterial3D_531rh")
 
 [node name="StaticBody3D" parent="TextArea2D" index="2"]
 collision_layer = 5242887
@@ -155,6 +157,12 @@ verbose_level = 0
 amount = 1000
 amount_ratio = 0.4475
 script = ExtResource("17_aulbh")
+
+[node name="MediaBrowserObjects" type="Node3D" parent="."]
+script = ExtResource("18_531rh")
+
+[node name="StaticBody3D" parent="MediaBrowserObjects" instance=ExtResource("19_50h8v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.66995, 1.50879, -5.0189)
 
 [connection signal="button_pressed" from="XROrigin3D/XRControllerLeft" to="." method="_on_xr_controller_left_button_pressed"]
 [connection signal="broker_connected" from="MQTT" to="." method="_on_mqtt_broker_connected"]

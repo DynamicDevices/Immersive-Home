@@ -126,6 +126,7 @@ func _input(event):
 		HomeApi.start_adapter(Store.settings.state.type.to_lower(), Store.settings.state.url, Store.settings.state.token)
 
 	if event is InputEventKey and event.keycode == KEY_V and event.is_pressed():
+		$MediaBrowserObjects.fetch_mediaimages()
 		var mediabrowser = await HomeApi.api.get_mediabrowser()
 		print("mediabrowser ", mediabrowser)
 
