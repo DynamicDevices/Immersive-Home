@@ -59,9 +59,9 @@ func move_into_view():
 
 
 func _on_state_button_on_toggled(active: bool) -> void:
-	await get_tree().create_timer(0.1).timeout
 	dev_menu = active
 	Store.settings.state.dev_state = dev_menu
+	get_parent().dev_state_changed.emit(active)
 	if active:
 		state_button.label = "developer_mode"
 	else:

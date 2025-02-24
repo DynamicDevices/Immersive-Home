@@ -23,6 +23,8 @@ var xr_interface : XRInterface
 var camera_position = null
 var XR_origin_position = null
 
+signal dev_state_changed(value:bool)
+
 func _ready():
 	print("OS.get_name() ", OS.get_name())
 	print("OS.get_model_name() ", OS.get_model_name())
@@ -193,3 +195,7 @@ func _on_xr_controller_left_button_pressed(name: String) -> void:
 	$MQTT.publish("stfc/pos", var_to_str(camera_position))
 	$MQTT.publish("stfc/pos_dif", var_to_str(abs(camera_position.distance_to(XR_origin_position))))
 #	debug_reference_position = camera_position
+
+
+func _on_dev_state_changed(value: bool) -> void:
+	pass # Replace with function body.

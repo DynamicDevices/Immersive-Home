@@ -60,16 +60,6 @@ vertical_alignment = 0
 autowrap_mode = 3
 width = 470.0
 
-[node name="NextStationButton" parent="." instance=ExtResource("3_qj8vf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.227835, 0.181337, 0.001)
-font_size = 5
-label = "forward"
-icon = true
-
-[node name="NextStationInput" parent="." instance=ExtResource("4_7n2ns")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120515, 0.181, 0)
-visible = false
-
 [node name="TextEditButton" parent="." instance=ExtResource("3_qj8vf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.228175, 0.181337, 0.001)
 label = "edit"
@@ -108,7 +98,5 @@ resizable = true
 transform = Transform3D(0.5, 0, 0, 0, 0.433012, 0.25, 0, -0.25, 0.433012, 0, -0.228365, 0.045)
 gizmo_extents = 0.02
 
-[connection signal="on_toggled" from="NextStationButton" to="." method="_on_next_tooltip_button_on_toggled"]
-[connection signal="on_text_changed" from="NextStationInput" to="." method="_on_next_station_input_on_text_changed"]
 [connection signal="on_toggled" from="TextEditButton" to="." method="_on_text_edit_button_on_toggled"]
 [connection signal="on_text_changed" from="Input" to="." method="_on_input_on_text_changed"]

@@ -29,7 +29,7 @@ script = ExtResource("1_hxajx")
 
 [node name="MiniView" parent="Content" instance=ExtResource("2_qan1b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, -0.04, 0)
-label = "view_comfy"
+label = "map"
 icon = true
 toggleable = true
 

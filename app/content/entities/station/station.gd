@@ -13,6 +13,7 @@ var next_station = null
 var previous_station = null
 var station_text_R = R.state("Blank Station")
 var mqtt = null
+var dev_state = false
 
 
 func _ready():
@@ -25,6 +26,8 @@ func _ready():
 	text_edit_button.on_button_down.connect(func():
 		text_edit()
 	)
+	
+	#get_node("/root/Main/").dev_state_changed.connect(_dev_state_changed(value))
 		
 	R.effect(func(_arg):
 		if station_text_R.value != null: station_text.text = station_text_R.value
@@ -41,6 +44,8 @@ func _ready():
 		self.visible = false
 	mqtt = get_node("/root/Main/MQTT")
 	
+	text_edit_button.visible = Store.settings.state.dev_state
+		
 
 # When we bring up/hide our input that we use to change the body text
 func text_edit():
@@ -63,6 +68,7 @@ func text_edit():
 		if close_button.label == "forward": close_button.label = "done"
 		_state_update()
 
+
 # It may be worth closing this 
 func close():
 	# queue_free() # Our old method of closing bits
@@ -71,11 +77,13 @@ func close():
 	if(next_station != null):
 		next_station.visible = true
 
+
 func _state_update() -> void:
 	if next_station != null:
 		close_button.label = "forward"
 	if previous_station != null and previous_station.visible:
 		self.visible = false
+
 
 # Change our body text with the input element we just brought up
 func _on_input_on_text_changed(text: String) -> void:
@@ -86,11 +94,13 @@ func _on_input_on_text_changed(text: String) -> void:
 	
 func _on_next__button_on_toggled(active: bool) -> void:
 	$NextStationInput.visibile = active
+
 	
 func get_options():
 	return {
 		"station_text": station_text_R.value,
 	}
+
 
 func set_options(options):
 	if options.has("station_text"): station_text_R.value = options["station_text"]
@@ -109,3 +119,6 @@ func station_update(origin: Variant, name_search: Variant) -> void:
 		origin.next_station = self
 		origin._state_update()
 		previous_station = origin
+
+func _dev_state_changed(value):
+	text_edit_button.visible = value
