@@ -20,7 +20,8 @@ static func isknownentity(entity_id: String):
 	var type = entity_id.split(".")[0]
 	return type in ["switch", "light", "sensor", "media_player",
 					"camera", "button", "chevron", "station", "custom_label",
-					"number", "line_chart", "timer", "weather" ]
+					"number", "line_chart", "timer", "weather", 
+					"text" ]
 
 static func create_entity(id: String, type=null):
 	var entity = null
@@ -46,6 +47,8 @@ static func create_entity(id: String, type=null):
 		"station":
 			entity = StationEntity.instantiate()
 		"custom_label":
+			entity = CustomLabelEntity.instantiate()
+		"text":
 			entity = CustomLabelEntity.instantiate()
 		"number":
 			entity = NumberEntity.instantiate()

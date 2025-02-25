@@ -11,7 +11,7 @@ signal on_disconnect()
 var devices_template := FileAccess.get_file_as_string("res://lib/home_apis/hass_ws/templates/devices.j2")
 
 var entities: Dictionary = {}
-var entitiy_callbacks := CallbackMap.new()
+var entity_callbacks := CallbackMap.new()
 
 var connection: Connection
 var integration_handler: IntegrationHandler
@@ -40,38 +40,48 @@ func _init(url: String, token: String):
 	assist_handler = AssistHandler.new(self)
 	history_handler = HistoryHandler.new(self)
 
-	start_subscriptions()
+	connection.send_subscribe_packet({ "type": "subscribe_entities" }, subscribe_entities_callback)
+	connection.send_subscribe_packet({ "type": "subscribe_events", "event_type": "station_text" }, subscribe_events_callback)
 
 	devices_template = devices_template.replace("\n", " ").replace("\t", "").replace("\r", " ")
 
-func start_subscriptions():
-	connection.send_subscribe_packet({
-		"type": "subscribe_entities"
-	}, func(packet: Dictionary):
-		if packet.type != "event":
-			return
+func subscribe_events_callback(packet: Dictionary):
+	if packet.type != "event":
+		return
+	if packet.event.event_type == "station_text":
+		var entity = "text." + packet.event.data.entityConfig
+		entities[entity] = {
+			"text": packet.event.data.text,
+			"name": packet.event.data.name,
+			"next_stations": packet.event.data.next_stations.split(" ")
+			#"attributes": { "friendly_name": }
+		}
+		prints("--- station_text", packet.event.data.name, entity, packet.event.data.next_stations, entity_callbacks.callbacks.has(entity))
+		entity_callbacks.call_key(entity, [entities[entity]])
 
-		if packet.event.has("a"):
-			for entity in packet.event.a.keys():
-				entities[entity]={
-					"state": packet.event.a[entity]["s"],
-					"attributes": packet.event.a[entity]["a"]
-				}
-				entitiy_callbacks.call_key(entity, [entities[entity]])
-			on_connect.emit()
+func subscribe_entities_callback(packet: Dictionary):
+	if packet.type != "event":
+		return
 
-		if packet.event.has("c"):
-			for entity in packet.event.c.keys():
-				if !entities.has(entity):
-					continue
+	if packet.event.has("a"):
+		for entity in packet.event.a.keys():
+			entities[entity] = {
+				"state": packet.event.a[entity]["s"],
+				"attributes": packet.event.a[entity]["a"]
+			}
+			entity_callbacks.call_key(entity, [entities[entity]])
+		on_connect.emit()
 
-				if packet.event.c[entity].has("+"):
-					if packet.event.c[entity]["+"].has("s"):
-						entities[entity]["state"]=packet.event.c[entity]["+"]["s"]
-					if packet.event.c[entity]["+"].has("a"):
-						entities[entity]["attributes"].merge(packet.event.c[entity]["+"]["a"], true)
-					entitiy_callbacks.call_key(entity, [entities[entity]])
-	)
+	if packet.event.has("c"):
+		for entity in packet.event.c.keys():
+			if !entities.has(entity):
+				continue
+			if packet.event.c[entity].has("+"):
+				if packet.event.c[entity]["+"].has("s"):
+					entities[entity]["state"]=packet.event.c[entity]["+"]["s"]
+				if packet.event.c[entity]["+"].has("a") and entities[entity].has("attributes"):
+					entities[entity]["attributes"].merge(packet.event.c[entity]["+"]["a"], true)
+				entity_callbacks.call_key(entity, [entities[entity]])
 
 func hhas_connected():
 	return connection.connected
@@ -108,10 +118,10 @@ func get_state(entity: String):
 	return null
 
 func hwatch_state(entity: String, callback: Callable):
-	entitiy_callbacks.add(entity, callback)
+	entity_callbacks.add(entity, callback)
 
 	return func():
-		entitiy_callbacks.remove(entity, callback)
+		entity_callbacks.remove(entity, callback)
 
 func set_state(entity: String, state: Variant, attributes: Dictionary={}):
 	var domain = entity.split(".")[0]

@@ -127,8 +127,7 @@ func _input(event):
 
 	if event is InputEventKey and event.keycode == KEY_V and event.is_pressed():
 		$MediaBrowserObjects.fetch_mediaimages()
-		var mediabrowser = await HomeApi.api.get_mediabrowser()
-		print("mediabrowser ", mediabrowser)
+
 
 func _move_camera_pc(delta):
 	if OS.get_name() == "Android": return

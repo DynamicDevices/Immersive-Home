@@ -59,6 +59,7 @@ func _ready():
 			entity_container.remove_child(child)
 			child.queue_free()
 
+		print("visible_entities ", visible_entities)
 		for entity in visible_entities.value:
 			var entity_node=EntityScene.instantiate()
 			entity_node.icon=EntityFactory.get_entity_icon(entity["id"].split(".")[0])

@@ -20,6 +20,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.005)
 shape = SubResource("BoxShape3D_um5pa")
 
 [node name="Label" parent="." instance=ExtResource("3_ve37m")]
+visible = false
 text = "Here's a thing!"
 font_size = 24
 size = Vector3(0.175, 0.03, 0.1)
@@ -28,3 +29,52 @@ size = Vector3(0.175, 0.03, 0.1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0879029, 0.0348504, -4.80005)
 visible = false
 label = "Edit"
+
+[node name="Title" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.078576, 0.0643789, 0)
+pixel_size = 0.001
+text = "Title"
+font_size = 18
+outline_size = 0
+
+[node name="entityId" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.245064, 0.0657119, 0)
+pixel_size = 0.001
+text = "text.xxxx"
+font_size = 18
+outline_size = 0
+
+[node name="LongText" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0871015, 0.0343588, 0.001)
+pixel_size = 0.001
+double_sided = false
+render_priority = 30
+outline_render_priority = 29
+text = "blank
+Blank station thing
+
+"
+font_size = 18
+outline_size = 0
+horizontal_alignment = 0
+vertical_alignment = 0
+autowrap_mode = 3
+width = 470.0
+
+[node name="NextStations" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0528078, 0)
+
+[node name="Next1" type="Label3D" parent="NextStations"]
+visible = false
+pixel_size = 0.001
+text = "next1"
+font_size = 18
+outline_size = 0
+
+[node name="Next2" type="Label3D" parent="NextStations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.108274, 0, 0)
+visible = false
+pixel_size = 0.001
+text = "next2"
+font_size = 18
+outline_size = 0
