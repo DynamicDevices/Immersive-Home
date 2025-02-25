@@ -53,7 +53,7 @@ func subscribe_events_callback(packet: Dictionary):
 		entities[entity] = {
 			"text": packet.event.data.text,
 			"name": packet.event.data.name,
-			"next_stations": packet.event.data.next_stations.split(" ")
+			"next_stations": packet.event.data.next_stations
 			#"attributes": { "friendly_name": }
 		}
 		prints("--- station_text", packet.event.data.name, entity, packet.event.data.next_stations, entity_callbacks.callbacks.has(entity))

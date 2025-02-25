@@ -23,3 +23,13 @@ func gotinsel(dt1):
 		print("tinsel tween length ", d)
 	if t0 == null or (t1.origin - t0.origin).length() > 1:
 		t0 = t1
+
+func gotinselpttopt(p0, p1):
+	var d = (p1 - p0).length()
+	if d > 0.1:
+		var x = get_tree().create_tween()
+		position = p0
+		x.tween_property(self, "emitting", true, 0.1)
+		x.tween_property(self, "position", p1, d*0.9)
+		x.tween_property(self, "emitting", false, 0.1)
+	
