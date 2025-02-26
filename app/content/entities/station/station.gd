@@ -32,10 +32,10 @@ func _ready():
 	)
 	
 	#get_node("/root/Main/").dev_state_changed.connect(_dev_state_changed(value))
-		
 	R.effect(func(_arg):
-		if station_text_R.value != null: station_text.text = station_text_R.value
-		)
+		if station_text_R.value != null: 
+			station_text.text = station_text_R.value
+	)
 		
 	if var_to_str(station_text.text).contains(" "):
 		station_name = var_to_str(station_text.text).split(" ",1)[0]

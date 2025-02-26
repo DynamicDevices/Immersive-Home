@@ -20,11 +20,73 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.005)
 shape = SubResource("BoxShape3D_um5pa")
 
 [node name="Label" parent="." instance=ExtResource("3_ve37m")]
+visible = false
 text = "Here's a thing!"
 font_size = 24
 size = Vector3(0.175, 0.03, 0.1)
 
 [node name="Button" parent="." instance=ExtResource("2_hbtf7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0879029, 0.0348504, -4.80005)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.134319, 0.0695834, 0)
 visible = false
 label = "Edit"
+disabled = true
+
+[node name="Title" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.078576, 0.0643789, 0)
+pixel_size = 0.001
+text = "Title"
+font_size = 18
+outline_size = 0
+
+[node name="entityId" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.245064, 0.0657119, 0)
+pixel_size = 0.001
+text = "text.xxxx"
+font_size = 18
+outline_size = 0
+
+[node name="LongText" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0871015, 0.0343588, 0.001)
+pixel_size = 0.001
+render_priority = 30
+outline_render_priority = 29
+text = "blank
+Blank station thing
+
+"
+font_size = 18
+outline_size = 0
+horizontal_alignment = 0
+vertical_alignment = 0
+autowrap_mode = 3
+width = 470.0
+
+[node name="NextStations" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0858577, -0.0862845, 0)
+
+[node name="Next1" parent="NextStations" instance=ExtResource("2_hbtf7")]
+label = "next"
+disabled = true
+
+[node name="Label3D" type="Label3D" parent="NextStations/Next1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0287315, -0.0610956, 0)
+pixel_size = 0.001
+text = "Next"
+font_size = 18
+outline_size = 0
+
+[node name="Next2" parent="NextStations" instance=ExtResource("2_hbtf7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0541832, 0, 0)
+label = "next2"
+disabled = true
+
+[node name="Label3D" type="Label3D" parent="NextStations/Next2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.029272, -0.0610956, 0)
+pixel_size = 0.001
+text = "Next"
+font_size = 18
+outline_size = 0
+
+[node name="KeyboardPlace" type="Marker3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.433012, 0.25, 0, -0.25, 0.433012, 0, -0.228365, 0.045)
+gizmo_extents = 0.02
