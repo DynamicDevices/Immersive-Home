@@ -29,7 +29,8 @@ script = ExtResource("1_hxajx")
 
 [node name="MiniView" parent="Content" instance=ExtResource("2_qan1b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, -0.04, 0)
-label = "map"
+font_size = 20
+label = "nest_multi_room"
 icon = true
 toggleable = true
 

@@ -24,6 +24,7 @@ var camera_position = null
 var XR_origin_position = null
 
 signal dev_state_changed(value:bool)
+signal reset()
 
 func _ready():
 	print("OS.get_name() ", OS.get_name())

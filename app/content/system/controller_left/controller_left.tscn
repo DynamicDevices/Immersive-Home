@@ -104,13 +104,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0600001, 0, 0)
 label = "nest_multi_room"
 icon = true
 
-[node name="Temperature" parent="Palm/QuickActions" instance=ExtResource("6_x5vuc")]
-label = "device_thermostat"
-icon = true
-
-[node name="Humidity" parent="Palm/QuickActions" instance=ExtResource("6_x5vuc")]
-transform = Transform3D(1, 1.73472e-18, 0, 0, 1, 0, 0, 0, 1, 0.0600001, -5.68873e-13, 0)
-label = "humidity_mid"
+[node name="Reset" parent="Palm/QuickActions" instance=ExtResource("6_x5vuc")]
+label = "refresh"
 icon = true
 
 [node name="Settings" type="Node3D" parent="Palm"]

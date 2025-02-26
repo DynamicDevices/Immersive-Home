@@ -36,11 +36,27 @@ func _ready():
 		if station_text_R.value != null: 
 			station_text.text = station_text_R.value
 	)
+	
+	get_node("/root/Main/").reset.connect(func():
+		_reset()
+	)
 		
 	if var_to_str(station_text.text).contains(" "):
 		station_name = var_to_str(station_text.text).split(" ",1)[0]
 	else:
 		station_name = var_to_str(station_text.text)
+	
+	# These following things need to wait for everything to get loaded,
+	# so i've added a manual delay for now. - PCJ
+	await get_tree().create_timer(0.1).timeout
+	
+	for x in Store.house.state.entities:
+		print(var_to_str(global_position) + var_to_str(x.position))
+		if global_position.is_equal_approx(x.position):
+			print(x._node_iid)
+			x._node_iid = get_instance_id()
+			print(x._node_iid)
+
 	
 	if next_station != null:
 		station_icon.visible = true
@@ -85,6 +101,10 @@ func close():
 	if(next_station != null):
 		next_station.station_icon.visible = true
 
+func _reset():
+	visible = true
+	$CollisionShape3D.disabled = false
+	_state_update()
 
 func _state_update() -> void:
 	if next_station != null:
