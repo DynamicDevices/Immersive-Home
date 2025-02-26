@@ -30,6 +30,9 @@ func gotinselpttopt(p0, p1):
 		var x = get_tree().create_tween()
 		position = p0
 		x.tween_property(self, "emitting", true, 0.1)
+		x.tween_property($AudioStreamPlayer3D, "playing", true, 0)
 		x.tween_property(self, "position", p1, d*0.9)
+		x.tween_property(self, "position", p1+Vector3(0,0.2,0), 2)
+		x.tween_property($AudioStreamPlayer3D, "playing", false, 0)
 		x.tween_property(self, "emitting", false, 0.1)
 	
