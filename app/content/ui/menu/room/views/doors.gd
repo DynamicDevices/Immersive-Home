@@ -58,7 +58,7 @@ func _ready():
 
 	delete_button.on_button_up.connect(func():
 		if doors_map.selected_door.value != null:
-			App.house.doors.delete(doors_map.selected_door.value)
+			App.house.doors.delete_door(doors_map.selected_door.value)
 			doors_map.selected_door.value=null
 	)
 	
