@@ -5,7 +5,11 @@ const Entity = preload ("../entity.gd")
 @onready var button = $Button
 @onready var long_text = $LongText
 @onready var title = $Title
+@onready var draggable = $DragBottom
+@onready var panel = $Panel
 var next_stations = ""
+
+var event: EventPointer
 
 func _ready():
 	super()
@@ -13,6 +17,10 @@ func _ready():
 	await HomeApi.watch_state(entity_id, func(new_state):
 		set_stateevent(new_state)
 	)
+	
+	#for Label3D in get_children(true):
+	#	if is_instance_valid(Label3D.get_aabb()):
+	#		print(var_to_str(Label3D.get_aabb()))
 
 	var stateInfo = await HomeApi.get_state(entity_id)
 	$entityId.text = entity_id
@@ -25,6 +33,18 @@ func _ready():
 	$NextStations/Next2.on_button_down.connect(func():
 		nextstation(2)
 	)
+	
+	
+	
+	await get_tree().create_timer(0.1).timeout
+	
+	var merged_aabb = $Title.get_aabb()
+	merged_aabb = merged_aabb.merge(long_text.get_aabb())
+	panel.position.y = title.position.y + (title.position.y - long_text.position.y)
+	panel.size.x = merged_aabb.size.x * 2
+	panel.size.y = merged_aabb.size.y * 2
+	print("panel size: " + var_to_str(merged_aabb.size * 2))
+
 
 func nextstation(n):
 	var nextstation = null
@@ -38,6 +58,8 @@ func nextstation(n):
 	if nextstation:
 		p1 = nextstation.get_node("KeyboardPlace").global_position
 	get_node("/root/Main/MagicTinsel").gotinselpttopt(p0, p1)
+
+
 
 				
 func get_options():
@@ -88,5 +110,9 @@ func update_labelshape():
 		$CollisionShape3D.shape.size.x = laabb.size.x/2
 		$CollisionShape3D.shape.size.y = laabb.size.y/2
 
-func _on_button_on_toggled(active: bool) -> void:
-	pass # Replace with function body.
+
+
+
+func _on_drag_bottom_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+	print(var_to_str(event))
+	#draggable.position.y = (event.initiator.node.global_position - event.initiator.node.global_transform.basis.z.normalized() * event.ray.get_collision_point().distance_to(event.ray.global_position)).y
