@@ -30,7 +30,7 @@ func add():
 	var next_index = 0
 	for i in range(doors.size()):
 		next_index = max(next_index, doors[i].id)
-	edit_door(next_index + 1)
+	edit_door(next_index + 1, true)
 
 	return next_index + 1
 
@@ -41,7 +41,7 @@ func delete_door(door):
 	App.controller_left.show_grid = false
 	App.controller_right.show_grid = false
 
-func edit_door(door):
+func edit_door(door, bnewdoor):
 	var doors = Store.house.state.doors
 	editing_door = door
 
@@ -56,6 +56,7 @@ func edit_door(door):
 	App.controller_right.show_grid = true
 
 	if existing_door != null:
+		assert (not bnewdoor)
 		room1 = App.house.find_room(existing_door.room1)
 		room2 = App.house.find_room(existing_door.room2)
 
@@ -84,19 +85,20 @@ func edit_door(door):
 				room.get_node("WallCollision/Clickable").on_click.connect(_add_corner.bind(room))
 			else:
 				room.get_node("WallCollision/Clickable").on_click.disconnect(_add_corner.bind(room))
-	else:
+	elif not bnewdoor:
 		printerr("Door not found: ", door)
 
 	for room in App.house.get_rooms():
 		if door != null:
 			room.get_node("WallCollision/Clickable").on_click.connect(_add_corner.bind(room))
 		else:
+			printerr("unexpected null door case?")
 			room.get_node("WallCollision/Clickable").on_click.disconnect(_add_corner.bind(room))
 
 func discard():
 	_clear()
 
-func save():
+func save_door():
 	var doors = Store.house.state.doors
 
 	if is_valid() == false:
