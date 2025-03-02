@@ -14,7 +14,9 @@ func _init():
 		print("HASS Connected, getting devices")
 		var devices = await HomeApi.get_devices()
 		devices.append(device1.duplicate(true))
-
+		for device in devices:
+			if device["name"] == null:
+				device["name"] = device["id"]
 		devices.sort_custom(func(a, b):
 			return a["name"].to_lower() < b["name"].to_lower()
 		)

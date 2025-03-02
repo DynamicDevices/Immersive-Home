@@ -24,15 +24,18 @@ func gotinsel(dt1):
 	if t0 == null or (t1.origin - t0.origin).length() > 1:
 		t0 = t1
 
+var tween = null
 func gotinselpttopt(p0, p1):
 	var d = (p1 - p0).length()
 	if d > 0.1:
-		var x = get_tree().create_tween()
+		if tween:
+			tween.kill()
+		tween = get_tree().create_tween()
 		position = p0
-		x.tween_property(self, "emitting", true, 0.1)
-		x.tween_property($AudioStreamPlayer3D, "playing", true, 0)
-		x.tween_property(self, "position", p1, d*0.9)
-		x.tween_property(self, "position", p1+Vector3(0,0.2,0), 2)
-		x.tween_property($AudioStreamPlayer3D, "playing", false, 0)
-		x.tween_property(self, "emitting", false, 0.1)
+		tween.tween_property(self, "emitting", true, 0.1)
+		tween.tween_property($AudioStreamPlayer3D, "playing", true, 0)
+		tween.tween_property(self, "position", p1, d*0.9)
+		tween.tween_property(self, "position", p1+Vector3(0,0.2,0), 2)
+		tween.tween_property($AudioStreamPlayer3D, "playing", false, 0)
+		tween.tween_property(self, "emitting", false, 0.1)
 	

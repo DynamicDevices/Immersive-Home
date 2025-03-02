@@ -49,10 +49,11 @@ func subscribe_events_callback(packet: Dictionary):
 	if packet.type != "event":
 		return
 	if packet.event.event_type == "station_text":
-		var entity = "text." + packet.event.data.entityConfig
+		var entity = packet.event.data.entity_id
 		entities[entity] = {
 			"text": packet.event.data.text,
 			"name": packet.event.data.name,
+			"station_id": packet.event.data.station_id,
 			"next_stations": packet.event.data.next_stations
 			#"attributes": { "friendly_name": }
 		}

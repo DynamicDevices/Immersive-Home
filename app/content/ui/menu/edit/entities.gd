@@ -61,6 +61,7 @@ func _ready():
 
 		print("visible_entities ", visible_entities)
 		for entity in visible_entities.value:
+			print("vv ", entity)
 			var entity_node=EntityScene.instantiate()
 			entity_node.icon=EntityFactory.get_entity_icon(entity["id"].split(".")[0])
 			entity_node.text=entity["name"]
