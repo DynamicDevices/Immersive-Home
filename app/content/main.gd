@@ -38,6 +38,11 @@ func _ready():
 
 	#create_voice_assistant()
 
+	dev_state_changed.connect(func(value):
+		_dev_state_changed(value)
+		)
+	
+	dev_state_changed.emit(false)
 
 	if OS.get_model_name() == "Quest":
 		print("Scene manage ", ClassDB.can_instantiate("OpenXRFbSceneManager"))
@@ -197,6 +202,7 @@ func _on_xr_controller_left_button_pressed(name: String) -> void:
 	$MQTT.publish("stfc/pos_dif", var_to_str(abs(camera_position.distance_to(XR_origin_position))))
 #	debug_reference_position = camera_position
 
-
-func _on_dev_state_changed(value: bool) -> void:
-	pass # Replace with function body.
+func _dev_state_changed(value):
+	get_node("/root/Main/XROrigin3D/MeshInstance3D").visible = value
+	get_node("/root/Main/XROrigin3D/XRCamera3D/HMD_Label").visible = value
+	

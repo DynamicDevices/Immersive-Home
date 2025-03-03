@@ -34,16 +34,17 @@ func _ready():
 		nextstation(2)
 	)
 	
-	
+	$CollisionShape3D.scale = panel.scale
+	$CollisionShape3D.transform = panel.transform
 	
 	await get_tree().create_timer(0.1).timeout
 	
-	var merged_aabb = $Title.get_aabb()
-	merged_aabb = merged_aabb.merge(long_text.get_aabb())
-	panel.position.y = title.position.y + (title.position.y - long_text.position.y)
-	panel.size.x = merged_aabb.size.x * 2
-	panel.size.y = merged_aabb.size.y * 2
-	print("panel size: " + var_to_str(merged_aabb.size * 2))
+#	var merged_aabb = $Title.get_aabb()
+#	merged_aabb = merged_aabb.merge(long_text.get_aabb())
+#	panel.position.y = title.position.y + (title.position.y - long_text.position.y)
+#	panel.size.x = merged_aabb.size.x * 2
+#	panel.size.y = merged_aabb.size.y * 2
+#	print("panel size: " + var_to_str(merged_aabb.size * 2))
 
 
 func nextstation(n):
@@ -106,10 +107,14 @@ func update_labelshape():
 	await get_tree().process_frame  
 	var laabb = $LongText.get_aabb()
 	if laabb:
-		$CollisionShape3D.position = laabb.get_center() + $LongText.position
-		$CollisionShape3D.shape.size.x = laabb.size.x/2
-		$CollisionShape3D.shape.size.y = laabb.size.y/2
-
+#		$CollisionShape3D.position = laabb.get_center() + $LongText.position
+#		$CollisionShape3D.shape.size.x = laabb.size.x/2
+#		$CollisionShape3D.shape.size.y = laabb.size.y/2
+		$CollisionShape3D.scale.x = panel.size.x * 20
+		$CollisionShape3D.scale.y = panel.size.y * 20
+		$CollisionShape3D.position = panel.position
+		print("Long text scale "+ var_to_str($LongText.scale))
+		pass
 
 
 
