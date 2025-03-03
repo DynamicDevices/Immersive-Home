@@ -21,6 +21,7 @@ func _ready():
 		if active:
 			App.house.fix_reference()
 		else:
+			App.house.save_reference()
 			App.house.disable_reference()
 		#active=true
 	)

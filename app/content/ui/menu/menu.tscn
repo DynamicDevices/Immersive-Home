@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c3kdssrmv84kv"]
+[gd_scene load_steps=23 format=3 uid="uid://c3kdssrmv84kv"]
 
 [ext_resource type="Script" uid="uid://ce5bx0ikwfbkt" path="res://content/ui/menu/menu.gd" id="1_ng4u3"]
 [ext_resource type="Script" uid="uid://tquknum0fs5j" path="res://content/functions/movable.gd" id="2_8coxu"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bsjqdvkt0u87c" path="res://content/ui/components/button/button.tscn" id="5_w4i01"]
 [ext_resource type="Script" uid="uid://bel3ondid6mxb" path="res://content/ui/components/tabs/tabs_content.gd" id="6_7rntr"]
 [ext_resource type="PackedScene" uid="uid://ddpxthb414unp" path="res://content/ui/menu/view/view_menu.tscn" id="8_71pkg"]
+[ext_resource type="PackedScene" uid="uid://10l8vxnddff2" path="res://content/ui/menu/experimental/experimental_menu.tscn" id="10_fspci"]
 [ext_resource type="PackedScene" uid="uid://c01gkeldvjwtr" path="res://content/ui/menu/room/room_menu.tscn" id="10_u4i1x"]
 [ext_resource type="PackedScene" uid="uid://c6r4higceibif" path="res://content/ui/menu/settings/settings_menu.tscn" id="11_7wm6b"]
 [ext_resource type="AudioStream" uid="uid://nmm8y0xt5wyj" path="res://assets/sound/open_menu.wav" id="12_dsnuc"]
@@ -255,9 +256,9 @@ icon = true
 toggleable = true
 size = Vector3(0.05, 0.05, 0.01)
 
-[node name="Automate" parent="AnimationContainer/DebugTabs" instance=ExtResource("5_w4i01")]
+[node name="Experimental" parent="AnimationContainer/DebugTabs" instance=ExtResource("5_w4i01")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.205, 0)
-label = "schema"
+label = "experiment"
 icon = true
 toggleable = true
 size = Vector3(0.05, 0.05, 0.01)
@@ -282,7 +283,7 @@ visible = false
 [node name="RoomMenu" parent="AnimationContainer/DebugTabsContent" instance=ExtResource("10_u4i1x")]
 visible = false
 
-[node name="AutomateMenu" type="Node3D" parent="AnimationContainer/DebugTabsContent"]
+[node name="ExperimentalMenu" parent="AnimationContainer/DebugTabsContent" instance=ExtResource("10_fspci")]
 visible = false
 
 [node name="SettingsMenu" parent="AnimationContainer/DebugTabsContent" instance=ExtResource("11_7wm6b")]
