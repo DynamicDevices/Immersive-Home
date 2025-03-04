@@ -16,10 +16,6 @@ func _ready():
 	HomeApi.on_connect.connect(fetch_mediafiles)
 	if not DirAccess.dir_exists_absolute(mediacachedir):
 		DirAccess.make_dir_absolute(mediacachedir)
-	var fout = FileAccess.open("user://test.txt", FileAccess.WRITE)
-	print("  **** ", fout.get_path_absolute())
-	print(listdir("user://"))
-	fout.close()
 	mediacachelist = listdir(mediacachedir)
 	print("mediacachelist ", mediacachelist)
 	if OS.get_name() == "Android" and Engine.has_singleton("godot_exoplayer"):
@@ -44,13 +40,21 @@ func playnextvideo():
 			if c != Dvidplaying:
 				Dvidplaying = c
 				break
-	if Dvidplaying:
-		var fin = FileAccess.open(mediacachedir+Dvidplaying, FileAccess.READ)
-		video_uri = fin.get_path_absolute()
-		print("video_uri ", video_uri)
-		fin.close()
-		
 
+func playvideo(vidname, globalplacement):
+	var video_uri = null
+	for c in mediacachelist:
+		if c.containsn(vidname):
+			var fc = mediacachedir+c
+			var fin = FileAccess.open(fc, FileAccess.READ)
+			video_uri = fin.get_path_absolute()
+			fin.close()
+	print("video_uri ", video_uri)
+	if globalplacement:
+		$VideoFrame.global_transform = globalplacement
+	$VideoFrame.visible = true
+	androidcompositionlayer.visible = true
+	
 	if exoplayer:
 		var androidsurface = androidcompositionlayer.get_android_surface()
 		if androidsurface:
@@ -61,6 +65,7 @@ func playnextvideo():
 			await get_tree().create_timer(2).timeout
 			#print("XXXX ", exoplayer.getResolutions(1))
 			#print("XXXX ", exoplayer.getDuration(1))
+			
 
 
 func listdir(d):

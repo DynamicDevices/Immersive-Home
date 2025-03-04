@@ -113,7 +113,7 @@ func update_labelshape():
 		$CollisionShape3D.scale.x = panel.size.x * 20
 		$CollisionShape3D.scale.y = panel.size.y * 20
 		$CollisionShape3D.position = panel.position
-		print("Long text scale "+ var_to_str($LongText.scale))
+		#print("Long text scale "+ var_to_str($LongText.scale))
 		pass
 
 

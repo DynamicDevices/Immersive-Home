@@ -50,7 +50,7 @@ resource_local_to_scene = true
 size = Vector3(1.5, 1, 0.02)
 
 [sub_resource type="QuadMesh" id="QuadMesh_6f830"]
-size = Vector2(1.1, 1.1)
+size = Vector2(0.5, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_htvu5"]
 transparency = 1
@@ -94,10 +94,12 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 10,
 mesh = SubResource("PrismMesh_tu1bw")
 
 [node name="OpenXRCompositionLayerQuad" type="OpenXRCompositionLayerQuad" parent="XROrigin3D"]
-transform = Transform3D(0.929493, 0, -0.368838, 0, 1, 0, 0.368838, 0, 0.929493, 0.287905, 0.778984, -1.64048)
+transform = Transform3D(0.929493, 0, -0.368838, 0, 1, 0, 0.368838, 0, 0.929493, 0.287905, 0.778984, -1.64049)
+visible = false
 use_android_surface = true
 sort_order = -1
 enable_hole_punch = true
+quad_size = Vector2(0.4, 0.4)
 
 [node name="XRSimulator" parent="." instance=ExtResource("5_3qc8g")]
 disable_xr_in_editor = false
