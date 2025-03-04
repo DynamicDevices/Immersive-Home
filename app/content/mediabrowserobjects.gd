@@ -9,7 +9,7 @@ const mediacachedir = "user://mediacachedir/"
 var mediacachelist = [ ]
 @onready var androidcompositionlayer = get_node("../XROrigin3D/OpenXRCompositionLayerQuad")
 var exoplayer = null
-
+const exoplayerid = 1
 
 func _ready():
 	firstpos = get_child(0).transform
@@ -20,26 +20,21 @@ func _ready():
 	print("mediacachelist ", mediacachelist)
 	if OS.get_name() == "Android" and Engine.has_singleton("godot_exoplayer"):
 		exoplayer = Engine.get_singleton("godot_exoplayer")
-		#exoplayer.on_player_ready(on_player_ready)
-		#exoplayer.on_video_end(on_video_end)
-		#exoplayer.on_player_error(on_player_ready)
-	
-func on_player_ready(id, duration):
-	prints("on_player_ready ", id, duration)
-func on_video_end(id):
-	prints("on_video_end ", id)
-func on_player_error(id, msg):
-	prints("on_player_ready ", id, msg)
+		exoplayer.connect("on_player_ready", on_player_ready)
+		exoplayer.connect("on_video_end", on_video_end)
+		exoplayer.connect("on_player_error", on_player_error)
 
-var Dvidplaying = ""
-func playnextvideo():
-	var video_uri : String = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-	#var video_uri : String = "https://mr5g.dynamicdevices.co.uk/media/local/hgtakeoffscale.mp4?authSig=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI5ZWRlNjdjNTc5Njg0ZGJkYTVjNTRiNzA2NGM0MDFlYiIsInBhdGgiOiIvbWVkaWEvbG9jYWwvaGd0YWtlb2Zmc2NhbGUubXA0IiwicGFyYW1zIjpbXSwiaWF0IjoxNzQxMDI5NzU0LCJleHAiOjE3NDExMTYxNTR9.Lr2_lKlIVdfuanrHMVtKeMhf5taXLdS4t6pd0ZUF0UI"
-	for c in mediacachelist:
-		if c.ends_with(".mp4"):
-			if c != Dvidplaying:
-				Dvidplaying = c
-				break
+var video_uri = null
+var videoduration_secs = 0
+var videoplayervolume = -1
+enum VideoStatus {
+	EMPTY,
+	REQUESTED,
+	WORKING,
+	ENDED
+}
+	
+var vidstatus : VideoStatus = VideoStatus.EMPTY
 
 func playvideo(vidname, globalplacement):
 	var video_uri = null
@@ -50,23 +45,68 @@ func playvideo(vidname, globalplacement):
 			video_uri = fin.get_path_absolute()
 			fin.close()
 	print("video_uri ", video_uri)
+
+	$VideoFrame.visible = true
 	if globalplacement:
 		$VideoFrame.global_transform = globalplacement
-	$VideoFrame.visible = true
 	androidcompositionlayer.visible = true
+	androidcompositionlayer.global_transform = $VideoFrame/CompositionLayerPosition.global_transform
 	
+	$VideoFrame/MessageLabel.visible = false
 	if exoplayer:
 		var androidsurface = androidcompositionlayer.get_android_surface()
 		if androidsurface:
-			exoplayer.createExoPlayerSurface(1, video_uri, androidsurface)
-			exoplayer.play(1)
-			## pause ( id of player)
-			## exoplayer.pause(1)
-			await get_tree().create_timer(2).timeout
-			#print("XXXX ", exoplayer.getResolutions(1))
-			#print("XXXX ", exoplayer.getDuration(1))
-			
+			exoplayer.createExoPlayerSurface(exoplayerid, video_uri, androidsurface)
+			exoplayer.play(exoplayerid)
+			vidstatus = VideoStatus.REQUESTED
+			$VideoFrame/MessageLabel.text = "loading"
+			$VideoFrame/MessageLabel.visible = true
+	if not $VideoFrame/MessageLabel.visible:
+		$VideoFrame/MessageLabel.text = "not working"
+		$VideoFrame/MessageLabel.visible = true
 
+func on_player_ready(id, duration):
+	$VideoFrame/MessageLabel.visible = false
+	prints("on_player_ready ", id, duration)
+	videoduration_secs = duration/1000.0
+	vidstatus = VideoStatus.WORKING
+	videoplayervolume = exoplayer.getVolume(exoplayerid)
+	var vidresolutions  = exoplayer.getResolutions(exoplayerid)
+	print("vidresolutions: ", vidresolutions)
+	if vidresolutions:
+		var splitText = vidresolutions[0].split(" - ")
+		var resText = splitText[0]
+		var resTextArray = resText.split("x")
+		var width : int = int(resTextArray[0])
+		var height : int = int(resTextArray[1])
+		var hwfac = width*1.0/height
+		$VideoFrame/YellowMesh.scale.x = hwfac
+		androidcompositionlayer.quad_size.x = androidcompositionlayer.quad_size.y*hwfac
+		print("trying to select res with width: ", width, " and height: ", height)
+		exoplayer.setResolution(exoplayerid, width, height)
+
+func on_video_end(id):
+	print("on_video_end ", id)
+	$VideoFrame/MessageLabel.text = "done"
+	$VideoFrame/MessageLabel.visible = true
+	
+func on_player_error(id, msg):
+	prints("on_player_error ", id, msg)
+	$VideoFrame/MessageLabel.text = "Error: "+msg
+	$VideoFrame/MessageLabel.visible = true
+
+func stopvideo():
+	if vidstatus != VideoStatus.EMPTY:
+		$VideoFrame.visible = false
+		androidcompositionlayer.visible = false
+		vidstatus = VideoStatus.EMPTY
+		if exoplayer:
+			exoplayer.stop(exoplayerid)
+
+func updateplaybackposition():
+	if vidstatus == VideoStatus.WORKING:
+		var current_time = exoplayer.getCurrentPosition(exoplayerid) / 1000.0
+		$VideoFrame/VidLengthBar.scale.x = current_time/max(1.0, videoduration_secs)
 
 func listdir(d):
 	var res = [ ]

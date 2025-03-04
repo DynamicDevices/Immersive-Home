@@ -129,7 +129,7 @@ func _input(event):
 		HomeApi.start_adapter(Store.settings.state.type.to_lower(), Store.settings.state.url, Store.settings.state.token)
 
 	if event is InputEventKey and event.keycode == KEY_V and event.is_pressed():
-		$MediaBrowserObjects.playnextvideo()
+		$MediaBrowserObjects.playvideo("hgtakeoff", null)
 
 
 func _move_camera_pc(delta):
@@ -196,7 +196,6 @@ func _on_xr_controller_left_button_pressed(name: String) -> void:
 	print("Left button ", name)
 	if name == "ax_button":
 		print("media")
-		$MediaBrowserObjects.playnextvideo()
 	#$MQTT.publish("stfc/pos", var_to_str(camera_position))
 	#$MQTT.publish("stfc/pos_dif", var_to_str(abs(camera_position.distance_to(XR_origin_position))))
 #	debug_reference_position = camera_position
