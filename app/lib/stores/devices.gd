@@ -21,7 +21,7 @@ func _init():
 			return a["name"].to_lower() < b["name"].to_lower()
 		)
 
-		var bverbosedevicelist = true
+		var bverbosedevicelist = false
 		if bverbosedevicelist:
 			print("\nDevices list:")
 		var knowndevices = [ ]

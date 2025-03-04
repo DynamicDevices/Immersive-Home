@@ -60,9 +60,8 @@ func _ready():
 			# Connect to boundary update event
 		xr_interface.play_area_changed.connect(_boundary_snapped)
 			
-
 	xr_origin.add_child(meta_scene_manager)
-
+ 
 	HomeApi.on_connect.connect(func():
 		start_setup_flow.call_deferred()
 	)
@@ -73,7 +72,6 @@ func _ready():
 		
 	camera_position = camera.position
 	XR_origin_position = xr_origin.position
-	
 
 func start_setup_flow():
 	var onboarding = OnboardingScene.instantiate()
@@ -106,7 +104,6 @@ func _process(delta):
 		camera_position *= 10 # Convert to decimeters
 		HMD_Label.text = var_to_str(round(camera_position-XR_origin_position)).split("r3")[1]
 	
-		pass
 func _input(event):
 
 	# Debugging Features
@@ -132,7 +129,7 @@ func _input(event):
 		HomeApi.start_adapter(Store.settings.state.type.to_lower(), Store.settings.state.url, Store.settings.state.token)
 
 	if event is InputEventKey and event.keycode == KEY_V and event.is_pressed():
-		$MediaBrowserObjects.fetch_mediaimages()
+		$MediaBrowserObjects.playnextvideo()
 
 
 func _move_camera_pc(delta):
@@ -197,9 +194,11 @@ func _on_mqtt_received_message(topic: Variant, message: Variant) -> void:
 
 func _on_xr_controller_left_button_pressed(name: String) -> void:
 	print("Left button ", name)
-	
-	$MQTT.publish("stfc/pos", var_to_str(camera_position))
-	$MQTT.publish("stfc/pos_dif", var_to_str(abs(camera_position.distance_to(XR_origin_position))))
+	if name == "ax_button":
+		print("media")
+		$MediaBrowserObjects.playnextvideo()
+	#$MQTT.publish("stfc/pos", var_to_str(camera_position))
+	#$MQTT.publish("stfc/pos_dif", var_to_str(abs(camera_position.distance_to(XR_origin_position))))
 #	debug_reference_position = camera_position
 
 func _dev_state_changed(value):

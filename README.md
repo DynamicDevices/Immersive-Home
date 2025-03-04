@@ -2,6 +2,14 @@
 
 #  🏠 Introduction
 
+*This project has been repurposed to work as QuestWalk, an app for giving a tour around a space with 
+interactive stations and videos and path animation.* 
+
+addons/godot-expplayer has been sourced from: https://github.com/bnjmntmm/godot-exoplayer/
+
+
+#  🏠 Introduction
+
 Immersive Home is project to bring Smart Home and Mixed Reality technologies together for an intuitive and immersive experience.
 
 <a href="https://immersive-home.org" target="_blank" style="text-decoration: none !important">
