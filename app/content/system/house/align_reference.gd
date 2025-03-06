@@ -29,7 +29,7 @@ func _ready():
 		edge.align_to_corners(corner1.global_position, corner2.global_position)
 
 		corner2.look_at(corner1.global_position, Vector3.UP)
-		corner2.rotate(Vector3.UP, deg_to_rad( - 90))
+		corner2.rotate(Vector3.UP, deg_to_rad(-90))
 	)
 
 	corner2.get_node("Movable").restrict_movement = func(new_position):
@@ -58,7 +58,7 @@ func update_align_reference():
 		corner2.global_position = corner1.global_position + Vector3(1, 0, 0)
 
 	corner2.look_at(corner1.global_position, Vector3.UP)
-	corner2.rotate(Vector3.UP, deg_to_rad( - 90))
+	corner2.rotate(Vector3.UP, deg_to_rad(-90))
 
 	edge.align_to_corners(corner1.global_position, corner2.global_position)
 

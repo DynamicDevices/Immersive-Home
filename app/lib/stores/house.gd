@@ -36,6 +36,9 @@ func _init():
 func clear():
 	self.state.rooms = []
 	self.state.entities = []
+	self.state.roods = []
+	self.align_position1 = Vector3()
+	self.align_position2 = Vector3()
 
 func get_room(name):
 	for room in self.state.rooms:

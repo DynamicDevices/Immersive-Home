@@ -36,8 +36,10 @@ enum VideoStatus {
 	
 var vidstatus : VideoStatus = VideoStatus.EMPTY
 
-func playvideo(vidname, globalplacement):
+var pauseatstart = false
+func playvideo(vidname, globalplacement, lpauseatstart=false):
 	var video_uri = null
+	pauseatstart = lpauseatstart
 	for c in mediacachelist:
 		if c.containsn(vidname):
 			var fc = mediacachedir+c
@@ -84,6 +86,17 @@ func on_player_ready(id, duration):
 		androidcompositionlayer.quad_size.x = androidcompositionlayer.quad_size.y*hwfac
 		print("trying to select res with width: ", width, " and height: ", height)
 		exoplayer.setResolution(exoplayerid, width, height)
+	if pauseatstart:
+		exoplayer.pause()
+		$VideoFrame/PlayVideoButton.visible = true
+		$VideoFrame/PlayVideoButton.disabled = false
+
+func _on_play_video_on_button_down():
+	if exoplayer:
+		exoplayer.play(exoplayerid)
+		$VideoFrame/PlayVideoButton.visible = false
+		$VideoFrame/PlayVideoButton.disabled = true
+
 
 func on_video_end(id):
 	print("on_video_end ", id)

@@ -22,9 +22,7 @@ func _ready():
 	
 	station_icon.visible = false
 	
-	close_button.on_button_down.connect(func():
-		close()
-	)
+	close_button.on_button_down.connect(close)
 	
 	# Our new text edit button
 	text_edit_button.on_button_down.connect(func():
@@ -37,9 +35,7 @@ func _ready():
 			station_text.text = station_text_R.value
 	)
 	
-	get_node("/root/Main/").reset.connect(func():
-		_reset()
-	)
+	get_node("/root/Main/").reset.connect(_reset)
 		
 	if var_to_str(station_text.text).contains(" "):
 		station_name = var_to_str(station_text.text).split(" ",1)[0]
@@ -67,7 +63,6 @@ func _ready():
 	if previous_station != null and previous_station.station_icon.visible:
 		station_icon.visible = false
 	mqtt = get_node("/root/Main/MQTT")
-	
 	text_edit_button.visible = Store.settings.state.dev_state
 		
 
@@ -92,14 +87,32 @@ func text_edit():
 		if close_button.label == "forward": close_button.label = "done"
 		_state_update()
 
+func activate(frompt):
+	visible = true
+	var regex = RegEx.new()
+	regex.compile("(?<vidplace>(Video[^:]*): (?<vidname>\\S+)")
+	var result = regex.search(station_text.text)
+	if result:
+		var vidplace = get_node_or_null(result.get_string("vidplace"))
+		if not vidplace:
+			print("Vid place ", result.get_string("vidplace"), " not found")
+			vidplace = get_node(result.get_string("VideoPlaceTop"))
+		var vidname = result.get_string("vidname")
+		get_node("/root/Main/MediaBrowserObjects").playvideo(vidname, vidplace.global_transform, true)
+	var tween : Tween = get_node("/root/Main/MagicTinsel").gotinselpttopt(frompt, $KeyboardPlace.global_position)
+	await tween.finished
+	next_station.station_icon.visible = true
+	
 
 # It may be worth closing this 
 func close():
 	# queue_free() # Our old method of closing bits
 	visible = false
 	$CollisionShape3D.disabled = true
-	if(next_station != null):
-		next_station.station_icon.visible = true
+	if next_station != null:
+		get_node("/root/Main/MediaBrowserObjects").stopvideo()
+		next_station.activate($KeyboardPlace.global_position)
+
 
 func _reset():
 	visible = true
@@ -137,7 +150,6 @@ func get_options():
 
 func set_options(options):
 	if options.has("station_text"): station_text_R.value = options["station_text"]
-
 
 func _on_next_station_input_on_text_changed(text: String) -> void:
 	if get_node("/root/Main/" + text) != get_node("/root/Main/") and get_node("/root/Main/" + text) != null:
