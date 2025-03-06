@@ -119,4 +119,9 @@ transform = Transform3D(1, 0, 0, 0, 0.995639, -0.0932916, 0, 0.0932916, 0.995639
 [node name="VideoPlaceRight" type="Marker3D" parent="."]
 transform = Transform3D(0.975296, 0, -0.220902, 0, 1, 0, 0.220902, 0, 0.975296, 0.47049, 0, 0)
 
+[node name="ActivateButton" parent="." instance=ExtResource("3_qj8vf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.201408, -0.109958, 0)
+label = "Activate"
+
 [connection signal="on_text_changed" from="Input" to="." method="_on_input_on_text_changed"]
+[connection signal="on_button_down" from="ActivateButton" to="." method="_on_activate_button_on_button_down"]

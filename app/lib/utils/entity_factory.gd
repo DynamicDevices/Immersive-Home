@@ -49,7 +49,7 @@ static func create_entity(id: String, type=null):
 		"custom_label":
 			entity = CustomLabelEntity.instantiate()
 		"text":
-			entity = CustomLabelEntity.instantiate()
+			entity = StationEntity.instantiate()
 		"number":
 			entity = NumberEntity.instantiate()
 		"line_chart":

@@ -37,13 +37,13 @@ size = Vector3(0.01, 0.01, 20)
 resource_local_to_scene = true
 size = Vector2(1.5, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_htvu5"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_6f830"]
 viewport_path = NodePath("Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efkdf"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6f830"]
 transparency = 1
 cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_htvu5")
+albedo_texture = SubResource("ViewportTexture_6f830")
 texture_filter = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_531rh"]
@@ -163,7 +163,7 @@ ertertertertertertert"
 
 [node name="Screen" parent="TextArea2D" index="1"]
 mesh = SubResource("QuadMesh_ce7ft")
-surface_material_override/0 = SubResource("StandardMaterial3D_efkdf")
+surface_material_override/0 = SubResource("StandardMaterial3D_6f830")
 
 [node name="StaticBody3D" parent="TextArea2D" index="2"]
 collision_layer = 5242887
@@ -191,6 +191,7 @@ script = ExtResource("18_531rh")
 
 [node name="VideoFrame" type="Node3D" parent="MediaBrowserObjects"]
 transform = Transform3D(0.921009, 0, -0.389542, 0, 1, 0, 0.389542, 0, 0.921009, 1.13626, 0.340048, -1.20125)
+visible = false
 
 [node name="YellowMesh" type="MeshInstance3D" parent="MediaBrowserObjects/VideoFrame"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.02)
@@ -218,6 +219,7 @@ autostart = true
 [node name="PlayVideoButton" parent="MediaBrowserObjects/VideoFrame" instance=ExtResource("20_6f830")]
 font_size = 16
 label = "Play Video"
+disabled = true
 size = Vector3(0.14, 0.1, 0.01)
 
 [node name="StaticBody3D" parent="MediaBrowserObjects" instance=ExtResource("19_50h8v")]

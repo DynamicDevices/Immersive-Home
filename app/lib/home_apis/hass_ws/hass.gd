@@ -50,15 +50,13 @@ func subscribe_events_callback(packet: Dictionary):
 		return
 	if packet.event.event_type == "station_text":
 		var entity = packet.event.data.entity_id
-		entities[entity] = {
-			"text": packet.event.data.text,
-			"name": packet.event.data.name,
-			"station_id": packet.event.data.station_id,
-			"next_stations": packet.event.data.next_stations
-			#"attributes": { "friendly_name": }
+		var options = {
+			"station_text": packet.event.data.text,
+			"station_name": packet.event.data.name,
+			"next_stations": packet.event.data.next_stations,
+			"station_id": packet.event.data.station_id
 		}
-		prints("--- station_text", packet.event.data.name, entity, packet.event.data.next_stations, entity_callbacks.callbacks.has(entity))
-		entity_callbacks.call_key(entity, [entities[entity]])
+		entity_callbacks.call_key(entity, [options])
 
 func subscribe_entities_callback(packet: Dictionary):
 	if packet.type != "event":
