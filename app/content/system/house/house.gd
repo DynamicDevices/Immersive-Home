@@ -214,19 +214,21 @@ func edit_reference():
 	align_reference.visible = true
 	align_reference.disabled = false
 
+func show_walls(value):
+	RoomMaterial.set_shader_parameter("show_border", value)
+
 func fix_reference():
 	fixing_reference = true
 	align_reference.disabled = false
 	align_reference.visible = true
 	align_reference.update_initial_positions()
-	RoomMaterial.set_shader_parameter("show_border", true)
+	
 	
 func disable_reference():
 	fixing_reference = false
 	align_reference.disabled = true
 	align_reference.visible = false
 	align_reference.update_initial_positions()
-	RoomMaterial.set_shader_parameter("show_border", false)
 
 func save_reference():
 	if fixing_reference:
@@ -249,7 +251,6 @@ func save_reference():
 	align_reference.update_initial_positions()
 
 	Store.house.save_local()
-	RoomMaterial.set_shader_parameter("show_border", false)
 
 func save_all_entities():
 	print("*** Copying entities from $Rooms to Store.house.state")

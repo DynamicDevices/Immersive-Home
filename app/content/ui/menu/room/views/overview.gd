@@ -1,7 +1,7 @@
 extends Node3D
 
 @onready var edit_button = $EditButton
-@onready var fix_button = $FixButton
+@onready var walls_button = $WallsButton
 
 #var active = false:
 #	set(value):
@@ -17,11 +17,20 @@ extends Node3D
 
 func _ready():
 
-	fix_button.on_toggled.connect(func(active):
+	# Show or hide walls
+	walls_button.on_toggled.connect(func(active): 
+		
+		App.house.show_walls(active)
+		)
+
+	# Activate or deactivate Nitwel's reference fixer
+	edit_button.on_toggled.connect(func(active):
 		if active:
 			App.house.fix_reference()
+			edit_button.label = "save"
 		else:
 			App.house.save_reference()
 			App.house.disable_reference()
+			edit_button.label = "edit"
 		#active=true
 	)

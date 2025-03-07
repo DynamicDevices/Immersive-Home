@@ -24,9 +24,15 @@ size = Vector2(0.42, 0.32)
 [node name="Overview" type="Node3D"]
 script = ExtResource("1_jesad")
 
-[node name="FixButton" parent="." instance=ExtResource("1_fteh8")]
+[node name="WallsButton" parent="." instance=ExtResource("1_fteh8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, -0.12, 0)
 label = "view_in_ar"
+icon = true
+toggleable = true
+
+[node name="EditButton" parent="." instance=ExtResource("1_fteh8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0885262, -0.12, 0)
+label = "edit"
 icon = true
 toggleable = true
 

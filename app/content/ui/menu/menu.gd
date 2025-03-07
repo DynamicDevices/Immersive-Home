@@ -66,5 +66,6 @@ func _on_state_button_on_toggled(active: bool) -> void:
 		state_button.label = "developer_mode"
 	else:
 		state_button.label = "person"
+		App.house.show_walls(false)
 		
 	
