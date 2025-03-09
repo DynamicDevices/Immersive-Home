@@ -1,27 +1,12 @@
 extends Node3D
 
-@onready var edit_button = $EditButton
-@onready var fix_button = $FixButton
+func _on_fix_button_on_toggled(active):
+	App.house.blueborder_alignment(active)
+	$ApplyAlignment.disabled = not active
+	$MoveAlignment.disabled = not active
 
-#var active = false:
-#	set(value):
-#		if value:
-#			edit_button.label = "save"
-#			fix_button.disabled = true
-#			fix_button.visible = false
-#		else:
-#			edit_button.label = "edit"
-#			fix_button.disabled = false
-#			fix_button.visible = true
-#		active = value
+func _on_move_alignment_on_button_down():
+	App.house.move_alignment()
 
-func _ready():
-
-	fix_button.on_toggled.connect(func(active):
-		if active:
-			App.house.fix_reference()
-		else:
-			App.house.save_reference()
-			App.house.disable_reference()
-		#active=true
-	)
+func _on_apply_alignment_on_button_down():
+	App.house.apply_alignment()

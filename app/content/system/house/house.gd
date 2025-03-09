@@ -11,7 +11,6 @@ const AlignReference = preload ("./align_reference.gd")
 @onready var align_reference: AlignReference = $AlignReference
 @onready var doors: Doors = $Doors
 
-var fixing_reference: bool = false
 var editing_room: RoomType = null
 var loaded = R.state(false)
 
@@ -209,47 +208,32 @@ func create_entity_in(entity_id: String, room_name: String, type=null):
 
 	return entity
 
-func edit_reference():
-	fixing_reference = false
-	align_reference.visible = true
-	align_reference.disabled = false
 
-func fix_reference():
-	fixing_reference = true
-	align_reference.disabled = false
-	align_reference.visible = true
-	align_reference.update_initial_positions()
-	RoomMaterial.set_shader_parameter("show_border", true)
+func blueborder_alignment(bshow):
+	align_reference.disabled = not bshow
+	align_reference.visible = bshow
+	$AlignRefShadow.visible = bshow
+	if bshow:
+		align_reference.update_initial_positions()
+		$AlignRefShadow.global_transform = 	align_reference.get_marker_transform()
+	RoomMaterial.set_shader_parameter("show_border", bshow)
 	
-func disable_reference():
-	fixing_reference = false
-	align_reference.disabled = true
-	align_reference.visible = false
+func move_alignment():
+	align_reference.update_stored_align_reference()
 	align_reference.update_initial_positions()
-	RoomMaterial.set_shader_parameter("show_border", false)
+	$AlignRefShadow.global_transform = 	align_reference.get_marker_transform()
 
-func save_reference():
-	if fixing_reference:
-		for room in get_rooms():
-			room.editable = true
-
-		var align_transform = align_reference.global_transform
-		transform = align_reference.get_new_transform()
-		align_reference.global_transform = align_transform
-
-		align_reference.update_store()
-
-		for room in get_rooms():
-			room.editable = false
-
-		save_all_entities()
-
-	align_reference.disabled = true
-	align_reference.visible = false
-	align_reference.update_initial_positions()
-
+func apply_alignment():
+	for room in get_rooms():
+		room.editable = true
+	var align_transform = align_reference.global_transform
+	transform = align_reference.get_marker_transform()*$AlignRefShadow.global_transform.inverse()
+	for room in get_rooms():
+		room.editable = false
+	save_all_entities() # reads them all through the set transform
+	transform = Transform3D()
+	move_alignment()
 	Store.house.save_local()
-	RoomMaterial.set_shader_parameter("show_border", false)
 
 func save_all_entities():
 	print("*** Copying entities from $Rooms to Store.house.state")
