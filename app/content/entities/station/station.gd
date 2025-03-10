@@ -18,6 +18,7 @@ var mqtt = null
 var dev_state = false
 var station_id = "unknown"
 
+var event = EventPointer
 
 func _ready():
 	super()
@@ -28,7 +29,13 @@ func _ready():
 	# Our new text edit button
 	text_edit_button.on_button_down.connect(text_edit)
 	
-	#get_node("/root/Main/").dev_state_changed.connect(_dev_state_changed(value))
+	get_node("/root/Main/").dev_state_changed.connect(func(value):
+		if value:
+			$MeshInstance3D.material_overlay = load("res://content/Materials/NoDepthTest.tres")
+		else:
+			$MeshInstance3D.material_overlay = null
+		
+	)
 	R.effect(func(_arg):
 		if station_text_R.value != null: 
 			station_text.text = station_text_R.value

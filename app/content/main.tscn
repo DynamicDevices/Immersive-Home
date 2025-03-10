@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://eecv28y6jxk4"]
+[gd_scene load_steps=33 format=3 uid="uid://eecv28y6jxk4"]
 
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_i4c04"]
 [ext_resource type="Script" uid="uid://bw2xmng3ynp6g" path="res://content/main.gd" id="1_uvrd4"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b2kjh1fpjptdr" path="res://content/system/camera/camera.tscn" id="3_rj4ac"]
 [ext_resource type="PackedScene" uid="uid://ctltchlf2j2r4" path="res://addons/xr-simulator/XRSimulator.tscn" id="5_3qc8g"]
 [ext_resource type="PackedScene" uid="uid://biu66ihmvmku3" path="res://content/system/controller_right/controller_right.tscn" id="7_0b3tc"]
+[ext_resource type="Material" uid="uid://b4n5e666v0gye" path="res://content/Materials/NoDepthTest.tres" id="7_r22o6"]
 [ext_resource type="PackedScene" uid="uid://c3kdssrmv84kv" path="res://content/ui/menu/menu.tscn" id="8_du83w"]
 [ext_resource type="PackedScene" uid="uid://cbemihbxkd4ll" path="res://content/system/house/house.tscn" id="9_np6mw"]
 [ext_resource type="Script" uid="uid://cwse6tumx7sd4" path="res://lib/utils/screenshot.gd" id="12_e13ym"]
@@ -21,29 +22,23 @@
 [ext_resource type="Script" uid="uid://cta77qg7aqv04" path="res://content/mediabrowserobjects.gd" id="18_531rh"]
 [ext_resource type="PackedScene" uid="uid://dh774jqd7tuy7" path="res://content/mediabrowserbox.tscn" id="19_50h8v"]
 [ext_resource type="PackedScene" uid="uid://bsjqdvkt0u87c" path="res://content/ui/components/button/button.tscn" id="20_6f830"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1bwg"]
-transparency = 1
-blend_mode = 1
-albedo_color = Color(0.658824, 0, 0.65098, 0.764706)
-emission_enabled = true
-emission = Color(0.839207, 3.85046e-07, 0.417799, 1)
+[ext_resource type="Material" uid="uid://crycqex1ucj04" path="res://content/ui/components/panel/panel.material" id="20_htvu5"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_tu1bw"]
-material = SubResource("StandardMaterial3D_i1bwg")
+material = ExtResource("7_r22o6")
 size = Vector3(0.01, 0.01, 20)
 
 [sub_resource type="QuadMesh" id="QuadMesh_ce7ft"]
 resource_local_to_scene = true
 size = Vector2(1.5, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_6f830"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_efkdf"]
 viewport_path = NodePath("Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efkdf"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aywjo"]
 transparency = 1
 cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_6f830")
+albedo_texture = SubResource("ViewportTexture_efkdf")
 texture_filter = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_531rh"]
@@ -163,7 +158,7 @@ ertertertertertertert"
 
 [node name="Screen" parent="TextArea2D" index="1"]
 mesh = SubResource("QuadMesh_ce7ft")
-surface_material_override/0 = SubResource("StandardMaterial3D_efkdf")
+surface_material_override/0 = SubResource("StandardMaterial3D_aywjo")
 
 [node name="StaticBody3D" parent="TextArea2D" index="2"]
 collision_layer = 5242887
@@ -191,10 +186,10 @@ script = ExtResource("18_531rh")
 
 [node name="VideoFrame" type="Node3D" parent="MediaBrowserObjects"]
 transform = Transform3D(0.921009, 0, -0.389542, 0, 1, 0, 0.389542, 0, 0.921009, 1.13626, 0.340048, -1.20125)
-visible = false
 
-[node name="YellowMesh" type="MeshInstance3D" parent="MediaBrowserObjects/VideoFrame"]
+[node name="BackgroundMesh" type="MeshInstance3D" parent="MediaBrowserObjects/VideoFrame"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.02)
+material_override = ExtResource("20_htvu5")
 mesh = SubResource("QuadMesh_6f830")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_htvu5")
@@ -218,9 +213,10 @@ autostart = true
 
 [node name="PlayVideoButton" parent="MediaBrowserObjects/VideoFrame" instance=ExtResource("20_6f830")]
 font_size = 16
-label = "Play Video"
+label = "resume"
+icon = true
 disabled = true
-size = Vector3(0.14, 0.1, 0.01)
+size = Vector3(0.1, 0.1, 0.01)
 
 [node name="StaticBody3D" parent="MediaBrowserObjects" instance=ExtResource("19_50h8v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.66995, 1.50879, -5.0189)
