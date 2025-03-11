@@ -89,5 +89,6 @@ material_override = SubResource("ShaderMaterial_n3lbn")
 mesh = SubResource("QuadMesh_l1dos")
 skeleton = NodePath("../..")
 
+[connection signal="on_toggled" from="WallsButton" to="." method="_on_walls_button_on_toggled"]
 [connection signal="on_button_down" from="MoveAlignment" to="." method="_on_move_alignment_on_button_down"]
 [connection signal="on_button_down" from="ApplyAlignment" to="." method="_on_apply_alignment_on_button_down"]

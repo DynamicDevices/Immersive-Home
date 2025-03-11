@@ -1,6 +1,6 @@
 extends Node3D
 
-func _on_fix_button_on_toggled(active):
+func _on_walls_button_on_toggled(active):
 	App.house.blueborder_alignment(active)
 	$ApplyAlignment.disabled = not active
 	$MoveAlignment.disabled = not active
