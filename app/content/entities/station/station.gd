@@ -53,11 +53,11 @@ func _ready():
 	await get_tree().create_timer(0.1).timeout
 
 	for x in Store.house.state.entities:
-		print(var_to_str(global_position) + var_to_str(x.position))
+		#print("stateentities ", var_to_str(global_position) + var_to_str(x.position))
 		if global_position.is_equal_approx(x.position):
-			print(x._node_iid)
+			#print(x._node_iid)
 			x._node_iid = get_instance_id()
-			print(x._node_iid)
+			#print(x._node_iid)
 
 	await HomeApi.watch_state(entity_id, set_options)
 	

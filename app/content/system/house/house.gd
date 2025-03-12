@@ -106,7 +106,6 @@ func delete_room(room_name):
 	room.queue_free()
 
 	Store.house.state.rooms = Store.house.state.rooms.filter(func(r): return r.name != room_name)
-
 	Store.house.save_local()
 
 func is_editiong(room_name):
@@ -222,18 +221,33 @@ func move_alignment():
 	align_reference.update_stored_align_reference()
 	align_reference.update_initial_positions()
 	$AlignRefShadow.global_transform = 	align_reference.get_marker_transform()
+	Store.house.save_local()
 
 func apply_alignment():
-	for room in get_rooms():
-		room.editable = true
 	var align_transform = align_reference.global_transform
-	transform = align_reference.get_marker_transform()*$AlignRefShadow.global_transform.inverse()
-	for room in get_rooms():
-		room.editable = false
+	var applytransform = align_reference.get_marker_transform()*$AlignRefShadow.global_transform.inverse()
+	applytransform.origin.y = 0
+	for door in Store.house.state.doors:
+		door.room1_position1 = applytransform*door.room1_position1
+		door.room1_position2 = applytransform*door.room1_position2
+		door.room2_position1 = applytransform*door.room2_position1
+		door.room2_position2 = applytransform*door.room2_position2
+	for room in Store.house.state.rooms:
+		var acorners = [ ]
+		for corner in room.corners:
+			var p = Vector3(corner.x, room.height, corner.y)
+			var ap = applytransform*p
+			acorners.append(Vector2(ap.x, ap.z))
+		room.corners = acorners
+
+	transform = applytransform
 	save_all_entities() # reads them all through the set transform
 	transform = Transform3D()
 	move_alignment()
-	Store.house.save_local()
+
+	# force update
+	Store.house.state.rooms = Store.house.state.rooms
+	App.house.update_house()
 
 func save_all_entities():
 	print("*** Copying entities from $Rooms to Store.house.state")

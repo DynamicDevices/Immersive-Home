@@ -10,3 +10,7 @@ func _on_move_alignment_on_button_down():
 
 func _on_apply_alignment_on_button_down():
 	App.house.apply_alignment()
+
+func D_on_apply_alignment_on_button_down():
+	Store.house.doors = []
+	App.house.update_house()

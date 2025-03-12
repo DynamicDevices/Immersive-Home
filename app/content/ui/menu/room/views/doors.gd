@@ -7,6 +7,7 @@ const material_unselected = preload ("../room_unselected.tres")
 
 @onready var door_button = $Button
 @onready var delete_button = $DeleteButton
+@onready var delete_all_button = $DeleteAll
 @onready var door_label = $Label3D
 @onready var rooms_map = $Rooms
 @onready var doors_map = $Doors
@@ -62,3 +63,7 @@ func _ready():
 			doors_map.selected_door.value=null
 	)
 	
+	delete_all_button.on_button_up.connect(func():
+		doors_map.selected_door.value = null
+		App.house.doors.delete_all_doors()
+	)

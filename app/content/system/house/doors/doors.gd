@@ -36,8 +36,15 @@ func add():
 
 func delete_door(door):
 	Store.house.state.doors = Store.house.state.doors.filter(func(d): return d.id != door)
+	App.house.update_house()
 	Store.house.save_local()
+	App.controller_left.show_grid = false
+	App.controller_right.show_grid = false
 
+func delete_all_doors():
+	Store.house.state.doors = [ ]
+	App.house.update_house()
+	Store.house.save_local()
 	App.controller_left.show_grid = false
 	App.controller_right.show_grid = false
 
@@ -132,7 +139,7 @@ func save_door():
 	room2.update()
 
 	Store.house.save_local()
-	
+eee	
 	_clear()
 
 func _clear():
@@ -140,8 +147,8 @@ func _clear():
 	room1 = null
 	room2 = null
 
-	App.controller_left.show_grid = true
-	App.controller_right.show_grid = true
+	App.controller_left.show_grid = false
+	App.controller_right.show_grid = false
 
 	if room1_corner1 != null:
 		remove_child(room1_corner1)
