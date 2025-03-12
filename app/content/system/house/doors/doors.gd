@@ -139,7 +139,7 @@ func save_door():
 	room2.update()
 
 	Store.house.save_local()
-eee	
+	
 	_clear()
 
 func _clear():
