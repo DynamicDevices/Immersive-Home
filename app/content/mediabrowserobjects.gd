@@ -82,12 +82,12 @@ func on_player_ready(id, duration):
 		var width : int = int(resTextArray[0])
 		var height : int = int(resTextArray[1])
 		var hwfac = width*1.0/height
-		$VideoFrame/YellowMesh.scale.x = hwfac
+		#$VideoFrame/YellowMesh.scale.x = hwfac
 		androidcompositionlayer.quad_size.x = androidcompositionlayer.quad_size.y*hwfac
 		print("trying to select res with width: ", width, " and height: ", height)
 		exoplayer.setResolution(exoplayerid, width, height)
 	if pauseatstart:
-		exoplayer.pause()
+		exoplayer.pause(exoplayerid)
 		$VideoFrame/PlayVideoButton.visible = true
 		$VideoFrame/PlayVideoButton.disabled = false
 

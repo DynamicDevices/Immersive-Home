@@ -31,7 +31,7 @@ size = Vector3(0.5, 0.3, 0.01)
 
 [node name="Station" type="StaticBody3D" groups=["DD_TutorialItems"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00218351, 0.000727355, -5.97239e-05)
-collision_layer = 6
+collision_layer = 7
 collision_mask = 0
 script = ExtResource("1_ohljc")
 
