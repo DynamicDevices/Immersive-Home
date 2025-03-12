@@ -1,7 +1,7 @@
 extends StoreClass
 const StoreClass = preload ("./store.gd")
 
-const device1 = {"name":"Stations", "id":"abcabcabcabc", "entities":[
+const device1 = {"name":"Offline", "id":"abcabcabcabc", "entities":[
 			{"name":"chevron", "id":"chevron.three"},
 			{"name":"ent", "id":"button.three"},
 			{"name":"station", "id":"station.three"},
