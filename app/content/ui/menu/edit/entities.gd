@@ -1,6 +1,6 @@
 extends Node3D
 
-signal on_select_entity(entity_id)
+signal on_select_entity(entity)
 signal on_back()
 
 const EntityScene = preload ("entity.tscn")
@@ -62,11 +62,11 @@ func _ready():
 		print("visible_entities ", visible_entities)
 		for entity in visible_entities.value:
 			print("vv ", entity)
-			var entity_node=EntityScene.instantiate()
-			entity_node.icon=EntityFactory.get_entity_icon(entity["id"].split(".")[0])
-			entity_node.text=entity["name"]
+			var entity_node = EntityScene.instantiate()
+			entity_node.icon = EntityFactory.get_entity_icon(entity["id"].split(".")[0])
+			entity_node.text = entity["name"]
 			entity_node.on_select.connect(func():
-				on_select_entity.emit(entity["id"])
+				on_select_entity.emit(entity)
 			)
 			entity_container.add_child(entity_node)
 

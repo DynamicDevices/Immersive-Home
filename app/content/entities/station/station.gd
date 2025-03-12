@@ -44,9 +44,10 @@ func _ready():
 	get_node("/root/Main/").reset.connect(_reset)
 		
 	if var_to_str(station_text.text).contains(" "):
-		station_name = var_to_str(station_text.text).split(" ",1)[0]
+		station_name = var_to_str(station_text.text).split(" ", 1)[0]
 	else:
 		station_name = var_to_str(station_text.text)
+	
 	
 	# These following things need to wait for everything to get loaded,
 	# so i've added a manual delay for now. - PCJ
@@ -155,14 +156,6 @@ func _on_next_station_input_on_text_changed(text: String) -> void:
 	if get_node("/root/Main/" + text) != get_node("/root/Main/") and get_node("/root/Main/" + text) != null:
 		next_station = get_node("/root/Main/" + text)
 		next_station._state_update(self)
-
-func station_update(origin: Variant, name_search: Variant) -> void:
-	print("we got here!!!")
-	if (name_search == station_name):
-		print("next station set!")
-		origin.next_station = self
-		origin._state_update()
-		previous_station = origin
 
 func _dev_state_changed(value):
 	text_edit_button.visible = value
