@@ -18,6 +18,7 @@ const Entity = preload ("res://content/entities/entity.gd")
 
 @onready var mini_view_button = $Palm/QuickActions/MiniView
 @onready var reset_button = $Palm/QuickActions/Reset
+@onready var compass_button = $Palm/QuickActions/Compass
 
 @onready var palm = $Palm
 @onready var ray: RayCast3D = $Raycast

@@ -108,6 +108,7 @@ func close():
 	if next_station != null:
 		get_node("/root/Main/MediaBrowserObjects").stopvideo()
 		next_station.activate($KeyboardPlace.global_position)
+		App.controller_right.get_node("hand_r/Compass Base").get_script().set_target(next_station)
 
 func _reset():
 	visible = true
@@ -118,6 +119,7 @@ func _state_update() -> void:
 	if next_station != null:
 		station_icon.visible = true
 		close_button.label = "forward"
+		App.controller_right.get_node("hand_r/Compass Base").get_script().set_target(self)
 	else:
 		station_icon.visible = false
 		close_button.label = "done"
