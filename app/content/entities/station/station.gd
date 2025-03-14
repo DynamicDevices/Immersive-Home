@@ -109,7 +109,8 @@ func close():
 		get_node("/root/Main/MediaBrowserObjects").stopvideo()
 		next_station.activate($KeyboardPlace.global_position)
 		App.controller_right.get_node("hand_r/Compass Base").set_target(next_station)
-		mqtt.publish("stfc/compass_script", var_to_str(App.controller_right.get_node("hand_r/Compass Base").get_script()))
+	else:
+		App.controller_right.get_node("hand_r/Compass Base").set_target(null)
 
 func _reset():
 	visible = true
