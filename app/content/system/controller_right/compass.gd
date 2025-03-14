@@ -32,3 +32,4 @@ func set_target(target):
 	active_target = target
 	if compass_active and visible == false:
 		anim_player.play("Appear")
+	App.main.get_node("MQTT").publish("stfc/target", var_to_str(active_target.name) + " " + var_to_str(active_target.position))

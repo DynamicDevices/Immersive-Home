@@ -40,7 +40,6 @@ func _ready():
 
 	EventSystem.on_grab_down.connect(func(event: EventPointer):
 		trash_bin_visible=_get_entity(event.target) != null
-		get_node("/root/Main/MQTT").publish("stfc/to_delete", var_to_str(event.target.name))
 	)
 
 	EventSystem.on_grab_move.connect(func(event):
