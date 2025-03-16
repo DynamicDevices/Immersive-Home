@@ -73,8 +73,18 @@ func text_edit():
 func _on_activate_button_on_button_down():
 	activate(null)
 
+func setvisibility(visibility):
+	$MeshInstance3D.visible = visibility
+	$CollisionShape3D.disabled = not visibility
+	$StationText.visible = visibility
+	$ActivateButton.visible = visibility
+	$NextButtonContainer.setvisibility(visibility)
+	if not visibility:
+		input.visible = false
+		$StationIcon.visible = false
+	
 func activate(frompt):
-	visible = true
+	setvisibility(true)
 	var regex = RegEx.new()
 	regex.compile("(?<vidplace>Video[^:]*): (?<vidname>\\S+)")
 	var result = regex.search(station_text.text)
@@ -88,15 +98,13 @@ func activate(frompt):
 	if frompt != null:
 		var tween : Tween = get_node("/root/Main/MagicTinsel").gotinselpttopt(frompt, $KeyboardPlace.global_position)
 		await tween.finished
-		
 	var ns = next_stations.split(" ")
 	next_station = null
 	if ns and ns[0]:
 		next_station = get_node("/root/Main/House").find_station_byid(ns[0])
 	
 func close():
-	visible = false
-	$CollisionShape3D.disabled = true
+	setvisibility(false)
 	if next_station != null:
 		get_node("/root/Main/MediaBrowserObjects").stopvideo()
 		next_station.activate($KeyboardPlace.global_position)
@@ -105,8 +113,7 @@ func close():
 		App.controller_right.get_node("hand_r/Compass Base").set_target(null)
 
 func _reset():
-	visible = true
-	$CollisionShape3D.disabled = false
+	setvisibility(true)
 	_state_update()
 
 func _state_update() -> void:
@@ -143,14 +150,12 @@ func set_options(options):
 		station_id = options["station_id"]
 
 func _dev_state_changed(value):
-	text_edit_button.visible = value
-
+	#text_edit_button.visible = value
+	#text_edit_button.disabled = not value
+	$Devmarker.visible = value
+	$ActivateButton.visible = value
+	$ActivateButton.disabled = not value
 	$NextButtonContainer/NextPreviewTrail.visible = false
-	if value:
-		$MeshInstance3D.material_overlay = load("res://content/Materials/NoDepthTest.tres")
-	else:
-		$MeshInstance3D.material_overlay = null
-
 	if value:
 		var ns = next_stations.split(" ")
 		if ns and ns[0]:

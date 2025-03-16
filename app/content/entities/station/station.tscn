@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cs4ytsxrm4kjw"]
+[gd_scene load_steps=14 format=3 uid="uid://cs4ytsxrm4kjw"]
 
 [ext_resource type="Script" uid="uid://ep12y2470fcm" path="res://content/entities/station/station.gd" id="1_ohljc"]
 [ext_resource type="Shader" uid="uid://dggseju3g4for" path="res://content/ui/components/panel/glass.gdshader" id="2_vbvi2"]
@@ -8,6 +8,16 @@
 [ext_resource type="Script" uid="uid://bg6vc81m8fuka" path="res://content/functions/camera_follower.gd" id="5_u4dbc"]
 [ext_resource type="Script" uid="uid://tquknum0fs5j" path="res://content/functions/movable.gd" id="6_vtooc"]
 [ext_resource type="PackedScene" uid="uid://52r38nw3mvfh" path="res://content/ui/components/next_button/next_button_container.tscn" id="8_qj8vf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qj8vf"]
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(1, 0.34902, 1, 0.705882)
+
+[sub_resource type="QuadMesh" id="QuadMesh_7n2ns"]
+material = SubResource("StandardMaterial3D_qj8vf")
+size = Vector2(0.5, 0.03)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m3w2u"]
 resource_local_to_scene = true
@@ -35,6 +45,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00218351, 0.000727355, -5.9
 collision_layer = 7
 collision_mask = 0
 script = ExtResource("1_ohljc")
+
+[node name="Devmarker" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.180436, 0)
+mesh = SubResource("QuadMesh_7n2ns")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000690326, 0)
@@ -78,8 +92,10 @@ width = 470.0
 
 [node name="TextEditButton" parent="." instance=ExtResource("3_qj8vf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.228175, 0.181337, 0.001)
+visible = false
 label = "edit"
 icon = true
+disabled = true
 
 [node name="CameraFollower" type="Node" parent="."]
 script = ExtResource("5_u4dbc")
@@ -104,7 +120,7 @@ transform = Transform3D(1, 0, 0, 0, 0.995639, -0.0932916, 0, 0.0932916, 0.995639
 transform = Transform3D(0.975296, 0, -0.220902, 0, 1, 0, 0.220902, 0, 0.975296, 0.47049, 0, 0)
 
 [node name="ActivateButton" parent="." instance=ExtResource("3_qj8vf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.201408, -0.109958, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.158086, 0.179655, 0)
 label = "Activate"
 
 [node name="NextButtonContainer" parent="." instance=ExtResource("8_qj8vf")]
