@@ -156,8 +156,8 @@ func _dev_state_changed(value):
 		if ns and ns[0]:
 			var lnext_station = get_node("/root/Main/House").find_station_byid(ns[0])
 			if lnext_station:
-				var frompt = $NextButtonContainer.global_position
-				var topt = lnext_station.get_node("NextButtonContainer/NextButton").global_position
+				var frompt = $NextButtonContainer/NextButton.global_position
+				var topt = lnext_station.global_position
 				$NextButtonContainer/NextPreviewTrail.look_at_from_position((frompt + topt)*0.5, topt)
 				$NextButtonContainer/NextPreviewTrail.scale.z = (frompt - topt).length()
 				$NextButtonContainer/NextPreviewTrail.visible = true
