@@ -4,7 +4,7 @@ const Entity = preload ("../entity.gd")
 
 @onready var station_node = preload("res://content/entities/station/station.tscn")
 @onready var text_edit_button = $TextEditButton
-@onready var close_button = $CloseButton
+@onready var close_button = $NextButtonContainer/NextButton
 @onready var input = $Input
 @onready var station_text = $StationText
 @onready var station_icon = $StationIcon
@@ -29,13 +29,7 @@ func _ready():
 	# Our new text edit button
 	text_edit_button.on_button_down.connect(text_edit)
 	
-	get_node("/root/Main/").dev_state_changed.connect(func(value):
-		if value:
-			$MeshInstance3D.material_overlay = load("res://content/Materials/NoDepthTest.tres")
-		else:
-			$MeshInstance3D.material_overlay = null
-		
-	)
+	get_node("/root/Main/").dev_state_changed.connect(_dev_state_changed)
 	R.effect(func(_arg):
 		if station_text_R.value != null: 
 			station_text.text = station_text_R.value
@@ -128,15 +122,11 @@ func _state_update() -> void:
 	if previous_station != null and previous_station.station_icon.visible:
 		station_icon.visible = false
 
-
 # Change our body text with the input element we just brought up
 func _on_input_on_text_changed(text: String) -> void:
 	station_text.text = text
 	#_text_R.set_state(entity_id, "_text", {"_text": text})
 	station_text_R.value = text
-
-func _on_next__button_on_toggled(active: bool) -> void:
-	$NextStationInput.visibile = active
 
 func get_options():
 	return {
@@ -156,10 +146,22 @@ func set_options(options):
 	if options.has("station_id"):
 		station_id = options["station_id"]
 
-func _on_next_station_input_on_text_changed(text: String) -> void:
-	if get_node("/root/Main/" + text) != get_node("/root/Main/") and get_node("/root/Main/" + text) != null:
-		next_station = get_node("/root/Main/" + text)
-		next_station._state_update(self)
-
 func _dev_state_changed(value):
 	text_edit_button.visible = value
+
+	$NextButtonContainer/NextPreviewTrail.visible = false
+	if value:
+		$MeshInstance3D.material_overlay = load("res://content/Materials/NoDepthTest.tres")
+	else:
+		$MeshInstance3D.material_overlay = null
+
+	if value:
+		var ns = next_stations.split(" ")
+		if ns and ns[0]:
+			var lnext_station = get_node("/root/Main/House").find_station_byid(ns[0])
+			if lnext_station:
+				var frompt = $NextButtonContainer.global_position
+				var topt = lnext_station.get_node("NextButtonContainer/NextButton").global_position
+				$NextButtonContainer/NextPreviewTrail.look_at_from_position((frompt + topt)*0.5, topt)
+				$NextButtonContainer/NextPreviewTrail.scale.z = (frompt - topt).length()
+				$NextButtonContainer/NextPreviewTrail.visible = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cs4ytsxrm4kjw"]
+[gd_scene load_steps=13 format=3 uid="uid://cs4ytsxrm4kjw"]
 
 [ext_resource type="Script" uid="uid://ep12y2470fcm" path="res://content/entities/station/station.gd" id="1_ohljc"]
 [ext_resource type="Shader" uid="uid://dggseju3g4for" path="res://content/ui/components/panel/glass.gdshader" id="2_vbvi2"]
@@ -28,6 +28,15 @@ size = Vector2(0.5, 0.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nfwtf"]
 size = Vector3(0.5, 0.3, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vbvi2"]
+transparency = 1
+no_depth_test = true
+albedo_color = Color(0.733333, 0.701961, 0.32549, 0.635294)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qj8vf"]
+material = SubResource("StandardMaterial3D_vbvi2")
+size = Vector3(0.02, 0.02, 1)
 
 [node name="Station" type="StaticBody3D" groups=["DD_TutorialItems"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00218351, 0.000727355, -5.97239e-05)
@@ -80,23 +89,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.228175, 0.181337, 0.001)
 label = "edit"
 icon = true
 
-[node name="CloseButton" parent="." instance=ExtResource("3_qj8vf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21, -0.11, 0.001)
-label = "done"
-icon = true
-
-[node name="CloseLabel" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18, -0.11, 0.001)
-pixel_size = 0.001
-render_priority = 30
-outline_render_priority = 29
-text = "Understood"
-font_size = 18
-outline_size = 0
-horizontal_alignment = 2
-autowrap_mode = 3
-width = 470.0
-
 [node name="CameraFollower" type="Node" parent="."]
 script = ExtResource("5_u4dbc")
 enabled = null
@@ -122,6 +114,29 @@ transform = Transform3D(0.975296, 0, -0.220902, 0, 1, 0, 0.220902, 0, 0.975296, 
 [node name="ActivateButton" parent="." instance=ExtResource("3_qj8vf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.201408, -0.109958, 0)
 label = "Activate"
+
+[node name="NextButtonContainer" type="Node3D" parent="."]
+
+[node name="NextButton" parent="NextButtonContainer" instance=ExtResource("3_qj8vf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21, -0.11, 0.001)
+label = "done"
+icon = true
+
+[node name="NextLabel" type="Label3D" parent="NextButtonContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18, -0.11, 0.001)
+pixel_size = 0.001
+render_priority = 30
+outline_render_priority = 29
+text = "Understood"
+font_size = 18
+outline_size = 0
+horizontal_alignment = 2
+autowrap_mode = 3
+width = 470.0
+
+[node name="NextPreviewTrail" type="MeshInstance3D" parent="NextButtonContainer"]
+visible = false
+mesh = SubResource("BoxMesh_qj8vf")
 
 [connection signal="on_text_changed" from="Input" to="." method="_on_input_on_text_changed"]
 [connection signal="on_button_down" from="ActivateButton" to="." method="_on_activate_button_on_button_down"]
