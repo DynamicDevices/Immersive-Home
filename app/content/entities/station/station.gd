@@ -63,7 +63,6 @@ func _ready():
 	if previous_station != null and previous_station.station_icon.visible:
 		station_icon.visible = false
 	mqtt = get_node("/root/Main/MQTT")
-	text_edit_button.visible = Store.settings.state.dev_state
 
 # When we bring up/hide our input that we use to change the body text
 func text_edit():
@@ -144,6 +143,7 @@ func set_options(options):
 		station_text_R.value = options["station_text"]
 	if options.has("station_name"):
 		station_name = options["station_name"]
+		$FriendlyName.text = station_name
 	if options.has("next_stations"):
 		next_stations = options["next_stations"]
 	if options.has("station_id"):
@@ -156,7 +156,9 @@ func _dev_state_changed(value):
 	$ActivateButton.visible = value
 	$ActivateButton.disabled = not value
 	$NextButtonContainer/NextPreviewTrail.visible = false
+	$FriendlyName.visible = value
 	if value:
+		$FriendlyName.text = station_name
 		var ns = next_stations.split(" ")
 		if ns and ns[0]:
 			var lnext_station = get_node("/root/Main/House").find_station_byid(ns[0])

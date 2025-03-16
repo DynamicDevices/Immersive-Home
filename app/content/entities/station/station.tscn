@@ -50,6 +50,27 @@ script = ExtResource("1_ohljc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.180436, 0)
 mesh = SubResource("QuadMesh_7n2ns")
 
+[node name="TextEditButton" parent="." instance=ExtResource("3_qj8vf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.228175, 0.181337, 0.001)
+visible = false
+label = "edit"
+icon = true
+disabled = true
+
+[node name="Input" parent="." instance=ExtResource("4_7n2ns")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.126, 0.181, 0)
+visible = false
+
+[node name="ActivateButton" parent="." instance=ExtResource("3_qj8vf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00295657, 0.179655, 0)
+label = "Activate"
+
+[node name="FriendlyName" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0963441, 0.182963, 0)
+pixel_size = 0.001
+text = "Station name"
+font_size = 18
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000690326, 0)
 material_override = SubResource("ShaderMaterial_m3w2u")
@@ -90,20 +111,9 @@ vertical_alignment = 0
 autowrap_mode = 3
 width = 470.0
 
-[node name="TextEditButton" parent="." instance=ExtResource("3_qj8vf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.228175, 0.181337, 0.001)
-visible = false
-label = "edit"
-icon = true
-disabled = true
-
 [node name="CameraFollower" type="Node" parent="."]
 script = ExtResource("5_u4dbc")
 enabled = null
-
-[node name="Input" parent="." instance=ExtResource("4_7n2ns")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.126, 0.181, 0)
-visible = false
 
 [node name="Movable" type="Node" parent="."]
 script = ExtResource("6_vtooc")
@@ -118,10 +128,6 @@ transform = Transform3D(1, 0, 0, 0, 0.995639, -0.0932916, 0, 0.0932916, 0.995639
 
 [node name="VideoPlaceRight" type="Marker3D" parent="."]
 transform = Transform3D(0.975296, 0, -0.220902, 0, 1, 0, 0.220902, 0, 0.975296, 0.47049, 0, 0)
-
-[node name="ActivateButton" parent="." instance=ExtResource("3_qj8vf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.158086, 0.179655, 0)
-label = "Activate"
 
 [node name="NextButtonContainer" parent="." instance=ExtResource("8_qj8vf")]
 
