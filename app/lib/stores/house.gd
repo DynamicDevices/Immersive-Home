@@ -33,12 +33,13 @@ func _init():
 		"align_position2": Vector3()
 	})
 
-func clear():
-	self.state.rooms = []
+func clearhouse(entitiesonly):
 	self.state.entities = []
-	self.state["doors"] = []
-	self.state.align_position1 = Vector3()
-	self.state.align_position2 = Vector3()
+	if not entitiesonly:
+		self.state.rooms = []
+		self.state["doors"] = []
+		self.state.align_position1 = Vector3()
+		self.state.align_position2 = Vector3()
 
 func get_room(name):
 	for room in self.state.rooms:

@@ -49,6 +49,21 @@ horizontal_alignment = 0
 autowrap_mode = 3
 width = 150.0
 
+[node name="clearEntitiesLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20863, -0.272675, 0)
+pixel_size = 0.001
+render_priority = 15
+outline_render_priority = 14
+text = "Clear Ents:"
+font_size = 18
+outline_size = 0
+horizontal_alignment = 0
+
+[node name="ClearEntities" parent="." instance=ExtResource("1_y2t0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.334189, -0.282675, 0)
+label = "close"
+icon = true
+
 [node name="SaveSlot1" parent="." instance=ExtResource("1_y2t0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0739233, -0.126, 0)
 label = "EMPTY"

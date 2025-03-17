@@ -25,6 +25,7 @@ func _ready():
 		elif typeof(entity_instance) == TYPE_BOOL&&entity == false:
 			EventSystem.notify("Entity is not in Room", EventNotify.Type.INFO)
 		elif entity["id"].split(".")[0] == "text": # station entity
+			entity_instance.station_name = entity.name
 			entity_instance.station_text_R.value = entity.name
 	)
 

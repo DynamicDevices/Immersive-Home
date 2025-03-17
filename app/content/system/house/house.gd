@@ -182,6 +182,16 @@ func create_entity(entity_id: String, entity_position: Vector3, type=null):
 
 	return entity
 
+func allstationsoptions():
+	var res = [ ]
+	for room in get_rooms():
+		for entity in room.get_node("Entities").get_children():
+			if entity and entity.has_method("get_options"):
+				var options = entity.get_options()
+				if options.has("station_id"):
+					res.append(options)
+	return res
+
 func find_station_byid(stationid):
 	for room in get_rooms():
 		for entity in room.get_node("Entities").get_children():

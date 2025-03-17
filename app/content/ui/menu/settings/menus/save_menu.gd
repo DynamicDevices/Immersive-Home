@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var save = $Save
 @onready var clear_save = $ClearSave
+@onready var clear_entities = $ClearEntities
 
 func _ready():
 
@@ -10,6 +11,11 @@ func _ready():
 	)
 
 	clear_save.on_button_down.connect(func():
-		Store.house.clear()
+		Store.house.clearhouse(false)
+		App.house.update_house()
+	)
+
+	clear_entities.on_button_down.connect(func():
+		Store.house.clearhouse(true)
 		App.house.update_house()
 	)

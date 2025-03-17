@@ -4,7 +4,6 @@ const Entity = preload ("../entity.gd")
 
 @onready var station_node = preload("res://content/entities/station/station.tscn")
 @onready var text_edit_button = $TextEditButton
-@onready var close_button = $NextButtonContainer/NextButton
 @onready var input = $Input
 @onready var station_text = $StationText
 @onready var station_icon = $StationIcon
@@ -18,13 +17,17 @@ var mqtt = null
 var dev_state = false
 var station_id = "unknown"
 
+var vidname = ""
+var vidplace = null
+var nextstations = [ ]
+
 var event = EventPointer
 
 func _ready():
 	super()
 	station_icon.visible = false
-	
-	close_button.on_button_down.connect(close)
+	$NextButtons/NextButtonContainer/NextButton.on_button_down.connect(nextbuttondown.bind(0))
+	$NextButtons/NextButtonContainer2/NextButton.on_button_down.connect(nextbuttondown.bind(1))
 	
 	# Our new text edit button
 	text_edit_button.on_button_down.connect(text_edit)
@@ -36,12 +39,6 @@ func _ready():
 	)
 	
 	get_node("/root/Main/").reset.connect(_reset)
-		
-	if var_to_str(station_text.text).contains(" "):
-		station_name = var_to_str(station_text.text).split(" ", 1)[0]
-	else:
-		station_name = var_to_str(station_text.text)
-	
 	
 	# These following things need to wait for everything to get loaded,
 	# so i've added a manual delay for now. - PCJ
@@ -77,36 +74,85 @@ func setvisibility(visibility):
 	$CollisionShape3D.disabled = not visibility
 	$StationText.visible = visibility
 	$ActivateButton.visible = visibility
-	$NextButtonContainer.setvisibility(visibility)
 	if not visibility:
 		input.visible = false
 		$StationIcon.visible = false
+	processnextbuttonvisibilities(visibility)
 	
-func activate(frompt):
-	setvisibility(true)
+func processstationtext():
+	nextstations = [ ]
+	var ns = next_stations.split(" ")
+	for nsi in ns:
+		if nsi:
+			var nextstation = get_node("/root/Main/House").find_station_byid(nsi)
+			var stationname = nextstation.station_name if nextstation else ""
+			nextstations.append({"station":nextstation, "stationname":stationname, 
+								 "label":"Next", "icon":"arrow_forward", "stationid":nsi})
+	var text = station_text_R.value
+	vidname = ""
+	vidplace = null
 	var regex = RegEx.new()
-	regex.compile("(?<vidplace>Video[^:]*): (?<vidname>\\S+)")
-	var result = regex.search(station_text.text)
-	if result:
-		var vidplace = get_node_or_null(result.get_string("vidplace"))
-		if not vidplace:
-			print("Vid place ", result.get_string("vidplace"), " not found")
-			vidplace = get_node(result.get_string("VideoPlaceTop"))
-		var vidname = result.get_string("vidname")
+	regex.compile("(?<coloncommand>Video[^:]*|NextButtonDef): (?<colonvalue>\\S+)\\s*")
+	var result = regex.search_all(text)
+	for cc in result:
+		var coloncommand = cc.get_string("coloncommand")
+		var colonvalue = cc.get_string("colonvalue")
+		if coloncommand.begins_with("Video"):
+			vidname = cc.get_string("colonvalue")
+			vidplace = get_node_or_null(coloncommand)
+			if not vidplace:
+				print("Vid place ", coloncommand, " not found")
+				vidplace = get_node("VideoPlaceTop")
+		elif coloncommand == "NextButtonDef":
+			var nextbuttonval = colonvalue.split(",")
+			#print("NextButtonDef working with ", nextbuttonval)
+			#var DD = get_node("/root/Main/House").allstationsoptions()
+			#print(DD)
+			if len(nextbuttonval) == 3:
+				for nss in nextstations:
+					if len(nextbuttonval[0]) == 0 or nss["stationname"].find(nextbuttonval[0]) != -1:
+						if nextbuttonval[1]:
+							nss["label"] = nextbuttonval[1]
+						if nextbuttonval[2]:
+							nss["icon"] = nextbuttonval[2]
+			else:
+				print("NextButtonDef not 3 csvs: ", colonvalue)
+
+		else:
+			print("unknown colon command: ", coloncommand, ": ", colonvalue)
+
+	station_text.text = text  # should be text.subs(regex, "")
+
+func processnextbuttonvisibilities(visibility):
+	for i in range($NextButtons.get_child_count()):
+		var nextbuttoncontainer = $NextButtons.get_child(i)
+		if i < len(nextstations) and visibility:
+			nextbuttoncontainer.updatenextstationdata(nextstations[i])
+		else:
+			nextbuttoncontainer.updatenextstationdata(null)
+
+func activate(frompt):
+	processstationtext()
+	setvisibility(true)
+	if vidname and vidplace:
 		get_node("/root/Main/MediaBrowserObjects").playvideo(vidname, vidplace.global_transform, true)
+
 	if frompt != null:
 		var tween : Tween = get_node("/root/Main/MagicTinsel").gotinselpttopt(frompt, $KeyboardPlace.global_position)
 		await tween.finished
+
 	var ns = next_stations.split(" ")
 	next_station = null
 	if ns and ns[0]:
 		next_station = get_node("/root/Main/House").find_station_byid(ns[0])
 	
-func close():
+func nextbuttondown(nextbuttonnumber):
+	var nss = nextstations[nextbuttonnumber]["station"]
 	setvisibility(false)
-	if next_station != null:
+	if nss != null:
 		get_node("/root/Main/MediaBrowserObjects").stopvideo()
-		next_station.activate($KeyboardPlace.global_position)
+		var bpos = ($NextButtons/NextButtonContainer/NextButton.global_position if nextbuttonnumber == 0 else $NextButtons/NextButtonContainer2/NextButton.global_position)
+		nss.activate($KeyboardPlace.global_position)
 		App.controller_right.get_node("hand_r/Compass Base").set_target(next_station)
 	else:
 		App.controller_right.get_node("hand_r/Compass Base").set_target(null)
@@ -155,16 +201,12 @@ func _dev_state_changed(value):
 	$Devmarker.visible = value
 	$ActivateButton.visible = value
 	$ActivateButton.disabled = not value
-	$NextButtonContainer/NextPreviewTrail.visible = false
 	$FriendlyName.visible = value
 	if value:
 		$FriendlyName.text = station_name
-		var ns = next_stations.split(" ")
-		if ns and ns[0]:
-			var lnext_station = get_node("/root/Main/House").find_station_byid(ns[0])
-			if lnext_station:
-				var frompt = $NextButtonContainer/NextButton.global_position
-				var topt = lnext_station.global_position
-				$NextButtonContainer/NextPreviewTrail.look_at_from_position((frompt + topt)*0.5, topt)
-				$NextButtonContainer/NextPreviewTrail.scale.z = (frompt - topt).length()
-				$NextButtonContainer/NextPreviewTrail.visible = true
+		processstationtext()
+	processnextbuttonvisibilities($MeshInstance3D.visible)
+	for i in range(min(len(nextstations), $NextButtons.get_child_count())):
+		var nss = nextstations[i] if value else null
+		$NextButtons.get_child(i).setpreviewtrail(nss)
+	
