@@ -191,6 +191,14 @@ func allstationsoptions():
 				if options.has("station_id"):
 					res.append(options)
 	return res
+	
+func find_station_byname(ns):
+	for room in get_rooms():
+		for entity in room.get_node("Entities").get_children():
+			if entity.entity_id.split(".")[0] == "text":
+				if entity.station_name == ns:
+					return entity
+	return null
 
 func find_station_byid(stationid):
 	for room in get_rooms():

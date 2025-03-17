@@ -27,13 +27,6 @@ func _ready():
 	# this is where we want to have backed up the text
 	set_stateevent(stateInfo)
 
-	$NextStations/Next1.on_button_down.connect(func():
-		nextstation(1)
-	)
-	$NextStations/Next2.on_button_down.connect(func():
-		nextstation(2)
-	)
-	
 	$CollisionShape3D.scale = panel.scale
 	$CollisionShape3D.transform = panel.transform
 	
@@ -47,22 +40,7 @@ func _ready():
 #	print("panel size: " + var_to_str(merged_aabb.size * 2))
 
 
-func nextstation(n):
-	var nextstation = null
-	var nextstationid = "text."+next_stations.split(" ")[n-1]
-	for room in get_node("/root/Main/House/Rooms").get_children():
-		for entity in room.get_node("Entities").get_children():
-			if nextstationid == entity.entity_id:
-				nextstation = entity
-	var p0 = get_node("KeyboardPlace").global_position
-	var p1 = p0 + Vector3(0,4,0)
-	if nextstation:
-		p1 = nextstation.get_node("KeyboardPlace").global_position
-	get_node("/root/Main/MagicTinsel").gotinselpttopt(p0, p1)
 
-
-
-				
 func get_options():
 	return {
 		"longtext": long_text.text,

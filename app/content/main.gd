@@ -73,6 +73,11 @@ func _ready():
 	camera_position = camera.position
 	XR_origin_position = xr_origin.position
 
+	var startstation = $House.find_station_byname("start here")
+	if startstation:
+		startstation.activate(null, true)
+	
+
 func start_setup_flow():
 	var onboarding = OnboardingScene.instantiate()
 	add_child(onboarding)

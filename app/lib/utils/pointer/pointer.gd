@@ -88,9 +88,10 @@ func released(type: Initiator.EventType):
 				moved = false
 
 func _emit_event(type: String, target):
-	var event = EventPointer.new()
-	event.initiator = initiator
-	event.target = target
-	event.ray = ray
+	if is_instance_valid(target):
+		var event = EventPointer.new()
+		event.initiator = initiator
+		event.target = target
+		event.ray = ray
 
-	EventSystem.emit(type, event)
+		EventSystem.emit(type, event)

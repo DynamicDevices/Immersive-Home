@@ -180,6 +180,7 @@ script = ExtResource("17_aulbh")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="MagicTinsel"]
 stream = ExtResource("18_50h8v")
+volume_db = -9.351
 
 [node name="MediaBrowserObjects" type="Node3D" parent="."]
 script = ExtResource("18_531rh")

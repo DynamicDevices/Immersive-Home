@@ -114,7 +114,7 @@ func stopvideo():
 		androidcompositionlayer.visible = false
 		vidstatus = VideoStatus.EMPTY
 		if exoplayer:
-			exoplayer.stop(exoplayerid)
+			exoplayer.releaseExoPlayer(exoplayerid)
 
 func updateplaybackposition():
 	if vidstatus == VideoStatus.WORKING:

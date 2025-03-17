@@ -67,13 +67,12 @@ func text_edit():
 	_state_update()
 
 func _on_activate_button_on_button_down():
-	activate(null)
+	activate(null, true)
 
 func setvisibility(visibility):
 	$MeshInstance3D.visible = visibility
 	$CollisionShape3D.disabled = not visibility
 	$StationText.visible = visibility
-	$ActivateButton.visible = visibility
 	if not visibility:
 		input.visible = false
 		$StationIcon.visible = false
@@ -131,7 +130,14 @@ func processnextbuttonvisibilities(visibility):
 		else:
 			nextbuttoncontainer.updatenextstationdata(null)
 
-func activate(frompt):
+func activate(frompt, hiderest):
+	if hiderest:
+		for room in get_node("/root/Main/House/Rooms").get_children():
+			for entity in room.get_node("Entities").get_children():
+				if entity.entity_id.split(".")[0] == "text": # station entity
+					if entity != self:
+						entity.setvisibility(false)
+
 	processstationtext()
 	setvisibility(true)
 	if vidname and vidplace:
@@ -152,7 +158,7 @@ func nextbuttondown(nextbuttonnumber):
 	if nss != null:
 		get_node("/root/Main/MediaBrowserObjects").stopvideo()
 		var bpos = ($NextButtons/NextButtonContainer/NextButton.global_position if nextbuttonnumber == 0 else $NextButtons/NextButtonContainer2/NextButton.global_position)
-		nss.activate($KeyboardPlace.global_position)
+		nss.activate(bpos, false)
 		App.controller_right.get_node("hand_r/Compass Base").set_target(next_station)
 	else:
 		App.controller_right.get_node("hand_r/Compass Base").set_target(null)
