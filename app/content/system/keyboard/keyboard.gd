@@ -146,8 +146,4 @@ func _emit_event(type: String, key: Key):
 	var event = EventKey.new()
 	event.key = key
 	event.shift_pressed = caps
-	
 	EventSystem.emit(type, event)
-
-	if key == KEY_ASCIITILDE and type == "key_down":
-		get_node("../MagicTinsel").gotinsel(global_transform)
