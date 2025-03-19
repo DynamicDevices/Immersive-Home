@@ -119,7 +119,6 @@ func processstationtext():
 
 		else:
 			print("unknown colon command: ", coloncommand, ": ", colonvalue)
-
 	station_text.text = text  # should be text.subs(regex, "")
 
 func processnextbuttonvisibilities(visibility):
@@ -140,6 +139,17 @@ func activate(frompt, hiderest):
 
 	processstationtext()
 	setvisibility(true)
+
+	await get_tree().process_frame  
+	var laabb = $StationText.get_aabb()
+	if laabb:
+		print("sss ", laabb)
+		$MeshInstance3D.position = laabb.get_center() + Vector3($StationText.position.x, $StationText.position.y, 0.0)
+		$MeshInstance3D.mesh.size = Vector2(laabb.size.x+0.04, laabb.size.y+0.04)
+		$CollisionShape3D.position = $MeshInstance3D.position
+		$CollisionShape3D.shape.size = Vector3($MeshInstance3D.mesh.size.x, $MeshInstance3D.mesh.size.y, $CollisionShape3D.shape.size.z)
+		$NextButtons.position = $MeshInstance3D.position + Vector3($MeshInstance3D.mesh.size.x/2 - 0.02, -$MeshInstance3D.mesh.size.y/2 - 0.03, 0.0)
+
 	if vidname and vidplace:
 		get_node("/root/Main/MediaBrowserObjects").playvideo(vidname, vidplace.global_transform, true)
 

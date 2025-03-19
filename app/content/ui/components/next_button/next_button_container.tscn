@@ -16,12 +16,12 @@ size = Vector3(0.02, 0.02, 1)
 script = ExtResource("1_2ijs3")
 
 [node name="NextButton" parent="." instance=ExtResource("1_3jdak")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21, -0.11, 0.001)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.001)
 label = "arrow_forward"
 icon = true
 
 [node name="NextLabel" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18, -0.11, 0.001)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, 0.001)
 pixel_size = 0.001
 render_priority = 30
 outline_render_priority = 29
