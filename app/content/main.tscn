@@ -17,8 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="13_tu1bw"]
 [ext_resource type="PackedScene" uid="uid://ktm7k0co2o7l" path="res://addons/mqtt/mqtt.tscn" id="15_tu1bw"]
 [ext_resource type="PackedScene" uid="uid://ytah1xlxtsv0" path="res://assets/materials/magictinsel.tscn" id="16_lmrq8"]
-[ext_resource type="AudioStream" uid="uid://cjmai08b7rpek" path="res://assets/sound/fizzle.mp3" id="18_50h8v"]
 [ext_resource type="Script" uid="uid://cta77qg7aqv04" path="res://content/mediabrowserobjects.gd" id="18_531rh"]
+[ext_resource type="AudioStream" uid="uid://cqjbct8g0ajb8" path="res://assets/sound/wispTemp2.wav" id="18_htvu5"]
 [ext_resource type="PackedScene" uid="uid://dh774jqd7tuy7" path="res://content/mediabrowserbox.tscn" id="19_50h8v"]
 [ext_resource type="PackedScene" uid="uid://bsjqdvkt0u87c" path="res://content/ui/components/button/button.tscn" id="20_6f830"]
 [ext_resource type="Material" uid="uid://crycqex1ucj04" path="res://content/ui/components/panel/panel.material" id="20_htvu5"]
@@ -31,13 +31,13 @@ size = Vector3(0.01, 0.01, 20)
 resource_local_to_scene = true
 size = Vector2(1.5, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_htvu5"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_r22o6"]
 viewport_path = NodePath("Viewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efkdf"]
 transparency = 1
 cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_htvu5")
+albedo_texture = SubResource("ViewportTexture_r22o6")
 texture_filter = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_531rh"]
@@ -77,6 +77,8 @@ enable_passthrough = true
 
 [node name="XRCamera3D" parent="XROrigin3D" instance=ExtResource("3_rj4ac")]
 unique_name_in_owner = true
+doppler_tracking = 2
+fov = 37.8493
 
 [node name="HMD_Label" type="Label3D" parent="XROrigin3D/XRCamera3D"]
 transform = Transform3D(0.1, 0, 0, 0, 0.0967709, -0.0252069, 0, 0.0252069, 0.0967709, -0.071, -0.061, -0.151)
@@ -178,8 +180,9 @@ amount = 1000
 amount_ratio = 0.4475
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="MagicTinsel"]
-stream = ExtResource("18_50h8v")
-volume_db = -9.351
+stream = ExtResource("18_htvu5")
+volume_db = -19.741
+doppler_tracking = 2
 
 [node name="MediaBrowserObjects" type="Node3D" parent="."]
 script = ExtResource("18_531rh")
