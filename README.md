@@ -8,7 +8,7 @@ We could not have attempted this project in such a short time frame without star
 
 # Demonstration Video
 
-This is an example of supervising someone to refill the coffee machine in the [DoESLiverpool hackspace](https://doesliverpool.com/).
+This is an example of guiding someone to refill the coffee machine in the [DoESLiverpool hackspace](https://doesliverpool.com/).
 
 [![Making Coffee in AR](https://github.com/user-attachments/assets/c20b158d-0c3e-4a36-b9cd-3a809a6a7bd1)](http://www.youtube.com/watch?v=QzLRFOMqT2g "SafeAR mixed reality training demonstration: How to make coffee at DoES Liverpool")
 
@@ -18,9 +18,9 @@ This is an example of supervising someone to refill the coffee machine in the [D
 
 [Home Assistant](https://www.home-assistant.io/) is a huge modular home automation system that runs on an RaspberryPI.  [Immersive-Home](https://immersive-home.org/) is able to log into it to access its location-based sensors and controls and overlay them into Augmented Reality.
 
-## Godotengine
+## Godot engine
 
-The [Godot](https://godotengine.org/) is a free, lightweight open source Game Engine that supports Virtual Reality features such as pass-through cameras and hand-tracking.
+The [Godot](https://godotengine.org/) engine is a free, lightweight open source Game Engine that supports Virtual Reality features such as pass-through cameras and hand-tracking.
 
 ## Exoplayer plugin
 
@@ -34,4 +34,4 @@ The Meta Quest 3 Virtual Reality headset runs Android which means that many the 
 
 # Future work
 
-SafeAR/QuestWalk is looking for real world uses and applications that could pay for and drive its future development.  You could theoretically download it and try it out yourself, but given the necessary sketchiness of the prototype product made on this time scale, you will need our help.  Please contact [Dynamic Devices](https://www.dynamicdevices.co.uk/) for details.
+SafeAR/QuestWalk is looking for real world uses and applications that could pay for and drive its future development.  You could theoretically download it and try it out yourself, but given the necessary sketchiness of the prototype product made on this time scale, you will need our help. Please contact [Dynamic Devices](https://www.dynamicdevices.co.uk/) for details.
