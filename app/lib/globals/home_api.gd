@@ -132,7 +132,8 @@ func has_integration() -> bool:
 ## Updates the room position of the headset in the home automation system
 func update_room(room: String) -> void:
 	if has_connected() and api.has_method("hupdate_room"):
-		api.hupdate_room(room)
+		pass # not updating room to set the Quest Room
+		#api.hupdate_room(room)
 
 ## Returns the VoiceHandler if the adapter has a voice assistant
 func get_voice_assistant() -> VoiceAssistant:
