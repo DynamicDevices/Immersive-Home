@@ -36,7 +36,7 @@ func _ready():
 func update_initial_positions():
 	if App.main.is_node_ready() == false:
 		await App.main.ready
-	update_aligned_edge_from_corners()
+	update_align_reference()
 	#marker.global_transform = App.house.transform
 
 func get_marker_transform():
@@ -58,3 +58,10 @@ func update_aligned_edge_from_corners():
 func update_stored_align_reference():
 	Store.house.state.align_position1 = corner1.global_position
 	Store.house.state.align_position2 = corner2.global_position
+
+func bring_alignment_close():
+	var headcam = get_node("/root/Main").camera.global_transform
+	var vecfore = Vector3(-headcam.basis.z.x, 0, -headcam.basis.z.z).normalized()
+	var vec0 = Vector3(headcam.origin.x, max(0.1, headcam.origin.y - 1.0), headcam.origin.z)
+	corner1.global_position = vec0 + vecfore*1.1
+	update_aligned_edge_from_corners()

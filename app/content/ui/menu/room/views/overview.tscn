@@ -42,6 +42,12 @@ label = "copy_all"
 icon = true
 disabled = true
 
+[node name="BringClose" parent="." instance=ExtResource("1_fteh8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.248404, -0.12, 0)
+label = "subdirectory_arrow_left"
+icon = true
+disabled = true
+
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0210605, -0.0862666, 0.0120744)
 pixel_size = 0.001
@@ -79,6 +85,16 @@ text = "Apply"
 font_size = 15
 outline_size = 0
 
+[node name="Label3DApply2" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.251457, -0.167329, 0)
+pixel_size = 0.001
+render_priority = 15
+outline_render_priority = 14
+text = "Bring
+close"
+font_size = 15
+outline_size = 0
+
 [node name="Background" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 1.06581e-14, 0, -1.06581e-14, 1, 0.21, -0.16, 0)
 visible = false
@@ -89,3 +105,4 @@ skeleton = NodePath("../..")
 [connection signal="on_toggled" from="WallsButton" to="." method="_on_walls_button_on_toggled"]
 [connection signal="on_button_down" from="MoveAlignment" to="." method="_on_move_alignment_on_button_down"]
 [connection signal="on_button_down" from="ApplyAlignment" to="." method="_on_apply_alignment_on_button_down"]
+[connection signal="on_button_down" from="BringClose" to="." method="_on_bring_close_on_button_down"]

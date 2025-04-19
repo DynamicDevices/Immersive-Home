@@ -241,6 +241,9 @@ func move_alignment():
 	$AlignRefShadow.global_transform = 	align_reference.get_marker_transform()
 	Store.house.save_local()
 
+func bring_alignment_close():
+	align_reference.bring_alignment_close()
+
 func apply_alignment():
 	var align_transform = align_reference.global_transform
 	var applytransform = align_reference.get_marker_transform()*$AlignRefShadow.global_transform.inverse()
