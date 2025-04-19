@@ -54,6 +54,7 @@ shading_mode = 0
 albedo_color = Color(1, 1, 1, 0.431373)
 
 [node name="MagicTinsel" type="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0181408)
 cast_shadow = 0
 amount = 100
 amount_ratio = 0.4067

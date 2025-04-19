@@ -22,7 +22,7 @@ func _ready():
 		var entity_instance = App.house.create_entity(entity["id"], global_position)
 		if entity_instance == null:
 			EventSystem.notify("This Entity is not supported yet", EventNotify.Type.INFO)
-		elif typeof(entity_instance) == TYPE_BOOL&&entity == false:
+		elif typeof(entity_instance) == TYPE_BOOL&&entity_instance == false:
 			EventSystem.notify("Entity is not in Room", EventNotify.Type.INFO)
 		elif entity["id"].split(".")[0] == "text": # station entity
 			entity_instance.station_name = entity.name
