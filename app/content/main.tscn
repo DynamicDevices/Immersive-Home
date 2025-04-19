@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://eecv28y6jxk4"]
+[gd_scene load_steps=34 format=3 uid="uid://eecv28y6jxk4"]
 
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_i4c04"]
 [ext_resource type="Script" uid="uid://bw2xmng3ynp6g" path="res://content/main.gd" id="1_uvrd4"]
@@ -57,6 +57,11 @@ size = Vector2(0.6, 0.02)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r22o6"]
 albedo_color = Color(0.670588, 1, 1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_aywjo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t8h65"]
+cull_mode = 2
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_uvrd4")
@@ -220,6 +225,12 @@ label = "resume"
 icon = true
 disabled = true
 size = Vector3(0.1, 0.1, 0.01)
+
+[node name="PhotoMesh" type="MeshInstance3D" parent="MediaBrowserObjects/VideoFrame"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.0145928, 0, -0.0345023)
+visible = false
+mesh = SubResource("QuadMesh_aywjo")
+surface_material_override/0 = SubResource("StandardMaterial3D_t8h65")
 
 [node name="StaticBody3D" parent="MediaBrowserObjects" instance=ExtResource("19_50h8v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.66995, 1.50879, -5.0189)

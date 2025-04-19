@@ -47,14 +47,32 @@ func playvideo(vidname, globalplacement, lpauseatstart=false):
 			video_uri = fin.get_path_absolute()
 			fin.close()
 	print("video_uri ", video_uri)
-
+	$VideoFrame/MessageLabel.visible = false
 	$VideoFrame.visible = true
 	if globalplacement:
 		$VideoFrame.global_transform = globalplacement
+
+	if video_uri.ends_with(".jpg"):
+		$VideoFrame/VidLengthBar.visible = false
+		$VideoFrame/PlayVideoButton.visible = false
+		var image = Image.load_from_file(video_uri)
+		if not image:
+			$VideoFrame/MessageLabel.text = "image not working"
+			$VideoFrame/MessageLabel.visible = true
+			return
+		var mat = $VideoFrame/PhotoMesh.get_surface_override_material(0)
+		mat.albedo_texture = ImageTexture.create_from_image(image)
+		print(mat.albedo_texture)
+		$VideoFrame/PhotoMesh.visible = true
+		return
+
+	$VideoFrame/PhotoMesh.visible = false
+	$VideoFrame/VidLengthBar.visible = true
+	$VideoFrame/PlayVideoButton.visible = true
+
 	androidcompositionlayer.visible = true
 	androidcompositionlayer.global_transform = $VideoFrame/CompositionLayerPosition.global_transform
 	
-	$VideoFrame/MessageLabel.visible = false
 	if exoplayer:
 		var androidsurface = androidcompositionlayer.get_android_surface()
 		if androidsurface:
