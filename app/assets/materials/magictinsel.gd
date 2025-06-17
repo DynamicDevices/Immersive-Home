@@ -9,7 +9,9 @@ func gotinselpttopt(p0, p1):
 			tween.kill()
 		tween = get_tree().create_tween()
 		position = p0
+		rotation.y = Vector2(p1.z - p0.z, p1.x - p0.x).angle()
 		$NoDepthSphere.visible = true
+		$CyberTruck.visible = true
 		tween.tween_property(self, "emitting", true, 0.1)
 		tween.tween_property($AudioStreamPlayer3D, "playing", true, 0)
 		tween.tween_property(self, "position", p1, d*0.9)
@@ -17,5 +19,6 @@ func gotinselpttopt(p0, p1):
 		tween.tween_property($AudioStreamPlayer3D, "playing", false, 0)
 	tween.tween_property(self, "emitting", false, 0.1)
 	tween.tween_property($NoDepthSphere, "visible", false, 0.0)
+	tween.tween_property($CyberTruck, "visible", false, 0.0)
 	return tween
 	
