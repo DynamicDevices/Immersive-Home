@@ -52,7 +52,7 @@ func playvideo(vidname, globalplacement, lpauseatstart=false):
 	if globalplacement:
 		$VideoFrame.global_transform = globalplacement
 
-	if video_uri.ends_with(".jpg"):
+	if video_uri.to_lower().ends_with(".jpg"):
 		$VideoFrame/VidLengthBar.visible = false
 		$VideoFrame/PlayVideoButton.visible = false
 		var image = Image.load_from_file(video_uri)
