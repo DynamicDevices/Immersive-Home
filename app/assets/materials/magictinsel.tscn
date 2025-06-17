@@ -69,4 +69,11 @@ mesh = SubResource("SphereMesh_vw2ul")
 surface_material_override/0 = SubResource("StandardMaterial3D_vw2ul")
 
 [node name="Cybertruck" parent="." instance=ExtResource("3_25k5d")]
-transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, -0.014152, 0.175727)
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, -0.0697054, 0.478317)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.527856, 0.702421, 0.477465, -0.112854, -0.615185, 0.780264, 0.841803, 0.357983, 0.404, 0.319851, 0.380004, 0)
+light_energy = 4.519
+light_specular = 2.394
+
+[editable path="Cybertruck"]
