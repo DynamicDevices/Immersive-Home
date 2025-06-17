@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://ytah1xlxtsv0"]
+[gd_scene load_steps=13 format=3 uid="uid://ytah1xlxtsv0"]
 
 [ext_resource type="Shader" uid="uid://dcvb01ytocctb" path="res://assets/materials/magictinsel.gdshader" id="1_hv8oc"]
 [ext_resource type="Script" uid="uid://7b8fsrj5iu51" path="res://assets/materials/magictinsel.gd" id="2_8iu3a"]
+[ext_resource type="PackedScene" uid="uid://dalvbkvg0yqv2" path="res://assets/low_poly_tesla_cybertruck.glb" id="3_25k5d"]
 
 [sub_resource type="Gradient" id="Gradient_ck1xm"]
 
@@ -66,3 +67,6 @@ script = ExtResource("2_8iu3a")
 [node name="NoDepthSphere" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_vw2ul")
 surface_material_override/0 = SubResource("StandardMaterial3D_vw2ul")
+
+[node name="Cybertruck" parent="." instance=ExtResource("3_25k5d")]
+transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, -0.014152, 0.175727)
