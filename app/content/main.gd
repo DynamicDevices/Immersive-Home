@@ -44,6 +44,7 @@ func _ready():
 	
 	dev_state_changed.emit(false)
 
+	print(OS.get_model_name())
 	if OS.get_model_name() == "Quest":
 		print("Scene manage ", ClassDB.can_instantiate("OpenXRFbSceneManager"))
 		meta_scene_manager = ClassDB.instantiate("OpenXRFbSceneManager")
