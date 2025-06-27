@@ -56,7 +56,7 @@ var current_module_config = {}
 func on_http_request_completed(result, response_code, headers, body):
 	if response_code == 200:
 		print("Download completed successfully.")
-		var file = FileAccess.open("res://tmp.zip", FileAccess.WRITE)
+		var file = FileAccess.open("res://tmp", FileAccess.WRITE)
 		file.store_buffer(body)
 		file.close()
 		extract_module_from_zip(current_module_config)
