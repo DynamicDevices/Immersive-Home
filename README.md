@@ -35,3 +35,28 @@ The Meta Quest 3 Virtual Reality headset runs Android which means that many the 
 # Future work
 
 SafeAR/QuestWalk is looking for real world uses and applications that could pay for and drive its future development.  You could theoretically download it and try it out yourself, but given the necessary sketchiness of the prototype product made on this time scale, you will need our help. Please contact [Dynamic Devices](https://www.dynamicdevices.co.uk/) for details.
+
+# Godot Setup
+
+Clone the repo
+`git clone https://github.com/DynamicDevices/Immersive-Home/`
+
+Open /app/ directory and install required plugins with gd-plug, replacing the executable path with your godot editor path. 
+`cd Immersive-Home/app/`
+`<godot_executable_path> --headless -s plug.gd`
+
+(or if `godot` is in your path)
+`godot --headless -s plug.gd`
+
+The required plugins should install to your /addons/ folder:
+```
+    godot-cdt
+    godot-xr-tools
+    godot_exoplayer
+    godotopenxrvendors
+    mqtt
+    promise
+    rdot
+    xr-autohandtracker
+    xr-simulator
+```
