@@ -50,11 +50,11 @@ func _ready():
 		print("House not loaded yet??? going into an await loop")
 		await Store.house.on_loaded
 
-	if App.main.meta_scene_manager == null:
-		remove_child(sync_room_button)
-		remove_child(sync_room_label)
-	else:
-		sync_room_button.on_button_up.connect(func():
+	#if App.main.meta_scene_manager == null:
+	#	remove_child(sync_room_button)
+	#	remove_child(sync_room_label)
+	#else:
+	sync_room_button.on_button_up.connect(func():
 			App.main.meta_scene_manager.create_scene_anchors()
 
 			await get_tree().create_timer(1.0).timeout
@@ -62,7 +62,7 @@ func _ready():
 			var data=MetaTools.spatial_entites.get_corners_and_height()
 
 			App.house.editing_room.state_machine.current_state.create_from_corners(data.corners, data.height)
-		)
+	)
 
 	delete_button.on_button_up.connect(func():
 		var selected_room=rooms_map.selected_room
