@@ -39,24 +39,22 @@ SafeAR/QuestWalk is looking for real world uses and applications that could pay 
 # Godot Setup
 
 Clone the repo
-`git clone https://github.com/DynamicDevices/Immersive-Home/`
+> git clone https://github.com/DynamicDevices/Immersive-Home/
 
 Open /app/ directory and install required plugins with gd-plug, replacing the executable path with your godot editor path. 
-`cd Immersive-Home/app/`
-`<godot_executable_path> --headless -s plug.gd`
-
-(or if `godot` is in your path)
-`godot --headless -s plug.gd`
+> cd Immersive-Home/app/
+> godot4 --headless -s plug.gd update debug
 
 The required plugins should install to your /addons/ folder:
 ```
     godot-cdt
     godot-xr-tools
     godot_exoplayer
-    godotopenxrvendors
     mqtt
     promise
     rdot
     xr-autohandtracker
     xr-simulator
 ```
+
+You need to install `godotopenxrvendors` directly from the assetlib or download it from https://github.com/GodotVR/godot_openxr_vendors as it is android/hardware related.

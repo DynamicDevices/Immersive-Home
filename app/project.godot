@@ -29,6 +29,7 @@ Store="*res://lib/globals/main_store.gd"
 EventSystem="*res://lib/globals/event_system.gd"
 Request="*res://lib/globals/request.gd"
 TouchManager="*res://lib/utils/touch/touch.gd"
+XRToolsRumbleManager="*res://addons/godot-xr-tools/rumble/rumble_manager.gd"
 
 [debug_draw_3d]
 
@@ -37,10 +38,6 @@ settings/3d/volumetric_defaults/thickness=0.001
 [display]
 
 window/vsync/vsync_mode=0
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg", "res://addons/godot_exoplayer/plugin.cfg")
 
 [file_customization]
 
