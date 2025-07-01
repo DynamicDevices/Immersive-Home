@@ -24,4 +24,3 @@ func _plugging():
 
 	# The godotopenxrvendorsaddon should be downloaded from the asset-store as it is part of the hardware platform, 
 	# in much the same way we need to install the Android templates and Android build tools directory tbrough the editor UI
-

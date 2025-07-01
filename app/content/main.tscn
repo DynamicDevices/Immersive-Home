@@ -107,13 +107,10 @@ visible = false
 use_android_surface = true
 sort_order = -1
 enable_hole_punch = true
-XR_FB_composition_layer_image_layout/vertical_flip = true
 quad_size = Vector2(0.4, 0.4)
 
 [node name="XRSimulator" parent="." instance=ExtResource("5_3qc8g")]
-disable_xr_in_editor = false
 min_camera_height = 0.01
-xr_origin = NodePath("../XROrigin3D")
 
 [node name="House" parent="." instance=ExtResource("9_np6mw")]
 
@@ -134,6 +131,7 @@ visible = false
 screen_size = Vector2(1.5, 1)
 enabled = false
 collision_layer = 5242887
+scene_properties_keys = PackedStringArray()
 
 [node name="ColorRect" type="ColorRect" parent="TextArea2D/Viewport" index="0"]
 offset_right = 40.0
