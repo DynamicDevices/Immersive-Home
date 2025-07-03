@@ -7,6 +7,7 @@ const Entity = preload ("../entity.gd")
 @onready var temp_label: Label3D = $TempLabel
 @onready var humid_label: Label3D = $HumidLabel
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super()
@@ -17,6 +18,12 @@ func _ready():
 	await HomeApi.watch_state(entity_id, func(new_state):
 		set_state(new_state)
 	)
+
+func _process(delta):
+	#var x = get_node_or_null("%XRCamera3D")
+	var x = get_node("/root/Main").camera
+	if x:
+		$sari/Armature/Skeleton3D/SpringBoneSimulator3D/SpringBoneCollisionSphere3D.global_position = x.global_position
 
 func set_state(stateInfo):
 	if stateInfo == null:
