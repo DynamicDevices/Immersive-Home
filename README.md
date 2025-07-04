@@ -36,25 +36,75 @@ The Meta Quest 3 Virtual Reality headset runs Android which means that many the 
 
 SafeAR/QuestWalk is looking for real world uses and applications that could pay for and drive its future development.  You could theoretically download it and try it out yourself, but given the necessary sketchiness of the prototype product made on this time scale, you will need our help. Please contact [Dynamic Devices](https://www.dynamicdevices.co.uk/) for details.
 
-# Godot Setup
 
-Clone the repo
-> git clone https://github.com/DynamicDevices/Immersive-Home/
+## App Developer Setup
 
-Open /app/ directory and install required plugins with gd-plug, replacing the executable path with your godot editor path. 
-> cd Immersive-Home/app/
-> godot4 --headless -s plug.gd update debug
+### 1. Install Android SDK  
+You’ll need Android SDK **Iguana (API 34)** or later — the latest is fine.  
+Download: [https://developer.android.com/studio/](https://developer.android.com/studio/)
 
-The required plugins should install to your /addons/ folder:
+Go and get `sdkmanager` working and run this command:
+(replace `<android_sdk_path>` with your SDK install path)
 ```
-    godot-cdt
-    godot-xr-tools
-    godot_exoplayer
-    mqtt
-    promise
-    rdot
-    xr-autohandtracker
-    xr-simulator
+sdkmanager --sdk_root=<android_sdk_path> \
+"platform-tools" \
+"build-tools;34.0.0" \
+"platforms;android-34" \
+"cmdline-tools;latest" \
+"cmake;3.10.2.4988404" \
+"ndk;23.2.8568313"
+```
+This installs:
+- Android SDK Platform-Tools 34.0.0+
+- Build-Tools 34.0.0
+- Platform 34
+- Command-line Tools (latest)
+- CMake 3.10.2.4988404
+- NDK r23c (23.2.8568313)
+
+### 2. Clone the repository  
+```
+git clone https://github.com/DynamicDevices/Immersive-Home/
+cd Immersive-Home/app/
+```
+Install required plugins using `gd-plug` (replace `godot4` path with your Godot editor executable):
+```
+godot4 --headless -s plug.gd update debug
+```
+Plugins will install to `/addons/`:
+```
+godot-cdt  
+godot-xr-tools  
+godot_exoplayer  
+mqtt  
+promise  
+rdot  
+xr-autohandtracker  
+xr-simulator
 ```
 
-You need to install `godotopenxrvendors` directly from the assetlib or download it from https://github.com/GodotVR/godot_openxr_vendors as it is android/hardware related.
+### 3. Install `godot_openxr_vendors`  
+Install from the Godot AssetLib or manually from:  
+[https://github.com/GodotVR/godot_openxr_vendors](https://github.com/GodotVR/godot_openxr_vendors) 
+This is required for Android hardware integration.
+
+### 4. Configure Godot  
+In **Editor Settings**, set:
+- Android SDK path
+- Java SDK path  
+In **Project Settings** look for OpenXR and:
+- enable passthrough
+- enable handtracking
+
+### 5. Prepare your Quest device  
+- Ensure you’re logged into the **owner account** on the Quest.  
+- Enable **developer mode** in Quest settings.  
+- Connect the Quest to your computer via USB-C.  
+- If **Meta Link** asks to connect, click **Disable** (don’t check “do not ask me again” — that can auto-enable it later).  
+- Restart the Quest.  
+
+The Quest *should* prompt you about USB debugging after the restart and this allows remote deployment via Godot.  
+
+### 6. Build Android templates  
+Build the Android export templates in your Godot project (do this **before** deploying).  
+In the template’s Meta settings, set **Passthrough = Optional**.
