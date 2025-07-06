@@ -1,4 +1,4 @@
-[gd_scene load_steps=4355 format=3 uid="uid://bkoybnltrq5uq"]
+[gd_scene load_steps=4354 format=3 uid="uid://bkoybnltrq5uq"]
 
 [ext_resource type="Script" uid="uid://btdtjmcomof6n" path="res://content/entities/weather/weather.gd" id="1_f8t6i"]
 [ext_resource type="Texture2D" uid="uid://caqghtbin4b02" path="res://assets/weather/lottie/clear-day.png" id="2_l4uh1"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://dnbddauwthelo" path="res://assets/weather/lottie/thunderstorms-rain.png" id="13_i5j3l"]
 [ext_resource type="Texture2D" uid="uid://bkywf5ish2l5u" path="res://assets/weather/lottie/wind.png" id="14_d3tg6"]
 [ext_resource type="PackedScene" uid="uid://bxv3qgujxbdgu" path="res://content/entities/weather/sari.glb" id="17_fvxy2"]
+[ext_resource type="Texture2D" uid="uid://kn8j5jnjj2g2" path="res://content/sarimaterials/sari1.jpg" id="18_t7783"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6bo5j"]
 size = Vector3(0.43, 0.12, 0.02)
@@ -30416,15 +30417,12 @@ animations = [{
 "speed": 60.0
 }]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_t7783"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0taql"]
-seamless = true
-noise = SubResource("FastNoiseLite_t7783")
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o768c"]
-albedo_texture = SubResource("NoiseTexture2D_0taql")
-uv1_scale = Vector3(1, 2, 2)
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.705882)
+albedo_texture = ExtResource("18_t7783")
+uv1_scale = Vector3(1, 4, 1)
 
 [node name="Weather" type="StaticBody3D" groups=["entity"]]
 script = ExtResource("1_f8t6i")
@@ -30499,7 +30497,7 @@ resizable = true
 surface_material_override/0 = SubResource("StandardMaterial3D_o768c")
 
 [node name="SpringBoneSimulator3D" type="SpringBoneSimulator3D" parent="sari/Armature/Skeleton3D" index="1"]
-transform = Transform3D(-0.999896, -0.0144047, 0, 0.0144047, -0.999896, 0, 0, 0, 1, 0.0483669, 3.35103, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 setting_count = 1
 settings/0/root_bone_name = "Bone"
 settings/0/root_bone = 0
@@ -30522,7 +30520,10 @@ settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
 [node name="SpringBoneCollisionSphere3D" type="SpringBoneCollisionSphere3D" parent="sari/Armature/Skeleton3D/SpringBoneSimulator3D"]
-transform = Transform3D(-0.999865, 0.0163912, 1.65444e-07, -0.0163912, -0.999865, 1.37089e-07, 1.67669e-07, 1.34359e-07, 1, -0.829163, 1.09568, 0.329227)
+transform = Transform3D(0.999999, 1.86264e-09, 0, -1.86264e-09, 0.999999, 0, 0, 0, 1, -1.80084, -2.20705, 0.205033)
 radius = 0.8
+
+[node name="SpringBoneCollisionPlane3D" type="SpringBoneCollisionPlane3D" parent="sari/Armature/Skeleton3D/SpringBoneSimulator3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.709531, -5.11711, 0)
 
 [editable path="sari"]

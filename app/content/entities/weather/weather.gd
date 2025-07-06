@@ -19,11 +19,18 @@ func _ready():
 		set_state(new_state)
 	)
 
+var filteredcamerapos = Vector3(0,0,0)
+const camerafilter = 0.1
 func _process(delta):
 	#var x = get_node_or_null("%XRCamera3D")
 	var x = get_node("/root/Main").camera
 	if x:
-		$sari/Armature/Skeleton3D/SpringBoneSimulator3D/SpringBoneCollisionSphere3D.global_position = x.global_position
+		var camerapos = x.global_position
+		filteredcamerapos = camerapos*camerafilter + filteredcamerapos*(1.0-camerafilter)
+		var filterdev = (filteredcamerapos - camerapos).length()
+		$sari/Armature/Skeleton3D/SpringBoneSimulator3D/SpringBoneCollisionSphere3D.global_position = camerapos
+		$sari/Armature/Skeleton3D/SpringBoneSimulator3D/SpringBoneCollisionSphere3D.radius = min(0.4, filterdev*4)
+		$sari/Armature/Skeleton3D/SpringBoneSimulator3D/SpringBoneCollisionPlane3D.global_position.y = 0.0
 
 func set_state(stateInfo):
 	if stateInfo == null:
