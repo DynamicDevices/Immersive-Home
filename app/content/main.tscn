@@ -131,7 +131,6 @@ visible = false
 screen_size = Vector2(1.5, 1)
 enabled = false
 collision_layer = 5242887
-scene_properties_keys = PackedStringArray()
 
 [node name="ColorRect" type="ColorRect" parent="TextArea2D/Viewport" index="0"]
 offset_right = 40.0

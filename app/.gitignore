@@ -19,3 +19,6 @@ mono_crash.*.json
 
 # plug-gd ignores
 .plugged/
+addons/
+# except addons/gdplug
+!addons/gdplug/
