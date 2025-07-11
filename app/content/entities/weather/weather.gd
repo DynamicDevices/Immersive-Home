@@ -18,19 +18,34 @@ func _ready():
 	await HomeApi.watch_state(entity_id, func(new_state):
 		set_state(new_state)
 	)
+	var mat : StandardMaterial3D = $sari/Armature/Skeleton3D/Plane.get_surface_override_material(0)
+	print("iiiii ", get_index())
+	print(mat.albedo_texture)
+	mat.albedo_texture = load("res://content/sarimaterials/sari%d.jpg" % ((get_index() % 3) + 1))
+
 
 var filteredcamerapos = Vector3(0,0,0)
-const camerafilter = 0.1
+var filteredlefthandpos = Vector3(0,0,0)
+var filteredrighthandpos = Vector3(0,0,0)
+const motionfilter = 0.1
+
+func filtapply(x, fpos, springbone):
+	var pos = x.global_position
+	fpos = pos*motionfilter + fpos*(1.0-motionfilter)
+	var filterdev = (fpos - pos).length()
+	springbone.global_position = pos
+	springbone.radius = min(0.4, filterdev*4)
+	return fpos
+
 func _process(delta):
 	#var x = get_node_or_null("%XRCamera3D")
-	var x = get_node("/root/Main").camera
-	if x:
-		var camerapos = x.global_position
-		filteredcamerapos = camerapos*camerafilter + filteredcamerapos*(1.0-camerafilter)
-		var filterdev = (filteredcamerapos - camerapos).length()
-		$sari/Armature/Skeleton3D/SpringBoneSimulator3D/SpringBoneCollisionSphere3D.global_position = camerapos
-		$sari/Armature/Skeleton3D/SpringBoneSimulator3D/SpringBoneCollisionSphere3D.radius = min(0.4, filterdev*4)
-		$sari/Armature/Skeleton3D/SpringBoneSimulator3D/SpringBoneCollisionPlane3D.global_position.y = 0.0
+	var xc = get_node("/root/Main").camera
+	var xl = get_node("/root/Main").controller_left
+	var xr = get_node("/root/Main").controller_right
+	if xl:
+		filteredlefthandpos = filtapply(xl, filteredlefthandpos, $sari/Armature/Skeleton3D/SpringBoneSimulator3D/LSpringBoneCollisionSphere3D)
+	if xr:
+		filteredrighthandpos = filtapply(xr, filteredrighthandpos, $sari/Armature/Skeleton3D/SpringBoneSimulator3D/RSpringBoneCollisionSphere3D)
 
 func set_state(stateInfo):
 	if stateInfo == null:

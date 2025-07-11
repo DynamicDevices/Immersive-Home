@@ -20,7 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://kn8j5jnjj2g2" path="res://content/sarimaterials/sari1.jpg" id="18_t7783"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6bo5j"]
-size = Vector3(0.43, 0.12, 0.02)
+size = Vector3(0.93, 0.32, 0.02)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2qh0r"]
 atlas = ExtResource("2_l4uh1")
@@ -30418,6 +30418,7 @@ animations = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o768c"]
+resource_local_to_scene = true
 transparency = 1
 cull_mode = 2
 albedo_color = Color(1, 1, 1, 0.705882)
@@ -30428,10 +30429,22 @@ uv1_scale = Vector3(1, 4, 1)
 script = ExtResource("1_f8t6i")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.143131, 0)
 shape = SubResource("BoxShape3D_6bo5j")
+
+[node name="HookLabel" type="Label3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 1, -0.327691, -0.0395205, 0)
+pixel_size = 0.001
+render_priority = 15
+outline_render_priority = 14
+text = "hook"
+font_size = 50
+outline_size = 10
+horizontal_alignment = 0
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, -0.14, 0.01, 0)
+visible = false
 pixel_size = 0.001
 render_priority = 15
 sprite_frames = SubResource("SpriteFrames_71wxj")
@@ -30439,6 +30452,7 @@ animation = &"partly-cloudy-day"
 
 [node name="WeatherLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0.02, 0)
+visible = false
 pixel_size = 0.001
 render_priority = 15
 outline_render_priority = 14
@@ -30449,6 +30463,7 @@ horizontal_alignment = 0
 
 [node name="TempLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, -0.03, 0)
+visible = false
 pixel_size = 0.001
 render_priority = 15
 outline_render_priority = 14
@@ -30459,6 +30474,7 @@ horizontal_alignment = 0
 
 [node name="TempIcon" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04, -0.03, 0)
+visible = false
 pixel_size = 0.001
 render_priority = 15
 outline_render_priority = 14
@@ -30469,6 +30485,7 @@ outline_size = 6
 
 [node name="HumidIcon" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11, -0.03, 0)
+visible = false
 pixel_size = 0.001
 render_priority = 15
 outline_render_priority = 14
@@ -30479,6 +30496,7 @@ outline_size = 6
 
 [node name="HumidLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13, -0.03, 0)
+visible = false
 pixel_size = 0.001
 render_priority = 15
 outline_render_priority = 14
@@ -30497,7 +30515,6 @@ resizable = true
 surface_material_override/0 = SubResource("StandardMaterial3D_o768c")
 
 [node name="SpringBoneSimulator3D" type="SpringBoneSimulator3D" parent="sari/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 setting_count = 1
 settings/0/root_bone_name = "Bone"
 settings/0/root_bone = 0
@@ -30519,11 +30536,12 @@ settings/0/gravity/direction = Vector3(0, -1, 0)
 settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
-[node name="SpringBoneCollisionSphere3D" type="SpringBoneCollisionSphere3D" parent="sari/Armature/Skeleton3D/SpringBoneSimulator3D"]
+[node name="LSpringBoneCollisionSphere3D" type="SpringBoneCollisionSphere3D" parent="sari/Armature/Skeleton3D/SpringBoneSimulator3D"]
 transform = Transform3D(0.999999, 1.86264e-09, 0, -1.86264e-09, 0.999999, 0, 0, 0, 1, -1.80084, -2.20705, 0.205033)
 radius = 0.8
 
-[node name="SpringBoneCollisionPlane3D" type="SpringBoneCollisionPlane3D" parent="sari/Armature/Skeleton3D/SpringBoneSimulator3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.709531, -5.11711, 0)
+[node name="RSpringBoneCollisionSphere3D" type="SpringBoneCollisionSphere3D" parent="sari/Armature/Skeleton3D/SpringBoneSimulator3D"]
+transform = Transform3D(0.999999, 1.86264e-09, 0, -1.86264e-09, 0.999999, 0, 0, 0, 1, -1.80084, -2.20705, 0.205033)
+radius = 0.8
 
 [editable path="sari"]
