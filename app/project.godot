@@ -30,6 +30,7 @@ EventSystem="*res://lib/globals/event_system.gd"
 Request="*res://lib/globals/request.gd"
 TouchManager="*res://lib/utils/touch/touch.gd"
 XRToolsRumbleManager="*res://addons/godot-xr-tools/rumble/rumble_manager.gd"
+ExoPlayer="*res://addons/godot_exoplayer/ExoPlayer.gd"
 
 [debug_draw_3d]
 
@@ -38,6 +39,10 @@ settings/3d/volumetric_defaults/thickness=0.001
 [display]
 
 window/vsync/vsync_mode=0
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg", "res://addons/godot_exoplayer/plugin.cfg")
 
 [file_customization]
 
@@ -96,3 +101,11 @@ openxr/extensions/hand_tracking_unobstructed_data_source=true
 openxr/extensions/hand_tracking_controller_data_source=true
 shaders/enabled=true
 openxr/extensions/hand_tracking_aim=true
+openxr/extensions/meta/passthrough=true
+openxr/extensions/meta/face_tracking=true
+openxr/extensions/meta/body_tracking=true
+openxr/extensions/meta/hand_tracking_aim=true
+openxr/extensions/meta/hand_tracking_mesh=true
+openxr/extensions/meta/hand_tracking_capsules=true
+openxr/extensions/meta/anchor_api=true
+openxr/extensions/meta/scene_api=true

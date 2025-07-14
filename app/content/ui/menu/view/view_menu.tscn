@@ -68,6 +68,7 @@ visible = false
 label = "humidity_mid"
 icon = true
 toggleable = true
+disabled = true
 
 [node name="HumidityMapLabel" type="Label3D" parent="Content"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07, -0.16, 0)

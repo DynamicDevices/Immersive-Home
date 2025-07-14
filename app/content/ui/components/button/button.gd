@@ -17,6 +17,7 @@ const ECHO_WAIT_REPEAT = 0.1
 @onready var label_node: Label3D = $Body/Label
 @onready var finger_area: Area3D = $FingerArea
 @onready var finger_area_collision: CollisionShape3D = $FingerArea/CollisionShape3D
+@onready var finger_area_disable: Area3D = $FingerAreaDisable
 @onready var click_sound = $ClickSound
 
 @export var focusable: bool = true:
@@ -78,6 +79,7 @@ var active: bool = false:
 		update_animation(1.0 if active else 0.0)
 	
 var echo_timer: Timer = null
+var touch_disabled: bool = false
 
 func _ready():
 	if initial_active:
@@ -154,10 +156,15 @@ func _on_ray_leave(_event: EventPointer):
 	panel.hovering = false
 
 func _on_touch_enter(event: EventTouch):
+	if event.target == finger_area_disable:
+		touch_disabled = true
+		event.bubbling = false
+		return
+	
 	if event.target != finger_area:
 		return
 
-	if disabled:
+	if disabled or touch_disabled:
 		event.bubbling = false
 		return
 
@@ -171,14 +178,14 @@ func _on_touch_enter(event: EventTouch):
 			on_button_up.emit()
 
 		return
-
+	
 	active = true
 	on_button_down.emit()
 
 	_touch_change(event)
 
 func _on_touch_move(event: EventTouch):
-	if disabled:
+	if disabled or touch_disabled:
 		event.bubbling = false
 		return
 
@@ -188,7 +195,11 @@ func _on_touch_move(event: EventTouch):
 	_touch_change(event)
 
 func _on_touch_leave(event: EventTouch):
-	if disabled:
+	if event.target == finger_area_disable:
+		touch_disabled = false
+		return
+	
+	if disabled or touch_disabled:
 		event.bubbling = false
 		return
 
@@ -206,6 +217,14 @@ func _touch_change(event: EventTouch):
 		
 	update_animation(percent)
 
+func _is_touch_in_disable_area(event: EventTouch) -> bool:
+	var global_point = event.fingers[0].area.global_position
+	var local_point = finger_area_disable.to_local(global_point)
+	var collision_shape = finger_area_disable.get_child(0) as CollisionShape3D
+	var extents = collision_shape.shape.extents
+
+	return abs(local_point.x) <= extents.x and abs(local_point.y) <= extents.y and abs(local_point.z) <= extents.z
+
 func _update():
 	body.position = Vector3(0, 0, size.z / 2)
 
@@ -216,4 +235,3 @@ func _update():
 	label_node.position = Vector3(0, 0, size.z / 2 + 0.001)
 
 	finger_area.position = Vector3(0, 0, size.z * 0.75)
-	finger_area_collision.shape.size = Vector3(size.x, size.y, size.z / 2)

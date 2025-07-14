@@ -15,9 +15,8 @@ ao_enabled = true
 material = SubResource("StandardMaterial3D_m58yb")
 size = Vector3(0.01, 0.01, 0.01)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_65k2y"]
-radius = 0.001
-height = 0.02
+[sub_resource type="SphereShape3D" id="SphereShape3D_0v383"]
+radius = 0.015
 
 [node name="XRControllerLeft" type="XRController3D"]
 tracker = &"left_hand"
@@ -60,7 +59,7 @@ monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="IndexTip/TouchArea"]
 transform = Transform3D(1, 0, 0, 1.49012e-08, 1, 0, 1.86265e-09, -7.45058e-09, 1, 0, -0.01, 0)
-shape = SubResource("CapsuleShape3D_65k2y")
+shape = SubResource("SphereShape3D_0v383")
 
 [node name="ThumbTip" type="BoneAttachment3D" parent="."]
 transform = Transform3D(0.967042, 0.24582, -0.0663439, -0.0663439, 0.494837, 0.86645, 0.24582, -0.833492, 0.494837, 0.0261569, 0.0891963, -0.0934418)
