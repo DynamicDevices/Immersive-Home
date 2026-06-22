@@ -1,6 +1,9 @@
 extends "res://addons/gd-plug/plug.gd"
 
-# from clean clone run `godot4 --headless --xr-mode off -s plug.gd update debug`
+# from inside clean clone (in the app directory) run:
+#   godot4 --import
+#   godot4 --headless --xr-mode off -s plug.gd update debug
+
 
 func _plugging():
 
