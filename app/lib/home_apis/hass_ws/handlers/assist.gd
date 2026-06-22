@@ -37,7 +37,7 @@ func _init(hass: HASS_API):
 
 func start_wakeword():
 	if pipe_running:
-		return
+		return false
 
 	api.connection.send_packet({
 		"type": "assist_pipeline/run",
@@ -49,6 +49,7 @@ func start_wakeword():
 		},
 		"timeout": 60
 	}, true)
+	return false
 
 func send_data(data: PackedByteArray):
 	
