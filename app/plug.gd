@@ -7,8 +7,9 @@ extends "res://addons/gd-plug/plug.gd"
 
 func _plugging():
 
-	plug("GodotVR/godot-xr-tools", {"commit": "c5c74338f88d393ee0724becf206f7d8dde744e0"})  # v4.3.0
 	#plug("GodotVR/godot-xr-tools", {"commit": "4d53140015ba5feb6f6ec07873f050311ffe1fdc"})  # v4.4.1 (has a rumble manager problem)
+	#plug("GodotVR/godot-xr-tools", {"commit": "c5c74338f88d393ee0724becf206f7d8dde744e0"})  # v4.3.0
+	plug("GodotVR/godot-xr-tools", {"commit": "aecfc894d9581cf4ca6df7fdd09098040497aa8e"})  # v4.5.0
 
 	# the following doesn't work as wanted due to https://github.com/imjp94/gd-plug/issues/47
 	#plug("bnjmntmm/godot-exoplayer", {"install_root": "addons/godot_exoplayer", "include":["plugin/demo/addons/godot_exoplayer"]})
